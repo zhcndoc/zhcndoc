@@ -1,15 +1,34 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
 
-const appConfig = useAppConfig();
+dayjs.extend(duration);
 
-const colors = appConfig.ui.colors;
+const colors = [
+  "red",
+  "orange",
+  "amber",
+  "yellow",
+  "lime",
+  "green",
+  "emerald",
+  "teal",
+  "cyan",
+  "sky",
+  "blue",
+  "indigo",
+  "violet",
+  "purple",
+  "fuchsia",
+  "pink",
+  "rose",
+  "primary",
+];
 
 const columns = [
   {
     key: "description",
     label: "项目名",
-    sortable: true,
   },
   {
     key: "homepage",
@@ -20,36 +39,49 @@ const columns = [
     label: "标签",
   },
   {
-    key: "created_at",
-    label: "创建时间",
+    key: "diff_time",
+    label: "同步状态",
     sortable: true,
   },
   {
-    key: "pushed_at",
-    label: "更新时间",
-    sortable: true,
+    key: "action",
+    label: "操作",
   },
 ];
 
-const { data } = useFetch("https://api.github.com/orgs/zhcndoc/repos", {
-  params: {
-    sort: "full_name",
-  },
-  lazy: true,
-  server: false,
-});
+const { data } = await useFetch("/api/repos");
+
+const getDiffTimeValue = (time: number) => {
+  const isNegative = time < 0;
+  const absTime = Math.abs(time);
+
+  const diffDuration = dayjs.duration(absTime, "seconds");
+  const days = Math.floor(diffDuration.asDays());
+  const hours = diffDuration.hours();
+
+  const leadOrLag = isNegative ? "落后" : "领先";
+
+  return `${leadOrLag} ${days} 天 ${hours} 小时`;
+};
 </script>
 
 <template>
-  <UTable :rows="data || []" :columns="columns" class="m-4">
+  <UTable :rows="data" :columns="columns" class="m-4">
     <template #topics-data="{ row }">
-      <UBadge
-        v-for="item in row.topics"
-        :key="item"
-        :color="colors[(Math.random() * colors.length) | 0]"
-        :label="item"
-        class="mr-1"
-      />
+      <ClientOnly>
+        <UBadge
+          v-for="item in row.topics"
+          :key="item"
+          :color="colors[(Math.random() * colors.length) | 0]"
+          :label="item"
+          class="mr-1"
+        />
+        <template #fallback>
+          <span v-for="item in row.topics" :key="item" class="mr-1">
+            {{ item }}
+          </span>
+        </template>
+      </ClientOnly>
     </template>
     <template #homepage-data="{ row }">
       <ULink
@@ -61,11 +93,27 @@ const { data } = useFetch("https://api.github.com/orgs/zhcndoc/repos", {
         {{ row.homepage }}
       </ULink>
     </template>
-    <template #created_at-data="{ row }">
-      {{ dayjs(row.created_at).format("YYYY-MM-DD HH:mm:ss") }}
+    <template #diff_time-data="{ row }">
+      <ClientOnly>
+        <UBadge
+          :color="row.diff_time < 0 ? 'orange' : 'green'"
+          :label="getDiffTimeValue(row.diff_time)"
+        />
+        <template #fallback>
+          {{ getDiffTimeValue(row.diff_time) }}
+        </template>
+      </ClientOnly>
     </template>
-    <template #pushed_at-data="{ row }">
-      {{ dayjs(row.pushed_at).format("YYYY-MM-DD HH:mm:ss") }}
+
+    <template #action-data="{ row }">
+      <div class="flex gap-2">
+        <NuxtLink :to="`https://github.com/${row.origin}`" target="_blank">
+          <UButton label="Git 仓库" color="gray" variant="solid" />
+        </NuxtLink>
+        <NuxtLink :to="`https://github.com/${row.upstream}`" target="_blank">
+          <UButton label="上游仓库" color="gray" variant="solid" />
+        </NuxtLink>
+      </div>
     </template>
   </UTable>
 </template>

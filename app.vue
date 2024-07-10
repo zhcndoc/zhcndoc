@@ -10,7 +10,12 @@ const links = [
 
 <template>
   <UHeader :links="links">
-    <template #logo> 简中文档 </template>
+    <template #logo>
+      <div class="flex items-center gap-2">
+        <Icon name="fluent-emoji-flat:open-book" class="h-9 w-9 mb-1.5"></Icon>
+        <div class="text-2xl">简中<span class="text-primary">文档</span></div>
+      </div>
+    </template>
 
     <template #right>
       <UColorModeButton />

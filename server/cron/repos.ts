@@ -1,7 +1,8 @@
 import { defineCronHandler } from "#nuxt/cron";
+import dayjs from "dayjs";
 import { writeFileSync } from "fs";
 
-interface BaseRepo {
+export interface BaseRepo {
   name: string;
   type: string;
   origin: string;
@@ -10,6 +11,7 @@ interface BaseRepo {
   upstream_branch: string;
   origin_pushed_at?: string;
   upstream_pushed_at?: string;
+  diff_time?: number;
   homepage?: string;
   description?: string;
   topics?: string[];
@@ -18,7 +20,7 @@ interface BaseRepo {
   stars?: number;
 }
 
-interface GithubRepo extends BaseRepo {
+export interface GithubRepo extends BaseRepo {
   description: string;
   homepage: string;
   topics: string[];
@@ -45,6 +47,9 @@ export default defineCronHandler("everyMinute", async () => {
         $fetch<GithubRepo>(`${baseUrl}/repos/${upstream}`, authHeader),
       ]);
 
+    const timeDiff =
+      dayjs(originInfo.pushed_at).unix() - dayjs(upstreamInfo.pushed_at).unix();
+
     return {
       description: originInfo.description,
       homepage: originInfo.homepage,
@@ -54,6 +59,7 @@ export default defineCronHandler("everyMinute", async () => {
       forks: originInfo.forks,
       origin_pushed_at: originInfo.pushed_at,
       upstream_pushed_at: upstreamInfo.pushed_at,
+      diff_time: timeDiff,
       ...repo,
     };
   };
