@@ -84,12 +84,7 @@ const getDiffTimeValue = (time: number) => {
       </ClientOnly>
     </template>
     <template #homepage-data="{ row }">
-      <ULink
-        :to="row.homepage"
-        active-class="text-primary"
-        inactive-class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
-        target="_blank"
-      >
+      <ULink :to="row.homepage" class="hover:text-primary" target="_blank">
         {{ row.homepage }}
       </ULink>
     </template>

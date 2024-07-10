@@ -39,39 +39,32 @@ const links = [
   <UFooter>
     <template #left>
       <p class="text-gray-500 dark:text-gray-400 text-sm">
-        Copyright © 2016-{{ new Date().getFullYear() }} Nuxt -
-        <NuxtLink
-          class="hover:underline"
-          to="https://github.com/nuxt/nuxt/blob/main/LICENSE"
-          target="_blank"
-        >
-          MIT License
+        Copyright © {{ new Date().getFullYear() }}
+        <NuxtLink to="https://www.zhcndoc.com" class="hover:text-primary">
+          简中文档
         </NuxtLink>
       </p>
     </template>
 
     <template #right>
-      <UButton
-        to="https://x.com/nuxt_js"
-        target="_blank"
-        icon="i-simple-icons-x"
-        color="gray"
-        variant="ghost"
-      />
-      <UButton
-        to="https://discord.com/invite/ps2h6QT"
-        target="_blank"
-        icon="i-simple-icons-discord"
-        color="gray"
-        variant="ghost"
-      />
-      <UButton
-        to="https://github.com/nuxt/nuxt"
-        target="_blank"
-        icon="i-simple-icons-github"
-        color="gray"
-        variant="ghost"
-      />
+      <div
+        class="text-gray-500 dark:text-gray-400 text-sm flex flex-col items-center lg:flex-row lg:gap-3 gap-1"
+      >
+        <NuxtLink
+          to="https://beian.miit.gov.cn/#/Integrated/index"
+          target="_blank"
+          class="hover:text-primary"
+        >
+          沪ICP备2024070610号-3
+        </NuxtLink>
+        <NuxtLink
+          to="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44200002445480"
+          target="_blank"
+          class="hover:text-primary"
+        >
+          粤公网安备44200002445480号
+        </NuxtLink>
+      </div>
     </template>
   </UFooter>
   <UNotifications />
