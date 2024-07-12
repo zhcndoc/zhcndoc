@@ -10,7 +10,7 @@ const colors = [
   "amber",
   "yellow",
   "lime",
-  "green",
+  // "green",
   "emerald",
   "teal",
   "cyan",
@@ -22,7 +22,7 @@ const colors = [
   "fuchsia",
   "pink",
   "rose",
-  "primary",
+  // "primary",
 ];
 
 const columns = [
