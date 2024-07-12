@@ -1,6 +1,7 @@
 import { defineCronHandler } from "#nuxt/cron";
 import dayjs from "dayjs";
 import { writeFileSync } from "fs";
+import { GithubCommit, GithubRepo } from "~/types/github";
 
 export interface BaseRepo {
   name: string;
@@ -20,47 +21,40 @@ export interface BaseRepo {
   stars?: number;
 }
 
-export interface GithubRepo extends BaseRepo {
-  description: string;
-  homepage: string;
-  topics: string[];
-  stargazers_count: number;
-  watchers_count: number;
-  forks: number;
-  pushed_at: string;
-}
-
 export default defineCronHandler("everyMinute", async () => {
   const baseUrl = "https://api.github.com";
-  const authHeader = {
-    headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-    },
+  const headers = {
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
   };
 
   const fetchRepoInfo = async (repo: BaseRepo): Promise<BaseRepo> => {
-    const { origin, upstream } = repo;
+    const { origin, origin_branch, upstream, upstream_branch } = repo;
 
-    const [originInfo, upstreamInfo]: [GithubRepo, GithubRepo] =
-      await Promise.all([
-        $fetch<GithubRepo>(`${baseUrl}/repos/${origin}`, authHeader),
-        $fetch<GithubRepo>(`${baseUrl}/repos/${upstream}`, authHeader),
-      ]);
+    const [originCommits, upstreamCommits, originInfo] = await Promise.all([
+      $fetch<GithubCommit>(`${baseUrl}/repos/${origin}/commits`, {
+        headers,
+        params: { per_page: 1, sha: origin_branch },
+      }),
+      $fetch<GithubCommit>(`${baseUrl}/repos/${upstream}/commits`, {
+        headers,
+        params: { per_page: 1, sha: upstream_branch },
+      }),
+      $fetch<GithubRepo>(`${baseUrl}/repos/${origin}`, { headers }),
+    ]);
 
-    const timeDiff =
-      dayjs(originInfo.pushed_at).unix() - dayjs(upstreamInfo.pushed_at).unix();
+    const diffTime =
+      dayjs(originCommits[0].commit.committer?.date).unix() -
+      dayjs(upstreamCommits[0].commit.committer?.date).unix();
 
     return {
-      description: originInfo.description,
-      homepage: originInfo.homepage,
-      topics: originInfo.topics,
-      stars: originInfo.stargazers_count,
-      watchers: originInfo.stargazers_count,
-      forks: originInfo.forks,
-      origin_pushed_at: originInfo.pushed_at,
-      upstream_pushed_at: upstreamInfo.pushed_at,
-      diff_time: timeDiff,
       ...repo,
+      description: originInfo.description!,
+      diff_time: diffTime,
+      forks: originInfo.forks,
+      homepage: originInfo.homepage!,
+      stars: originInfo.stargazers_count,
+      topics: originInfo.topics,
+      watchers: originInfo.stargazers_count,
     };
   };
 
