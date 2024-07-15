@@ -16,7 +16,6 @@
     "@octokit/types": "^13.5.0",
     "dayjs": "^1.11.11",
     "nuxt": "^3.12.3",
-    "nuxt-cron": "^1.5.1",
     "tailwindcss": "^3.4.4",
     "vue": "latest"
   },

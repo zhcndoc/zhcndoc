@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import type { GithubCompare, GithubRepo } from "~/types/github";
 
 dayjs.extend(duration);
 
@@ -28,7 +29,12 @@ const colors = [
 const columns = [
   {
     key: "description",
-    label: "项目名",
+    label: "名称",
+  },
+  {
+    key: "type",
+    label: "类型",
+    sortable: true,
   },
   {
     key: "homepage",
@@ -39,7 +45,7 @@ const columns = [
     label: "标签",
   },
   {
-    key: "diff_time",
+    key: "ahead_by",
     label: "同步状态",
     sortable: true,
   },
@@ -49,24 +55,42 @@ const columns = [
   },
 ];
 
-const { data } = await useFetch("/api/repos");
+const fetchGithubRepos = async (item: any) => {
+  const [details, compare] = await Promise.all([
+    $fetch<GithubRepo>(`/api/github/repos`, {
+      query: {
+        repo: item.origin,
+      },
+    }),
+    $fetch<GithubCompare>("/api/github/compare", {
+      query: {
+        repo: item.origin,
+      },
+    }),
+  ]);
 
-const getDiffTimeValue = (time: number) => {
-  const isNegative = time < 0;
-  const absTime = Math.abs(time);
-
-  const diffDuration = dayjs.duration(absTime, "seconds");
-  const days = Math.floor(diffDuration.asDays());
-  const hours = diffDuration.hours();
-
-  const leadOrLag = isNegative ? "落后" : "领先";
-
-  return `${leadOrLag} ${days} 天 ${hours} 小时`;
+  return {
+    ...item,
+    ...details,
+    ...compare,
+  };
 };
+
+repositories.sort((last, next) => last.name.localeCompare(next.name));
+const tableData = ref(await Promise.all(repositories.map(fetchGithubRepos)));
 </script>
 
 <template>
-  <UTable :rows="data" :columns="columns" class="m-4">
+  <UTable :rows="tableData" :columns="columns" class="m-4">
+    <template #homepage-data="{ row }">
+      <ULink :to="row.homepage" class="hover:text-primary" target="_blank">
+        {{ row.homepage }}
+      </ULink>
+    </template>
+    <template #type-data="{ row }">
+      <span v-if="row.type === 'mirror'"> 镜像 </span>
+      <span v-if="row.type === 'translate'"> 翻译 </span>
+    </template>
     <template #topics-data="{ row }">
       <ClientOnly>
         <UBadge
@@ -83,21 +107,13 @@ const getDiffTimeValue = (time: number) => {
         </template>
       </ClientOnly>
     </template>
-    <template #homepage-data="{ row }">
-      <ULink :to="row.homepage" class="hover:text-primary" target="_blank">
-        {{ row.homepage }}
-      </ULink>
-    </template>
-    <template #diff_time-data="{ row }">
-      <ClientOnly>
-        <UBadge
-          :color="row.diff_time < 0 ? 'orange' : 'green'"
-          :label="getDiffTimeValue(row.diff_time)"
-        />
-        <template #fallback>
-          {{ getDiffTimeValue(row.diff_time) }}
-        </template>
-      </ClientOnly>
+    <template #ahead_by-data="{ row }">
+      <UBadge
+        :color="row.ahead_by > 0 ? 'red' : 'green'"
+        :label="
+          row.ahead_by <= 0 ? `已同步最新` : `落后 ${row.ahead_by} 个提交`
+        "
+      />
     </template>
 
     <template #action-data="{ row }">

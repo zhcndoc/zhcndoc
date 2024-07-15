@@ -1,4 +1,6 @@
-export const allRepos = [
+import type { RepositoryType } from "~/types/repositories";
+
+export default [
   {
     name: "elysia",
     type: "translate",
@@ -143,4 +145,4 @@ export const allRepos = [
     upstream: "vuejs/vitepress",
     upstream_branch: "main",
   },
-];
+] as RepositoryType[];
