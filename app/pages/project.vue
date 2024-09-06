@@ -5,26 +5,12 @@ import type { GithubCompare, GithubRepo } from "~/types/github";
 
 dayjs.extend(duration);
 
-const colors = [
-  "red",
-  "orange",
-  "amber",
-  "yellow",
-  "lime",
-  // "green",
-  "emerald",
-  "teal",
-  "cyan",
-  "sky",
-  "blue",
-  "indigo",
-  "violet",
-  "purple",
-  "fuchsia",
-  "pink",
-  "rose",
-  // "primary",
-];
+const appConfig = useAppConfig();
+
+const getRandomColor = (): any => {
+  const { colors } = appConfig.ui;
+  return colors[(Math.random() * colors.length) | 0];
+};
 
 const columns = [
   {
@@ -34,7 +20,6 @@ const columns = [
   {
     key: "type",
     label: "类型",
-    sortable: true,
   },
   {
     key: "homepage",
@@ -59,12 +44,12 @@ const fetchGithubRepos = async (item: any) => {
   const [details, compare] = await Promise.all([
     $fetch<GithubRepo>(`/api/github/repos`, {
       query: {
-        repo: item.origin,
+        repo: item.origin.repo,
       },
     }),
     $fetch<GithubCompare>("/api/github/compare", {
       query: {
-        repo: item.origin,
+        repo: item.origin.repo,
       },
     }),
   ]);
@@ -76,8 +61,8 @@ const fetchGithubRepos = async (item: any) => {
   };
 };
 
-repositories.sort((last, next) => last.name.localeCompare(next.name));
-const tableData = ref(await Promise.all(repositories.map(fetchGithubRepos)));
+project.sort((last, next) => last.id.localeCompare(next.id));
+const tableData = ref(await Promise.all(project.map(fetchGithubRepos)));
 </script>
 
 <template>
@@ -88,15 +73,19 @@ const tableData = ref(await Promise.all(repositories.map(fetchGithubRepos)));
       </ULink>
     </template>
     <template #type-data="{ row }">
-      <span v-if="row.type === 'mirror'"> 镜像 </span>
-      <span v-if="row.type === 'translate'"> 翻译 </span>
+      <span v-if="row.type === 0">
+        <UBadge color="yellow">维护</UBadge>
+      </span>
+      <span v-if="row.type === 1">
+        <UBadge color="cyan">镜像</UBadge>
+      </span>
     </template>
     <template #topics-data="{ row }">
       <ClientOnly>
         <UBadge
           v-for="item in row.topics"
           :key="item"
-          :color="colors[(Math.random() * colors.length) | 0]"
+          :color="getRandomColor()"
           :label="item"
           class="mr-1"
         />
@@ -118,10 +107,10 @@ const tableData = ref(await Promise.all(repositories.map(fetchGithubRepos)));
 
     <template #action-data="{ row }">
       <div class="flex gap-2">
-        <NuxtLink :to="`https://github.com/${row.origin}`" target="_blank">
+        <NuxtLink :to="`https://github.com/${row.origin.repo}`" target="_blank">
           <UButton label="Git 仓库" color="gray" variant="solid" />
         </NuxtLink>
-        <NuxtLink :to="`https://github.com/${row.upstream}`" target="_blank">
+        <NuxtLink :to="`https://github.com/${row.upstream.repo}`" target="_blank">
           <UButton label="上游仓库" color="gray" variant="solid" />
         </NuxtLink>
       </div>
