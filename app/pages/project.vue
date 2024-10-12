@@ -35,6 +35,11 @@ const columns = [
     sortable: true,
   },
   {
+    key: "created_at",
+    label: "创建时间",
+    sortable: true,
+  },
+  {
     key: "action",
     label: "操作",
   },

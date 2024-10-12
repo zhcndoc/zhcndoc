@@ -128,7 +128,7 @@ export const project: ProjectItem[] = [
       branch: "main",
     },
     upstream: {
-      repo: "vuejs/docs-cn",
+      repo: "vuejs-translations/docs-zh-cn",
       branch: "main",
     },
   },
@@ -140,7 +140,7 @@ export const project: ProjectItem[] = [
       branch: "main",
     },
     upstream: {
-      repo: "unjs/unjs",
+      repo: "unjs/website",
       branch: "main",
     },
   },
