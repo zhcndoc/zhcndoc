@@ -228,4 +228,16 @@ export const project: ProjectItem[] = [
       branch: "main",
     },
   },
+  {
+    id: "konva",
+    type: 0,
+    origin: {
+      repo: "zhcndoc/konva",
+      branch: "main",
+    },
+    upstream: {
+      repo: "konvajs/site",
+      branch: "master",
+    },
+  },
 ];

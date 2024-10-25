@@ -9,6 +9,7 @@ const links = [
 </script>
 
 <template>
+  <NuxtLoadingIndicator />
   <UHeader :links="links">
     <template #logo>
       <div class="flex items-center gap-2 font-source-han-serif">
@@ -22,7 +23,7 @@ const links = [
 
       <UButton
         icon="i-simple-icons-github"
-        to="https://github.com/nuxt/nuxt"
+        to="https://github.com/zhcndoc/zhcndoc"
         target="_blank"
         color="gray"
         variant="ghost"
