@@ -12,9 +12,9 @@ const links = [
   <NuxtLoadingIndicator />
   <UHeader :links="links">
     <template #logo>
-      <div class="flex items-center gap-2 font-source-han-serif">
-        <Logo class="h-8 w-8"></Logo>
-        <div class="text-2xl">简中<span class="text-primary">文档</span></div>
+      <div class="flex items-center font-source-han-serif">
+        <Logo class="h-9 w-9"></Logo>
+        <div class="text-2xl">简中<span class="text-[#ff3f57]">文档</span></div>
       </div>
     </template>
 
