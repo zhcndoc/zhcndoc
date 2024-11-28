@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const project = useState<GithubRepo[]>("project", () => []);
+
+project.value = await $fetch("/api/project");
+
 const links = [
   {
     label: "项目",
