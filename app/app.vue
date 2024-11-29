@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const projects = useState<GithubRepo[]>("projects", () => []);
 
-projects.value = await $fetch("/api/projects");
+projects.value = await $fetch<GithubRepo[]>("/api/project");
 
 const links = [
   {
