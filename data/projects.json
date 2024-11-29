@@ -1,0 +1,97 @@
+[
+  {
+    "name": "elysia",
+    "sync": ["elysiajs/documentation", "main"],
+    "translate": true
+  },
+  {
+    "name": "drizzle", 
+    "sync": ["drizzle-team/drizzle-orm-docs", "main"],
+    "translate": true
+  },
+  {
+    "name": "vueuse",
+    "sync": ["vueuse/vueuse", "main"],
+    "translate": true
+  },
+  {
+    "name": "unocss",
+    "sync": ["unocss/unocss", "main"],
+    "translate": true
+  },
+  {
+    "name": "shiki",
+    "sync": ["shikijs/shiki", "main"],
+    "translate": true
+  },
+  {
+    "name": "vitest",
+    "sync": ["vitest-dev/docs-cn", "dev"],
+    "translate": false
+  },
+  {
+    "name": "umami",
+    "sync": ["umami-software/website", "master"],
+    "translate": true
+  },
+  {
+    "name": "astro",
+    "sync": ["withastro/docs", "main"],
+    "translate": false
+  },
+  {
+    "name": "nuxt-color-mode",
+    "sync": ["nuxt-modules/color-mode", "main"],
+    "translate": true
+  },
+  {
+    "name": "vue",
+    "sync": ["vuejs-translations/docs-zh-cn", "main"],
+    "translate": false
+  },
+  {
+    "name": "unjs",
+    "sync": ["unjs/website", "main"],
+    "translate": true
+  },
+  {
+    "name": "nitro",
+    "sync": ["unjs/nitro", "main"],
+    "translate": true
+  },
+  {
+    "name": "h3",
+    "sync": ["unjs/h3", "main"],
+    "translate": true
+  },
+  {
+    "name": "nuxt",
+    "sync": ["nuxt/nuxt.com", "main"],
+    "translate": true
+  },
+  {
+    "name": "nuxt-docs",
+    "sync": ["nuxt/nuxt", "main"],
+    "translate": true
+  },
+  {
+    "name": "nuxt-examples",
+    "sync": ["nuxt/examples", "main"],
+    "translate": true
+  },
+  {
+    "name": "vite",
+    "sync": ["vitejs/docs-cn", "main"],
+    "translate": false
+  },
+  {
+    "name": "vitepress",
+    "sync": ["vuejs/vitepress", "main"],
+    "translate": false
+  },
+  {
+    "name": "konva",
+    "sync": ["konvajs/site", "master"],
+    "translate": true
+  }
+]
