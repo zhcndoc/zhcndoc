@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  features: {
+    inlineStyles: false,
+  },
   devtools: { enabled: true },
   extends: ["@nuxt/ui-pro"],
   modules: ["@nuxt/ui", "@nuxt/fonts"],
