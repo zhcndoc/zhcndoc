@@ -1,0 +1,38 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: "0 0/8 * * *"
+  workflow_dispatch:
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: set-matrix
+        run: |
+          content=$(cat data/projects.json)
+          echo "matrix=$(echo $content | jq -c '{include: map({name: .name, upstream: .sync[0], branch: .sync[1]})}' )" >> $GITHUB_OUTPUT
+
+  sync:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.prepare.outputs.matrix)}}
+      fail-fast: false
+      max-parallel: 5
+
+    steps:
+      - name: Sync ${{ matrix.name }}
+        uses: ikxin/sync-upstream@main
+        with:
+          github_token: ${{ secrets.SYNC_TOKEN }}
+          target_repository: "zhcndoc/${{ matrix.name }}"
+          target_branch: "upstream"
+          upstream_repository: "${{ matrix.upstream }}"
+          upstream_branch: "${{ matrix.branch }}"
