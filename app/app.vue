@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
   script: [
-    { src: "/common/analytics.js" }
+    { src: "/js/common.js", async: true }
   ],
 });
 
