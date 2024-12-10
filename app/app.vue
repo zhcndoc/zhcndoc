@@ -1,4 +1,10 @@
 <script setup lang="ts">
+useHead({
+  script: [
+    { src: "/common/analytics.js" }
+  ],
+});
+
 const projects = useState<GithubRepo[]>("projects", () => []);
 
 projects.value = await $fetch<GithubRepo[]>("/api/project");
