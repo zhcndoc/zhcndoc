@@ -71,7 +71,7 @@ const tableColumns = [
     <template #actions-data="{ row }">
       <div class="flex gap-2">
         <UButton
-          :to="row.html_url"
+          :to="`https://github.com/zhcndoc/${row.name}`"
           target="_blank"
           label="Git 仓库"
           color="gray"
