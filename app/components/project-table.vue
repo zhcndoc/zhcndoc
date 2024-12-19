@@ -49,14 +49,18 @@ const tableColumns = [
       </ClientOnly>
     </template>
     <template #created_at-data="{ row }">
-      <span>
-        {{ dayjs(row.created_at).format("YYYY-MM-DD HH:mm:ss") }}
-      </span>
+      <ClientOnly fallback-tag="span" :fallback="row.created_at">
+        <span>
+          {{ dayjs(row.created_at).format("YYYY-MM-DD HH:mm:ss") }}
+        </span>
+      </ClientOnly>
     </template>
     <template #updated_at-data="{ row }">
-      <span>
-        {{ dayjs(row.updated_at).format("YYYY-MM-DD HH:mm:ss") }}
-      </span>
+      <ClientOnly fallback-tag="span" :fallback="row.updated_at">
+        <span>
+          {{ dayjs(row.updated_at).format("YYYY-MM-DD HH:mm:ss") }}
+        </span>
+      </ClientOnly>
     </template>
     <template #actions-data="{ row }">
       <div class="flex gap-2">
