@@ -36,16 +36,13 @@ const tableColumns = [
       </UButton>
     </template>
     <template #ahead_by-data="{ row }">
-      <ClientOnly>
+      <ClientOnly fallback-tag="span" fallback="加载中...">
         <UBadge
           v-if="row.ahead_by !== undefined"
           :color="row.ahead_by! <= 0 ? 'green' : 'red'"
           :label="row.ahead_by! <= 0 ? '已同步最新' : `落后 ${row.ahead_by} 个提交`"
         />
         <UBadge v-else color="gray" label="加载中..." />
-        <template #fallback>
-          <UBadge color="gray" label="加载中..." />
-        </template>
       </ClientOnly>
     </template>
     <template #created_at-data="{ row }">
