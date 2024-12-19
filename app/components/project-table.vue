@@ -38,21 +38,11 @@ const tableColumns = [
     <template #ahead_by-data="{ row }">
       <ClientOnly>
         <UBadge
-          :color="
-            row.ahead_by !== undefined
-              ? row.ahead_by! > 0
-                ? 'red'
-                : 'green'
-              : 'gray'
-          "
-          :label="
-            row.ahead_by !== undefined
-            ? row.ahead_by! <= 0
-              ? '已同步最新'
-              : `落后 ${row.ahead_by} 个提交`
-            : '加载中...'
-        "
+          v-if="row.ahead_by !== undefined"
+          :color="row.ahead_by! <= 0 ? 'green' : 'red'"
+          :label="row.ahead_by! <= 0 ? '已同步最新' : `落后 ${row.ahead_by} 个提交`"
         />
+        <UBadge v-else color="gray" label="加载中..." />
         <template #fallback>
           <UBadge color="gray" label="加载中..." />
         </template>

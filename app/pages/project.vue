@@ -5,34 +5,26 @@ const projects = useState<GithubRepo[]>("projects", () => []);
 
 const compareResults = ref<Record<string, number>>({});
 
-const getFilteredProjects = (shouldTranslate: boolean) => {
-  return computed(() => {
-    return projects.value
-      .filter((project) => {
-        const config = _projects.find((p) => p.name === project.name);
-        return config?.translate === shouldTranslate;
-      })
-      .map((project) => ({
+const newProjects = computed(() => {
+  return projects.value
+    .map((project) => {
+      const target = _projects.find((p) => p.name === project.name);
+      return {
         ...project,
         ahead_by: compareResults.value[project.name] ?? undefined,
-      }))
-      .sort((a, b) => a.name.localeCompare(b.name));
-  });
-};
-
-const translateProjects = getFilteredProjects(true);
-const mirrorProjects = getFilteredProjects(false);
+        translate: target?.translate ?? false,
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+});
 
 const getCompare = async (repo: string) => {
   const data = await $fetch(`/api/project/compare?repo=${repo}`);
   compareResults.value[repo] = data?.ahead_by ?? 0;
 };
 
-onMounted(async () => {
-  translateProjects.value.forEach((project) => {
-    getCompare(project.name);
-  });
-  mirrorProjects.value.forEach((project) => {
+onMounted(() => {
+  newProjects.value.forEach((project) => {
     getCompare(project.name);
   });
 });
@@ -45,7 +37,9 @@ onMounted(async () => {
       <div class="text-gray-500 dark:text-gray-400 text-center px-8">
         以下项目由简中文档团队负责翻译和维护，定期与上游同步并保持更新
       </div>
-      <ProjectTable :rows="translateProjects" />
+      <ProjectTable
+        :rows="newProjects.filter((project) => project.translate)"
+      />
     </div>
 
     <div class="flex flex-col gap-8">
@@ -53,7 +47,9 @@ onMounted(async () => {
       <div class="text-gray-500 dark:text-gray-400 text-center px-8">
         以下项目仅作为镜像存储，定期同步上游仓库的翻译内容更新
       </div>
-      <ProjectTable :rows="mirrorProjects" />
+      <ProjectTable
+        :rows="newProjects.filter((project) => !project.translate)"
+      />
     </div>
   </div>
 </template>
