@@ -56,7 +56,7 @@
   },
   {
     "name": "nitro",
-    "sync": ["unjs/nitro", "main"],
+    "sync": ["nitrojs/nitro", "v2"],
     "translate": true
   },
   {
