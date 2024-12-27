@@ -93,5 +93,10 @@
     "name": "konva",
     "sync": ["konvajs/site", "master"],
     "translate": true
+  },
+  {
+    "name": "nuxt-i18n",
+    "sync": ["nuxt-modules/i18n", "main"],
+    "translate": true
   }
 ]
