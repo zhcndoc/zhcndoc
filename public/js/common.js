@@ -23,4 +23,4 @@ function loadGoogleAnalytics() {
 }
 
 loadUmami();
-loadGoogleAnalytics();
+// loadGoogleAnalytics();
