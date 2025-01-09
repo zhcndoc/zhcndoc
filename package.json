@@ -11,15 +11,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify-json/heroicons": "^1.2.2",
-    "@iconify-json/simple-icons": "^1.2.17",
-    "@nuxt/fonts": "^0.10.3",
-    "@nuxt/ui-pro": "^1.6.0",
-    "@octokit/types": "^13.6.2",
+    "@iconify-json/lucide": "^1.2.22",
+    "@nuxt/ui-pro": "3.0.0-alpha.10",
+    "@octokit/types": "^13.7.0",
     "dayjs": "^1.11.13",
-    "nuxt": "^3.14.1592",
-    "octokit": "^4.0.2",
-    "tailwindcss": "^3.4.17",
+    "nuxt": "^3.15.1",
+    "octokit": "^4.1.0",
     "vue": "^3.5.13"
   }
 }

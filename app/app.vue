@@ -9,10 +9,10 @@ const projects = useState<GithubRepo[]>("projects", () => []);
 
 projects.value = await $fetch<GithubRepo[]>("/api/project");
 
-const links = [
+const items = [
   {
     label: "项目",
-    icon: "i-heroicons-square-3-stack-3d",
+    icon: "lucide:layout-list",
     to: "/project",
   },
 ];
@@ -20,23 +20,22 @@ const links = [
 
 <template>
   <NuxtLoadingIndicator />
-  <UHeader :links="links">
-    <template #logo>
+  <UHeader>
+    <template #title>
       <div class="flex items-center gap-1 font-source-han-serif">
         <Logo class="h-6 w-6"></Logo>
         <div class="text-2xl">简中<span class="text-[#ff3f57]">文档</span></div>
       </div>
     </template>
-
+    <UNavigationMenu :items="items" />
     <template #right>
       <UColorModeButton />
-
       <UButton
-        icon="i-simple-icons-github"
         to="https://github.com/zhcndoc/zhcndoc"
         target="_blank"
-        color="gray"
         variant="ghost"
+        icon="lucide:github"
+        color="neutral"
       />
     </template>
   </UHeader>
@@ -78,5 +77,4 @@ const links = [
       </div>
     </template>
   </UFooter>
-  <UNotifications />
 </template>

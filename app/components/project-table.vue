@@ -3,82 +3,79 @@ import dayjs from "dayjs";
 import projects from "../../data/projects.json";
 
 defineProps<{
-  rows: GithubRepo[];
+  data: any[];
 }>();
 
 const tableColumns = [
-  { key: "name", label: "项目名称" },
-  { key: "homepage", label: "项目链接" },
-  { key: "ahead_by", label: "同步状态", sortable: true },
-  { key: "created_at", label: "创建时间", sortable: true },
-  { key: "updated_at", label: "更新时间", sortable: true },
-  { key: "actions", label: "操作" },
+  { accessorKey: "name", header: "项目名称" },
+  { accessorKey: "homepage", header: "项目链接" },
+  { accessorKey: "ahead_by", header: "同步状态", sortable: true },
+  { accessorKey: "created_at", header: "创建时间", sortable: true },
+  { accessorKey: "updated_at", header: "更新时间", sortable: true },
+  { accessorKey: "actions", header: "操作" },
 ];
 </script>
 
 <template>
-  <UTable :rows="rows" :columns="tableColumns">
-    <template #name-data="{ row }">
-      <UButton :to="row.homepage" target="_blank" variant="link" color="black">
-        {{ row.description }}
+  <UTable :data="data" :columns="tableColumns">
+    <template #name-cell="{ row }">
+      <UButton
+        :to="row.original.homepage!"
+        target="_blank"
+        variant="link"
+        color="neutral"
+      >
+        {{ row.original.description }}
       </UButton>
     </template>
-    <template #homepage-data="{ row }">
+    <template #homepage-cell="{ row }">
       <UButton
-        :to="row.homepage"
+        :to="row.original.homepage!"
         target="_blank"
-        icon="i-mdi-link-variant"
+        icon="lucide:external-link"
         variant="link"
-        color="black"
+        color="neutral"
         trailing
       >
-        {{ row.homepage }}
+        {{ row.original.homepage }}
       </UButton>
     </template>
-    <template #ahead_by-data="{ row }">
-      <ClientOnly>
-        <UBadge
-          v-if="row.ahead_by !== undefined"
-          :color="row.ahead_by! <= 0 ? 'green' : 'red'"
-          :label="row.ahead_by! <= 0 ? '已同步最新' : `落后 ${row.ahead_by} 个提交`"
-        />
-        <UBadge v-else color="gray" label="加载中..." />
-        <template #fallback>
-          <UBadge color="gray" label="加载中..." />
-        </template>
+    <template #ahead_by-cell="{ row }">
+      <UBadge
+        v-if="row.original.ahead_by !== undefined"
+        :color="row.original.ahead_by! <= 0 ? 'success' : 'error'"
+        :label="row.original.ahead_by! <= 0 ? '已同步最新' : `落后 ${row.original.ahead_by} 个提交`"
+        variant="subtle"
+      />
+      <UBadge v-else color="neutral" variant="subtle" label="加载中..." />
+    </template>
+    <template #created_at-cell="{ row }">
+      <ClientOnly :fallback="row.original.created_at">
+        {{ dayjs(row.original.created_at).format("YYYY-MM-DD HH:mm:ss") }}
       </ClientOnly>
     </template>
-    <template #created_at-data="{ row }">
-      <ClientOnly fallback-tag="span" :fallback="row.created_at">
-        <span>
-          {{ dayjs(row.created_at).format("YYYY-MM-DD HH:mm:ss") }}
-        </span>
+    <template #updated_at-cell="{ row }">
+      <ClientOnly :fallback="row.original.updated_at">
+        {{ dayjs(row.original.updated_at).format("YYYY-MM-DD HH:mm:ss") }}
       </ClientOnly>
     </template>
-    <template #updated_at-data="{ row }">
-      <ClientOnly fallback-tag="span" :fallback="row.updated_at">
-        <span>
-          {{ dayjs(row.updated_at).format("YYYY-MM-DD HH:mm:ss") }}
-        </span>
-      </ClientOnly>
-    </template>
-    <template #actions-data="{ row }">
+    <template #actions-cell="{ row }">
       <div class="flex gap-2">
         <UButton
-          :to="`https://github.com/zhcndoc/${row.name}`"
+          :to="`https://github.com/zhcndoc/${row.original.name}`"
           target="_blank"
           label="Git 仓库"
-          color="gray"
-          variant="solid"
+          color="neutral"
+          variant="soft"
         />
         <UButton
           :to="`https://github.com/${
-            projects.find((p) => p.name === row.name)?.sync[0]
+            projects.find((p) => p.name === row.original.name)?.sync[0]
           }`"
           target="_blank"
           label="上游仓库"
-          color="gray"
-          variant="solid"
+          color="neutral"
+          variant="soft"
         />
       </div>
     </template>

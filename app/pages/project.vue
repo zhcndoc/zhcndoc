@@ -38,7 +38,7 @@ onMounted(() => {
         以下项目由简中文档团队负责翻译和维护，定期与上游同步并保持更新
       </div>
       <ProjectTable
-        :rows="newProjects.filter((project) => project.translate)"
+        :data="newProjects.filter((project) => project.translate)"
       />
     </div>
 
@@ -48,7 +48,7 @@ onMounted(() => {
         以下项目仅作为镜像存储，定期同步上游仓库的翻译内容更新
       </div>
       <ProjectTable
-        :rows="newProjects.filter((project) => !project.translate)"
+        :data="newProjects.filter((project) => !project.translate)"
       />
     </div>
   </div>
