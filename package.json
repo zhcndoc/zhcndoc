@@ -2,7 +2,7 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.14.2",
+  "packageManager": "pnpm@9.15.3",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -18,5 +18,9 @@
     "nuxt": "^3.15.1",
     "octokit": "^4.1.0",
     "vue": "^3.5.13"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }
