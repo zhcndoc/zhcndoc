@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import _projects from "../../data/projects.json";
+import _projects from '@/assets/projects.json'
 
-const projects = useState<GithubRepo[]>("projects", () => []);
+const projects = useState<GithubRepo[]>('projects', () => [])
 
-const compareResults = ref<Record<string, number>>({});
+const compareResults = ref<Record<string, number>>({})
 
 const newProjects = computed(() => {
   return projects.value
     .map((project) => {
-      const target = _projects.find((p) => p.name === project.name);
+      const target = _projects.find((p) => p.name === project.name)
       return {
         ...project,
         ahead_by: compareResults.value[project.name] ?? undefined,
         translate: target?.translate ?? false,
-      };
+      }
     })
-    .sort((a, b) => a.name.localeCompare(b.name));
-});
+    .sort((a, b) => a.name.localeCompare(b.name))
+})
 
 const getCompare = async (repo: string) => {
-  const data = await $fetch(`/api/project/compare?repo=${repo}`);
-  compareResults.value[repo] = data?.ahead_by ?? 0;
-};
+  const data = await $fetch(`/api/project/compare?repo=${repo}`)
+  compareResults.value[repo] = data?.ahead_by ?? 0
+}
 
 onMounted(() => {
   newProjects.value.forEach((project) => {
-    getCompare(project.name);
-  });
-});
+    getCompare(project.name)
+  })
+})
 </script>
 
 <template>

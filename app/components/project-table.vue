@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import dayjs from "dayjs";
-import projects from "../../data/projects.json";
+import dayjs from 'dayjs'
+import projects from '@/assets/projects.json'
 
 defineProps<{
-  data: any[];
-}>();
+  data: any[]
+}>()
 
 const tableColumns = [
-  { accessorKey: "name", header: "项目名称" },
-  { accessorKey: "homepage", header: "项目链接" },
-  { accessorKey: "ahead_by", header: "同步状态", sortable: true },
-  { accessorKey: "created_at", header: "创建时间", sortable: true },
-  { accessorKey: "updated_at", header: "更新时间", sortable: true },
-  { accessorKey: "actions", header: "操作" },
-];
+  { accessorKey: 'name', header: '项目名称' },
+  { accessorKey: 'homepage', header: '项目链接' },
+  { accessorKey: 'ahead_by', header: '同步状态', sortable: true },
+  { accessorKey: 'created_at', header: '创建时间', sortable: true },
+  { accessorKey: 'updated_at', header: '更新时间', sortable: true },
+  { accessorKey: 'actions', header: '操作' },
+]
 </script>
 
 <template>
@@ -51,12 +51,12 @@ const tableColumns = [
     </template>
     <template #created_at-cell="{ row }">
       <ClientOnly :fallback="row.original.created_at">
-        {{ dayjs(row.original.created_at).format("YYYY-MM-DD HH:mm:ss") }}
+        {{ dayjs(row.original.created_at).format('YYYY-MM-DD HH:mm:ss') }}
       </ClientOnly>
     </template>
     <template #updated_at-cell="{ row }">
       <ClientOnly :fallback="row.original.updated_at">
-        {{ dayjs(row.original.updated_at).format("YYYY-MM-DD HH:mm:ss") }}
+        {{ dayjs(row.original.updated_at).format('YYYY-MM-DD HH:mm:ss') }}
       </ClientOnly>
     </template>
     <template #actions-cell="{ row }">

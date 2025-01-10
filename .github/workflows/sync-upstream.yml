@@ -2,7 +2,7 @@ name: Sync Upstream
 
 on:
   schedule:
-    - cron: "0 0/8 * * *"
+    - cron: '0 0/8 * * *'
   workflow_dispatch:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
 
       - id: set-matrix
         run: |
-          content=$(cat data/projects.json)
+          content=$(cat app/assets/projects.json)
           echo "matrix=$(echo $content | jq -c '{include: map({name: .name, upstream: .sync[0], branch: .sync[1]})}' )" >> $GITHUB_OUTPUT
 
   sync:
@@ -32,7 +32,7 @@ jobs:
         uses: ikxin/sync-upstream@main
         with:
           github_token: ${{ secrets.SYNC_TOKEN }}
-          target_repository: "zhcndoc/${{ matrix.name }}"
-          target_branch: "upstream"
-          upstream_repository: "${{ matrix.upstream }}"
-          upstream_branch: "${{ matrix.branch }}"
+          target_repository: 'zhcndoc/${{ matrix.name }}'
+          target_branch: 'upstream'
+          upstream_repository: '${{ matrix.upstream }}'
+          upstream_branch: '${{ matrix.branch }}'
