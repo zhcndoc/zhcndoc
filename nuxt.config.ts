@@ -8,7 +8,10 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui-pro'],
 
   css: ['~/assets/css/main.css'],
-  ui: {
-    fonts: false,
+  fonts: {
+    provider: 'local',
+    experimental: {
+      processCSSVariables: true,
+    },
   },
-});
+})
