@@ -1,7 +1,2 @@
 @import 'tailwindcss';
 @import '@nuxt/ui-pro';
-
-@font-face {
-  font-family: header-logo;
-  src: url(/fonts/header-logo.woff);
-}
