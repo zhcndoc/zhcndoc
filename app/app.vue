@@ -1,7 +1,6 @@
 <script setup lang="ts">
 useHead({
   title: '简中文档 - 由开源社区提供支持的中文技术文档',
-  titleTemplate: '%s - 简中文档',
   meta: [
     {
       name: 'description',
@@ -27,7 +26,7 @@ const items = [
 
 <template>
   <NuxtLoadingIndicator />
-  <UHeader>
+  <UHeader title="简中文档">
     <template #title>
       <div class="flex items-center gap-1 font-[logo]">
         <Logo class="h-6 w-6"></Logo>
@@ -38,6 +37,7 @@ const items = [
     <template #right>
       <UColorModeButton />
       <UButton
+        aria-label="GitHub"
         to="https://github.com/zhcndoc/zhcndoc"
         target="_blank"
         variant="ghost"

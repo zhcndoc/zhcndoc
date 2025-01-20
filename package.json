@@ -11,11 +11,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.22",
-    "@nuxt/ui-pro": "3.0.0-alpha.10",
+    "@iconify-json/lucide": "^1.2.24",
+    "@nuxt/ui-pro": "3.0.0-alpha.11",
+    "@nuxtjs/i18n": "9.1.1",
     "@octokit/types": "^13.7.0",
     "dayjs": "^1.11.13",
-    "nuxt": "^3.15.1",
+    "nuxt": "^3.15.2",
     "octokit": "^4.1.0",
     "vue": "^3.5.13"
   },
