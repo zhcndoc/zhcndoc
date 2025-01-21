@@ -1,17 +1,37 @@
 <script setup lang="ts">
+import type { TableColumn } from '@nuxt/ui'
 import dayjs from 'dayjs'
 import projects from '@/assets/projects.json'
+
+const UButton = resolveComponent('UButton')
 
 defineProps<{
   data: any[]
 }>()
 
-const tableColumns = [
+const tableColumns: TableColumn<any>[] = [
   { accessorKey: 'name', header: '项目名称' },
   { accessorKey: 'homepage', header: '项目链接' },
-  { accessorKey: 'ahead_by', header: '同步状态', sortable: true },
-  { accessorKey: 'created_at', header: '创建时间', sortable: true },
-  { accessorKey: 'updated_at', header: '更新时间', sortable: true },
+  {
+    accessorKey: 'ahead_by',
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted()
+      return h(UButton, {
+        color: 'neutral',
+        variant: 'ghost',
+        label: '同步状态',
+        'trailing-icon': isSorted
+          ? isSorted === 'asc'
+            ? 'lucide:arrow-up-narrow-wide'
+            : 'lucide:arrow-down-wide-narrow'
+          : 'lucide:arrow-up-down',
+        class: '-mx-2.5',
+        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+      })
+    },
+  },
+  { accessorKey: 'created_at', header: '创建时间' },
+  { accessorKey: 'updated_at', header: '更新时间' },
   { accessorKey: 'actions', header: '操作' },
 ]
 </script>
