@@ -5,7 +5,7 @@
     "translate": true
   },
   {
-    "name": "drizzle", 
+    "name": "drizzle",
     "sync": ["drizzle-team/drizzle-orm-docs", "main"],
     "translate": true
   },
@@ -97,6 +97,11 @@
   {
     "name": "nuxt-i18n",
     "sync": ["nuxt-modules/i18n", "main"],
+    "translate": true
+  },
+  {
+    "name": "deno",
+    "sync": ["denoland/docs", "main"],
     "translate": true
   }
 ]
