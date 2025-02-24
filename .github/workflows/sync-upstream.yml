@@ -15,9 +15,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: set-matrix
+        name: Set matrix
         run: |
-          content=$(cat app/assets/projects.json)
-          echo "matrix=$(echo $content | jq -c '{include: map({name: .name, upstream: .sync[0], branch: .sync[1]})}' )" >> $GITHUB_OUTPUT
+          matrix=$(yq -o=json '.projects[] | {"name": .name, "upstream": .upstream.repo, "branch": .upstream.branch}' shared/config.yaml | jq -s | jq '{include: .}' -c)
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
   sync:
     needs: prepare
