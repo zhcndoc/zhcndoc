@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import _projects from '@/assets/projects.json'
+import config from '#shared/config.yaml'
 
 const projects = useState<GithubRepo[]>('projects', () => [])
 
@@ -8,7 +8,7 @@ const compareResults = ref<Record<string, number>>({})
 const newProjects = computed(() => {
   return projects.value
     .map((project) => {
-      const target = _projects.find((p) => p.name === project.name)
+      const target = config.projects.find((p) => p.name === project.name)
       return {
         ...project,
         ahead_by: compareResults.value[project.name] ?? undefined,

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import config from '#shared/config.yaml'
 import type { TableColumn } from '@nuxt/ui'
 import dayjs from 'dayjs'
-import projects from '@/assets/projects.json'
+
+const { projects } = config
 
 const UButton = resolveComponent('UButton')
 
@@ -90,7 +92,7 @@ const tableColumns: TableColumn<any>[] = [
         />
         <UButton
           :to="`https://github.com/${
-            projects.find((p) => p.name === row.original.name)?.sync[0]
+            projects.find((p) => p.name === row.original.name)?.upstream.repo
           }`"
           target="_blank"
           label="上游仓库"
