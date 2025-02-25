@@ -25,7 +25,7 @@ projects.value = await $fetch<GithubRepo[]>('/api/project')
 const items = [
   {
     label: '项目',
-    icon: 'lucide:layout-list',
+    icon: 'tabler:list-details',
     to: '/project',
   },
 ]
@@ -39,13 +39,17 @@ const items = [
     </template>
     <UNavigationMenu :items="items" />
     <template #right>
-      <UColorModeButton />
+      <UColorModeButton>
+        <template #fallback>
+          <UButton loading variant="ghost" color="neutral" />
+        </template>
+      </UColorModeButton>
       <UButton
         aria-label="GitHub"
         to="https://github.com/zhcndoc/zhcndoc"
         target="_blank"
         variant="ghost"
-        icon="lucide:github"
+        icon="tabler:brand-github"
         color="neutral"
       />
     </template>

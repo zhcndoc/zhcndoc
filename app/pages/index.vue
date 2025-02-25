@@ -14,7 +14,7 @@
       </template>
       <template #links>
         <UButton
-          icon="lucide:github"
+          icon="tabler:brand-github"
           to="https://github.com/zhcndoc"
           target="_blank"
           variant="soft"
@@ -24,7 +24,7 @@
           Github
         </UButton>
         <UButton
-          icon="lucide:layout-list"
+          icon="tabler:list-details"
           to="/project"
           variant="soft"
           color="neutral"

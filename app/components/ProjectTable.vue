@@ -24,9 +24,9 @@ const tableColumns: TableColumn<any>[] = [
         label: '同步状态',
         'trailing-icon': isSorted
           ? isSorted === 'asc'
-            ? 'lucide:arrow-up-narrow-wide'
-            : 'lucide:arrow-down-wide-narrow'
-          : 'lucide:arrow-up-down',
+            ? 'tabler:sort-ascending'
+            : 'tabler:sort-descending'
+          : 'tabler:arrows-sort',
         class: '-mx-2.5',
         onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
       })
@@ -54,7 +54,7 @@ const tableColumns: TableColumn<any>[] = [
       <UButton
         :to="row.original.homepage!"
         target="_blank"
-        icon="lucide:external-link"
+        icon="tabler:external-link"
         variant="link"
         color="neutral"
         trailing
