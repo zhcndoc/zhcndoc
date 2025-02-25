@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ['@nuxt/ui-pro', '@nuxtjs/i18n'],
+  modules: ['@nuxt/ui-pro'],
 
   css: ['~/assets/css/main.css'],
   fonts: {
@@ -23,19 +23,6 @@ export default defineNuxtConfig({
     experimental: {
       processCSSVariables: true,
     },
-  },
-  i18n: {
-    baseUrl: 'https://www.zhcndoc.com',
-    defaultLocale: 'zh-cn',
-    locales: [
-      {
-        code: 'zh-cn',
-        language: 'zh-CN',
-        file: 'zh-cn.json',
-        icon: 'cn',
-        name: '简体中文',
-      },
-    ],
   },
   icon: {
     customCollections: [
