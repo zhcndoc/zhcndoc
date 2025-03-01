@@ -104,3 +104,8 @@ projects:
     upstream:
       repo: denoland/docs
       branch: main
+  - name: tailwindcss
+    translate: true
+    upstream:
+      repo: tailwindlabs/tailwindcss.com
+      branch: main
