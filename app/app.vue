@@ -55,7 +55,7 @@ const items = [
     </template>
   </UHeader>
 
-  <UMain>
+  <UMain class="px-4 container mx-auto xl:max-w-7xl">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -75,6 +75,7 @@ const items = [
       <div
         class="text-gray-500 dark:text-gray-400 text-sm flex flex-col items-center lg:flex-row lg:gap-3 gap-1"
       >
+        <Icon name="icon:miit" />
         <NuxtLink
           to="https://beian.miit.gov.cn/#/Integrated/index"
           target="_blank"
@@ -82,6 +83,7 @@ const items = [
         >
           沪ICP备2024070610号-3
         </NuxtLink>
+        <Icon name="icon:mps" />
         <NuxtLink
           to="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44200002445480"
           target="_blank"

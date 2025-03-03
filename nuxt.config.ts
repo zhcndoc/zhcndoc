@@ -28,6 +28,7 @@ export default defineNuxtConfig({
     clientBundle: {
       scan: true,
       includeCustomCollections: true,
+      sizeLimitKb: 1024,
     },
     customCollections: [
       {
