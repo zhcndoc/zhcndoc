@@ -1,5 +1,9 @@
 export default defineAppConfig({
   ui: {
+    colors: {
+      primary: 'blue',
+      neutral: 'gray',
+    },
     icons: {
       // @ts-ignore
       dark: 'tabler:moon',
