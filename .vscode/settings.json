@@ -1,4 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "eslint.useFlatConfig": true
+  "editor.quickSuggestions": { "strings": "on" },
+  "eslint.useFlatConfig": true,
+  "files.associations": { "*.css": "tailwindcss" }
 }
