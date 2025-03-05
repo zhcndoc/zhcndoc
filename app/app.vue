@@ -55,7 +55,7 @@ const items = [
     </template>
   </UHeader>
 
-  <UMain class="px-4 container mx-auto xl:max-w-7xl">
+  <UMain class="container mx-auto px-4 xl:max-w-7xl">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -63,7 +63,7 @@ const items = [
 
   <UFooter>
     <template #left>
-      <p class="text-gray-500 dark:text-gray-400 text-sm">
+      <p class="text-sm text-gray-500 dark:text-gray-400">
         Copyright © {{ new Date().getFullYear() }}
         <NuxtLink to="https://www.zhcndoc.com" class="hover:text-primary">
           简中文档
@@ -73,7 +73,7 @@ const items = [
 
     <template #right>
       <div
-        class="text-gray-500 dark:text-gray-400 text-sm flex flex-col items-center lg:flex-row lg:gap-3 gap-1"
+        class="flex flex-col items-center gap-1 text-sm text-gray-500 lg:flex-row lg:gap-3 dark:text-gray-400"
       >
         <Icon name="icon:miit" />
         <NuxtLink

@@ -2,23 +2,23 @@
 
 <template>
   <section
-    class="lg:pt-40 lg:pb-52 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-14 xl:gap-8 my-16 lg:my-0"
+    class="my-16 flex flex-col gap-14 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:pt-40 lg:pb-52 xl:gap-8"
   >
     <div
-      class="max-w-screen-sm mx-auto lg:ml-6 lg:mr-auto lg:max-w-3xl flex flex-col items-center lg:items-start gap-6 text-center lg:text-start"
+      class="mx-auto flex max-w-screen-sm flex-col items-center gap-6 text-center lg:mr-auto lg:ml-6 lg:max-w-3xl lg:items-start lg:text-start"
     >
       <div class="flex flex-col gap-2">
         <h1
-          class="text-gray-950 dark:text-gray-50 text-[2.75rem] font-black tracking-wide leading-normal font-serif"
+          class="font-serif text-[2.75rem] leading-normal font-black tracking-wide text-gray-950 dark:text-gray-50"
         >
           由
-          <span class="text-[1.2em] text-primary-500">社区</span>
+          <span class="text-primary-500 text-[1.2em]">社区</span>
           提供支持的
           <br />
-          <span class="text-[1.2em] text-primary-500">中文技术文档</span>
+          <span class="text-primary-500 text-[1.2em]">中文技术文档</span>
         </h1>
         <p
-          class="text-gray-500 dark:text-gray-400 text-xl md:text-[1.5rem] leading-normal"
+          class="text-xl leading-normal text-gray-500 md:text-[1.5rem] dark:text-gray-400"
         >
           旨在为中文地区开发者提供优质的技术文档查阅体验
         </p>
@@ -35,6 +35,6 @@
         </UButton>
       </div>
     </div>
-    <div class="relative flex justify-center shrink-0"></div>
+    <div class="relative flex shrink-0 justify-center"></div>
   </section>
 </template>

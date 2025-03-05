@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ['@nuxt/ui-pro'],
+  modules: ['@nuxt/ui-pro', '@nuxt/eslint'],
 
   css: ['~/assets/css/main.css'],
   fonts: {
