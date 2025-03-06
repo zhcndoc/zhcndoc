@@ -55,7 +55,7 @@ const items = [
     </template>
   </UHeader>
 
-  <UMain class="container mx-auto px-4 xl:max-w-7xl">
+  <UMain>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
