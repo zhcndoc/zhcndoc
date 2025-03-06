@@ -3,7 +3,13 @@
 <template>
   <Html lang="zh-CN" dir="ltr">
     <Body>
-      <slot></slot>
+      <AppHeader />
+
+      <UMain class="mt-[var(--ui-header-height)]">
+        <slot></slot>
+      </UMain>
+
+      <AppFooter />
     </Body>
   </Html>
 </template>

@@ -144,8 +144,8 @@ const comments = [
     </UPageHero>
 
     <UPageSection
-      title="社区用户的真实评价"
-      description="来自社区用户的真实使用体验与评价反馈，感谢每一位用户的支持与建议"
+      title="社区用户评价"
+      description="来自社区用户的使用体验与评价反馈，感谢每一位用户的支持与建议"
     >
       <UPageColumns class="xl:columns-4">
         <UPageCard
