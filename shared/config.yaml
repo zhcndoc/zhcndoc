@@ -109,3 +109,13 @@ projects:
     upstream:
       repo: tailwindlabs/tailwindcss.com
       branch: main
+  - name: sharp
+    translate: true
+    upstream:
+      repo: lovell/sharp
+      branch: main
+  - name: react
+    translate: false
+    upstream:
+      repo: reactjs/zh-hans.react.dev
+      branch: main
