@@ -2,7 +2,7 @@ name: Sync Upstream
 
 on:
   schedule:
-    - cron: '0 0/8 * * *'
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
       - id: set-matrix
         name: Set matrix
         run: |
-          matrix=$(yq -o=json '.projects[] | {"name": .name, "upstream": .upstream.repo, "branch": .upstream.branch}' shared/config.yaml | jq -s | jq '{include: .}' -c)
+          matrix=$(yq -o=json '.[] | {"name": .name, "owner": .upstream.owner, "repo": .upstream.repo, "branch": .upstream.branch}' shared/projects.yaml | jq -s | jq '{include: .}' -c)
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
   sync:
@@ -35,5 +35,5 @@ jobs:
           github_token: ${{ secrets.SYNC_TOKEN }}
           target_repository: 'zhcndoc/${{ matrix.name }}'
           target_branch: 'upstream'
-          upstream_repository: '${{ matrix.upstream }}'
+          upstream_repository: '${{ matrix.owner }}/${{ matrix.repo }}'
           upstream_branch: '${{ matrix.branch }}'
