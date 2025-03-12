@@ -1,161 +1,161 @@
 - name: elysia
-  translate: true
+  type: translate
   upstream:
     owner: elysiajs
     repo: documentation
     branch: main
 - name: drizzle
-  translate: true
+  type: translate
   upstream:
     owner: drizzle-team
     repo: drizzle-orm-docs
     branch: main
 - name: vueuse
-  translate: true
+  type: translate
   upstream:
     owner: vueuse
     repo: vueuse
     branch: main
 - name: unocss
-  translate: true
+  type: translate
   upstream:
     owner: unocss
     repo: unocss
     branch: main
 - name: shiki
-  translate: true
+  type: translate
   upstream:
     owner: shikijs
     repo: shiki
     branch: main
 - name: vitest
-  translate: false
+  type: mirror
   upstream:
     owner: vitest-dev
     repo: docs-cn
     branch: dev
 - name: umami
-  translate: true
+  type: translate
   upstream:
     owner: umami-software
     repo: website
     branch: master
 - name: astro
-  translate: false
+  type: mirror
   upstream:
     owner: withastro
     repo: docs
     branch: main
 - name: nuxt-color-mode
-  translate: true
+  type: translate
   upstream:
     owner: nuxt-modules
     repo: color-mode
     branch: main
 - name: vue
-  translate: false
+  type: mirror
   upstream:
     owner: vuejs-translations
     repo: docs-zh-cn
     branch: main
 - name: unjs
-  translate: true
+  type: translate
   upstream:
     owner: unjs
     repo: website
     branch: main
 - name: nitro
-  translate: true
+  type: translate
   upstream:
     owner: nitrojs
     repo: nitro
     branch: v2
 - name: h3
-  translate: true
+  type: translate
   upstream:
     owner: unjs
     repo: h3
     branch: main
 - name: nuxt
-  translate: true
+  type: translate
   upstream:
     owner: nuxt
     repo: nuxt.com
     branch: main
 - name: nuxt-docs
-  translate: true
+  type: translate
   upstream:
     owner: nuxt
     repo: nuxt
     branch: main
 - name: nuxt-examples
-  translate: true
+  type: translate
   upstream:
     owner: nuxt
     repo: examples
     branch: main
 - name: vite
-  translate: false
+  type: mirror
   upstream:
     owner: vitejs
     repo: docs-cn
     branch: main
 - name: vitepress
-  translate: false
+  type: mirror
   upstream:
     owner: vuejs
     repo: vitepress
     branch: main
 - name: konva
-  translate: true
+  type: translate
   upstream:
     owner: konvajs
     repo: site
     branch: master
 - name: nuxt-i18n
-  translate: true
+  type: translate
   upstream:
     owner: nuxt-modules
     repo: i18n
     branch: main
 - name: deno
-  translate: true
+  type: translate
   upstream:
     owner: denoland
     repo: docs
     branch: main
 - name: tailwindcss
-  translate: true
+  type: translate
   upstream:
     owner: tailwindlabs
     repo: tailwindcss.com
     branch: main
 - name: sharp
-  translate: true
+  type: translate
   upstream:
     owner: lovell
     repo: sharp
     branch: main
 - name: react
-  translate: false
+  type: mirror
   upstream:
     owner: reactjs
     repo: zh-hans.react.dev
     branch: main
 - name: node
-  translate: false
+  type: mirror
   upstream:
     owner: nodejs
     repo: nodejs.org
     branch: main
 - name: shadcn
-  translate: false
+  type: translate
   upstream:
     owner: shadcn-ui
     repo: ui
     branch: main
 - name: radix
-  translate: false
+  type: translate
   upstream:
     owner: radix-ui
     repo: website

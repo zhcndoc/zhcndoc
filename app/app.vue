@@ -18,9 +18,9 @@ useHead({
   script: [{ src: '/js/common.js', async: true }],
 })
 
-const projects = useState<GithubRepo[]>('projects', () => [])
+// const projects = useState<GithubRepo[]>('projects', () => [])
 
-projects.value = await $fetch<GithubRepo[]>('/api/project')
+// projects.value = await $fetch<GithubRepo[]>('/api/project')
 </script>
 
 <template>

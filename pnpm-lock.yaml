@@ -47,6 +47,9 @@ importers:
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.2)
+      yaml:
+        specifier: ^2.7.0
+        version: 2.7.0
 
 packages:
 
