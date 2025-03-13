@@ -4,6 +4,7 @@ import type { Column } from '@tanstack/vue-table'
 
 const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
+const UTooltip = resolveComponent('UTooltip')
 
 defineProps<{ data: ProjectData[] }>()
 
@@ -13,25 +14,12 @@ const tableColumns: TableColumn<ProjectData>[] = [
     header: '项目',
     cell({ row }) {
       return h(UButton, {
-        to: row.original.url,
-        target: '_blank',
-        variant: 'link',
         color: 'neutral',
         label: row.original.title,
-      })
-    },
-  },
-  {
-    accessorKey: 'link',
-    header: '链接',
-    cell({ row }) {
-      return h(UButton, {
-        to: row.original.url,
         target: '_blank',
+        to: row.original.url,
         trailingIcon: 'tabler:external-link',
-        variant: 'link',
-        color: 'neutral',
-        label: row.original.url,
+        variant: 'ghost',
       })
     },
   },
@@ -43,7 +31,7 @@ const tableColumns: TableColumn<ProjectData>[] = [
         case 'translate':
           return h(UBadge, {
             color: 'info',
-            icon: 'tabler:file-text',
+            icon: 'tabler:pencil-code',
             label: '翻译',
             variant: 'solid',
           })
@@ -199,22 +187,38 @@ const tableColumns: TableColumn<ProjectData>[] = [
       },
     }) {
       return h('div', { class: 'flex gap-2 justify-center' }, [
-        h(UButton, {
-          color: 'neutral',
-          icon: 'tabler:brand-github',
-          label: '仓库',
-          target: '_blank',
-          to: `https://github.com/zhcndoc/${name}`,
-          variant: 'soft',
-        }),
-        h(UButton, {
-          color: 'neutral',
-          icon: 'tabler:brand-github',
-          label: '上游',
-          target: '_blank',
-          to: `https://github.com/${upstream.owner}/${upstream.repo}`,
-          variant: 'soft',
-        }),
+        h(
+          UTooltip,
+          {
+            arrow: true,
+            delayDuration: 100,
+            text: '查看项目',
+          },
+          () =>
+            h(UButton, {
+              color: 'neutral',
+              icon: 'tabler:brand-github',
+              target: '_blank',
+              to: `https://github.com/zhcndoc/${name}`,
+              variant: 'soft',
+            }),
+        ),
+        h(
+          UTooltip,
+          {
+            arrow: true,
+            delayDuration: 100,
+            text: '上游仓库',
+          },
+          () =>
+            h(UButton, {
+              color: 'neutral',
+              icon: 'tabler:git-pull-request',
+              target: '_blank',
+              to: `https://github.com/${upstream.owner}/${upstream.repo}`,
+              variant: 'soft',
+            }),
+        ),
       ])
     },
   },
