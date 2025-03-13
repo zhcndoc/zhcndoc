@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
+import type { Column } from '@tanstack/vue-table'
 
 const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
@@ -9,7 +10,7 @@ defineProps<{ data: ProjectData[] }>()
 const tableColumns: TableColumn<ProjectData>[] = [
   {
     accessorKey: 'title',
-    header: '项目名称',
+    header: '项目',
     cell({ row }) {
       return h(UButton, {
         to: row.original.url,
@@ -22,7 +23,7 @@ const tableColumns: TableColumn<ProjectData>[] = [
   },
   {
     accessorKey: 'link',
-    header: '项目链接',
+    header: '链接',
     cell({ row }) {
       return h(UButton, {
         to: row.original.url,
@@ -38,67 +39,118 @@ const tableColumns: TableColumn<ProjectData>[] = [
     accessorKey: 'type',
     header: '类型',
     cell({ row }) {
-      return row.original.type
+      switch (row.original.type) {
+        case 'translate':
+          return h(UBadge, {
+            color: 'info',
+            icon: 'tabler:file-text',
+            label: '翻译',
+            variant: 'solid',
+          })
+        case 'mirror':
+          return h(UBadge, {
+            color: 'warning',
+            icon: 'tabler:copy',
+            label: '镜像',
+            variant: 'solid',
+          })
+        default:
+          return '无'
+      }
     },
   },
   {
     accessorKey: 'license',
-    header: '许可证',
+    header: '开源协议',
     cell({ row }) {
-      return row.original.license
+      switch (row.original.license) {
+        case 'Apache License 2.0':
+          return 'Apache License 2.0'
+        case 'MIT License':
+          return 'MIT License'
+        case 'Creative Commons Attribution 4.0 International':
+          return 'CC BY 4.0'
+        case 'Other':
+          return '其他'
+        default:
+          return '无'
+      }
     },
   },
   {
     accessorKey: 'stars',
-    header: '星标',
+    header: ({ column }) => {
+      return getHeader(column, 'Star')
+    },
     cell({ row }) {
-      return row.original.stars
+      return h(UBadge, {
+        color: 'neutral',
+        icon: 'tabler:star',
+        label: row.original.stars.toString(),
+        variant: 'soft',
+      })
     },
   },
   {
     accessorKey: 'forks',
-    header: '分叉',
+    header: ({ column }) => {
+      return getHeader(column, 'Fork')
+    },
     cell({ row }) {
-      return row.original.forks
+      return h(UBadge, {
+        color: 'neutral',
+        icon: 'tabler:git-fork',
+        label: row.original.forks.toString(),
+        variant: 'soft',
+      })
     },
   },
   {
     accessorKey: 'watchers',
-    header: '关注者',
+    header: ({ column }) => {
+      return getHeader(column, 'Wtach')
+    },
     cell({ row }) {
-      return row.original.watchers
+      return h(UBadge, {
+        color: 'neutral',
+        icon: 'tabler:eyeglass',
+        label: row.original.watchers.toString(),
+        variant: 'soft',
+      })
     },
   },
   {
     accessorKey: 'openIssues',
-    header: '问题',
+    header: ({ column }) => {
+      return getHeader(column, 'Issue')
+    },
     cell({ row }) {
-      return row.original.openIssues
+      return h(UBadge, {
+        color: 'neutral',
+        icon: 'tabler:message',
+        label: row.original.openIssues.toString(),
+        variant: 'soft',
+      })
     },
   },
   {
     accessorKey: 'openPullRequests',
-    header: '拉取请求',
+    header: ({ column }) => {
+      return getHeader(column, 'Pull')
+    },
     cell({ row }) {
-      return row.original.openPullRequests
+      return h(UBadge, {
+        color: 'neutral',
+        icon: 'tabler:git-pull-request',
+        label: row.original.openPullRequests.toString(),
+        variant: 'soft',
+      })
     },
   },
   {
     accessorKey: 'newCommit',
     header: ({ column }) => {
-      const isSorted = column.getIsSorted()
-      return h(UButton, {
-        color: 'neutral',
-        variant: 'ghost',
-        label: '同步状态',
-        'trailing-icon': isSorted
-          ? isSorted === 'asc'
-            ? 'tabler:sort-ascending'
-            : 'tabler:sort-descending'
-          : 'tabler:arrows-sort',
-        class: '-mx-2.5',
-        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-      })
+      return getHeader(column, '同步状态')
     },
     cell({
       row: {
@@ -122,14 +174,18 @@ const tableColumns: TableColumn<ProjectData>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: '创建时间',
+    header: ({ column }) => {
+      return getHeader(column, '创建时间')
+    },
     cell({ row }) {
       return new Date(row.getValue('createdAt')).toLocaleString('zh-CN')
     },
   },
   {
     accessorKey: 'updatedAt',
-    header: '更新时间',
+    header: ({ column }) => {
+      return getHeader(column, '更新时间')
+    },
     cell({ row }) {
       return new Date(row.getValue('updatedAt')).toLocaleString('zh-CN')
     },
@@ -144,23 +200,49 @@ const tableColumns: TableColumn<ProjectData>[] = [
     }) {
       return h('div', { class: 'flex gap-2 justify-center' }, [
         h(UButton, {
-          to: `https://github.com/zhcndoc/${name}`,
-          target: '_blank',
-          label: 'Git 仓库',
           color: 'neutral',
+          icon: 'tabler:brand-github',
+          label: '仓库',
+          target: '_blank',
+          to: `https://github.com/zhcndoc/${name}`,
           variant: 'soft',
         }),
         h(UButton, {
-          to: `https://github.com/${upstream.owner}/${upstream.repo}`,
-          target: '_blank',
-          label: '上游仓库',
           color: 'neutral',
+          icon: 'tabler:brand-github',
+          label: '上游',
+          target: '_blank',
+          to: `https://github.com/${upstream.owner}/${upstream.repo}`,
           variant: 'soft',
         }),
       ])
     },
   },
 ]
+
+const getHeader = (column: Column<ProjectData>, label: string) => {
+  const isSorted = column.getIsSorted()
+  return h(UButton, {
+    label,
+    variant: 'ghost',
+    color: 'neutral',
+    trailingIcon: isSorted
+      ? isSorted === 'asc'
+        ? 'tabler:sort-ascending'
+        : 'tabler:sort-descending'
+      : 'tabler:arrows-sort',
+    class: '-mx-2.5',
+    onClick: () => {
+      if (isSorted === false) {
+        column.toggleSorting(true)
+      } else if (isSorted === 'desc') {
+        column.toggleSorting(false)
+      } else {
+        column.clearSorting()
+      }
+    },
+  })
+}
 </script>
 
 <template>
@@ -168,7 +250,7 @@ const tableColumns: TableColumn<ProjectData>[] = [
     :data="data"
     :columns="tableColumns"
     :ui="{
-      th: 'text-center',
+      th: 'text-center text-nowrap',
       td: 'text-center',
     }"
   />
