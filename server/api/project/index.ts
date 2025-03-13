@@ -1,27 +1,27 @@
 import projects from '~~/.nuxt/projects.json'
 
-type Result = {
+type GraphqlResult = {
   organization: {
     repositories: {
-      pageInfo: {
-        hasNextPage: boolean
-        endCursor: string | null
-      }
       nodes: {
         name: string
-        homepageUrl: string | null
-        description: string | null
-        stargazerCount: number
-        forkCount: number
+        title: string | null
+        url: string | null
+        license: { name: string } | null
+        stars: number
+        forks: number
         watchers: { totalCount: number }
         openIssues: { totalCount: number }
         issues: { totalCount: number }
         openPullRequests: { totalCount: number }
         pullRequests: { totalCount: number }
-        pushedAt: string
-        createdAt: string
         updatedAt: string
+        createdAt: string
       }[]
+      pageInfo: {
+        hasNextPage: boolean
+        endCursor: string | null
+      }
     }
   }
 }
@@ -31,23 +31,24 @@ export default defineCachedEventHandler(
     const query = `query ($after: String) {
       organization(login: "zhcndoc") {
         repositories(first: 100, after: $after) {
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
           nodes {
             name
-            homepageUrl
-            description
-            stargazerCount
-            forkCount
+            title: description
+            url: homepageUrl
+            license: licenseInfo { name }
+            stars: stargazerCount
+            forks: forkCount
             watchers { totalCount }
             openIssues: issues(states: OPEN) { totalCount }
             issues { totalCount }
             openPullRequests: pullRequests(states: OPEN) { totalCount }
             pullRequests { totalCount }
-            createdAt
             updatedAt
+            createdAt
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
           }
         }
       }
@@ -56,10 +57,10 @@ export default defineCachedEventHandler(
     let hasNextPage = true
     let after = null
 
-    const repos: Result['organization']['repositories']['nodes'] = []
+    const repos: GraphqlResult['organization']['repositories']['nodes'] = []
 
     while (hasNextPage) {
-      const result: Result = await octokit.graphql({ query, after })
+      const result: GraphqlResult = await octokit.graphql({ query, after })
       repos.push(...result.organization.repositories.nodes)
 
       hasNextPage = result.organization.repositories.pageInfo.hasNextPage
@@ -70,18 +71,21 @@ export default defineCachedEventHandler(
       const repo = repos.find((repo) => repo.name === project.name)!
 
       return {
-        link: repo.homepageUrl || '',
-        title: repo.description || '',
-        stars: repo.stargazerCount,
-        forks: repo.forkCount,
+        ...project,
+        title: repo.title || '',
+        url: repo.url || '',
+        license: repo.license?.name || '',
+        stars: repo.stars,
+        forks: repo.forks,
         watchers: repo.watchers.totalCount,
         openIssues: repo.openIssues.totalCount,
         issues: repo.issues.totalCount,
         openPullRequests: repo.openPullRequests.totalCount,
         pullRequests: repo.pullRequests.totalCount,
+        newCommit: null,
+        oldCommit: null,
         createdAt: repo.createdAt,
         updatedAt: repo.updatedAt,
-        ...project,
       }
     })
   },

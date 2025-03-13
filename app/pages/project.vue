@@ -1,24 +1,12 @@
 <script setup lang="ts">
-const projects = useState<GithubRepo[]>('projects', () => [])
+const projects = ref<ProjectData[]>([])
 
-projects.value = await $fetch<GithubRepo[]>('/api/project')
-
-const compareResults = ref<Record<string, number>>({})
-
-const newProjects = computed(() => {
-  return projects.value
-    .map((project) => {
-      return {
-        ...project,
-        ahead_by: compareResults.value[project.name] ?? undefined,
-      }
-    })
-    .sort((a, b) => a.name.localeCompare(b.name))
-})
+projects.value = await $fetch<ProjectData[]>('/api/project')
 
 const getCompare = async (repo: string) => {
-  const data = await $fetch(`/api/project/compare?repo=${repo}`)
-  compareResults.value[repo] = data?.ahead_by ?? 0
+  const result = await $fetch(`/api/project/compare?repo=${repo}`)
+  const project = projects.value.find((project) => project.name === repo)
+  if (project && result) project.newCommit = result.newCommit
 }
 
 onMounted(() => {
@@ -30,6 +18,6 @@ onMounted(() => {
 
 <template>
   <div class="p-4 pb-8">
-    <ProjectTable :data="newProjects" />
+    <ProjectTable :data="projects" />
   </div>
 </template>
