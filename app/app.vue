@@ -7,6 +7,10 @@ useHead({
       content:
         '由开源社区提供支持的中文技术文档，旨在为中文地区开发者提供优质的技术文档查阅体验。',
     },
+    {
+      name: 'wwads-cn-verify',
+      content: 'f74909ace68e51891440e4da0b65a70c',
+    },
   ],
   link: [
     {
