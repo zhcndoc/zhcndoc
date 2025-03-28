@@ -166,7 +166,9 @@ const tableColumns: TableColumn<ProjectData>[] = [
       return getHeader(column, '创建时间')
     },
     cell({ row }) {
-      return new Date(row.getValue('createdAt')).toLocaleString('zh-CN')
+      return new Date(row.getValue('createdAt')).toLocaleString('zh-CN', {
+        timeZone: 'Asia/Shanghai',
+      })
     },
   },
   {
@@ -175,7 +177,9 @@ const tableColumns: TableColumn<ProjectData>[] = [
       return getHeader(column, '更新时间')
     },
     cell({ row }) {
-      return new Date(row.getValue('updatedAt')).toLocaleString('zh-CN')
+      return new Date(row.getValue('updatedAt')).toLocaleString('zh-CN', {
+        timeZone: 'Asia/Shanghai',
+      })
     },
   },
   {
