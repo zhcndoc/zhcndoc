@@ -3,7 +3,7 @@ const items = [
   {
     label: '项目',
     icon: 'tabler:list-details',
-    to: '/project',
+    to: '/projects',
   },
 ]
 </script>

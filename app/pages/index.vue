@@ -134,7 +134,7 @@ const comments = [
         <UButton
           color="primary"
           size="xl"
-          to="/project"
+          to="/projects"
           trailing-icon="tabler:chevron-right"
           variant="solid"
         >
