@@ -10,7 +10,7 @@ projects.value = await $fetch<ProjectInfo[]>('/api/projects', {
 const getCompare = async (repo: string) => {
   const project = projects.value.find((project) => project.name === repo)
   const { newCommit } = await $fetch(`/api/projects/compare?repo=${repo}`)
-  if (project && newCommit) project.newCommit = newCommit
+  if (project) project.newCommit = newCommit
 }
 
 onMounted(() => {
