@@ -13,24 +13,32 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.33",
+    "@iconify-json/lucide": "^1.2.34",
     "@iconify-json/tabler": "^1.2.17",
-    "@nuxt/eslint": "^1.2.0",
-    "@nuxt/ui-pro": "^3.0.1",
+    "@nuxt/content": "^3.4.0",
+    "@nuxt/eslint": "^1.3.0",
+    "@nuxt/ui-pro": "^3.0.2",
     "dayjs": "^1.11.13",
     "eslint": "^9.23.0",
-    "nuxt": "^3.16.1",
+    "nuxt": "^3.16.2",
     "octokit": "^4.1.2",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "vue": "^3.5.13",
-    "yaml": "^2.7.0"
+    "vue": "^3.5.13"
   },
   "prettier": {
     "semi": false,
     "singleQuote": true,
     "plugins": [
       "prettier-plugin-tailwindcss"
+    ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "better-sqlite3",
+      "esbuild",
+      "vue-demi"
     ]
   }
 }

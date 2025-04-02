@@ -17,7 +17,7 @@ jobs:
       - id: set-matrix
         name: Set matrix
         run: |
-          matrix=$(yq -o=json '.[] | {"name": .name, "owner": .upstream.owner, "repo": .upstream.repo, "branch": .upstream.branch}' shared/projects.yaml | jq -s | jq '{include: .}' -c)
+          matrix=$(yq -o=json '.projects[] | {"name": .name, "owner": .upstream.owner, "repo": .upstream.repo, "branch": .upstream.branch}' content/app.yml | jq -s | jq '{include: .}' -c)
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
   sync:

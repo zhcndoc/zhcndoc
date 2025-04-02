@@ -1,0 +1,163 @@
+projects:
+  - name: elysia
+    type: translate
+    upstream:
+      owner: elysiajs
+      repo: documentation
+      branch: main
+  - name: drizzle
+    type: translate
+    upstream:
+      owner: drizzle-team
+      repo: drizzle-orm-docs
+      branch: main
+  - name: vueuse
+    type: translate
+    upstream:
+      owner: vueuse
+      repo: vueuse
+      branch: main
+  - name: unocss
+    type: translate
+    upstream:
+      owner: unocss
+      repo: unocss
+      branch: main
+  - name: shiki
+    type: translate
+    upstream:
+      owner: shikijs
+      repo: shiki
+      branch: main
+  - name: vitest
+    type: mirror
+    upstream:
+      owner: vitest-dev
+      repo: docs-cn
+      branch: dev
+  - name: umami
+    type: translate
+    upstream:
+      owner: umami-software
+      repo: website
+      branch: master
+  - name: astro
+    type: mirror
+    upstream:
+      owner: withastro
+      repo: docs
+      branch: main
+  - name: nuxt-color-mode
+    type: translate
+    upstream:
+      owner: nuxt-modules
+      repo: color-mode
+      branch: main
+  - name: vue
+    type: mirror
+    upstream:
+      owner: vuejs-translations
+      repo: docs-zh-cn
+      branch: main
+  - name: unjs
+    type: translate
+    upstream:
+      owner: unjs
+      repo: website
+      branch: main
+  - name: nitro
+    type: translate
+    upstream:
+      owner: nitrojs
+      repo: nitro
+      branch: v2
+  - name: h3
+    type: translate
+    upstream:
+      owner: unjs
+      repo: h3
+      branch: main
+  - name: nuxt
+    type: translate
+    upstream:
+      owner: nuxt
+      repo: nuxt.com
+      branch: main
+  - name: nuxt-docs
+    type: translate
+    upstream:
+      owner: nuxt
+      repo: nuxt
+      branch: main
+  - name: nuxt-examples
+    type: translate
+    upstream:
+      owner: nuxt
+      repo: examples
+      branch: main
+  - name: vite
+    type: mirror
+    upstream:
+      owner: vitejs
+      repo: docs-cn
+      branch: main
+  - name: vitepress
+    type: mirror
+    upstream:
+      owner: vuejs
+      repo: vitepress
+      branch: main
+  - name: konva
+    type: translate
+    upstream:
+      owner: konvajs
+      repo: site
+      branch: master
+  - name: nuxt-i18n
+    type: translate
+    upstream:
+      owner: nuxt-modules
+      repo: i18n
+      branch: main
+  - name: deno
+    type: translate
+    upstream:
+      owner: denoland
+      repo: docs
+      branch: main
+  - name: tailwindcss
+    type: translate
+    upstream:
+      owner: tailwindlabs
+      repo: tailwindcss.com
+      branch: main
+  - name: sharp
+    type: translate
+    upstream:
+      owner: lovell
+      repo: sharp
+      branch: main
+  - name: react
+    type: mirror
+    upstream:
+      owner: reactjs
+      repo: zh-hans.react.dev
+      branch: main
+  - name: node
+    type: mirror
+    upstream:
+      owner: nodejs
+      repo: nodejs.org
+      branch: main
+  - name: shadcn
+    type: translate
+    upstream:
+      owner: shadcn-ui
+      repo: ui
+      branch: main
+  - name: radix
+    type: translate
+    upstream:
+      owner: radix-ui
+      repo: website
+      branch: main

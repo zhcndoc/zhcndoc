@@ -1,5 +1,3 @@
-import projects from '~~/.nuxt/projects.json'
-
 type GraphqlResult = {
   organization: {
     repositories: {
@@ -27,7 +25,7 @@ type GraphqlResult = {
 }
 
 export default defineCachedEventHandler(
-  async () => {
+  async (event) => {
     const query = `query ($after: String) {
       organization(login: "zhcndoc") {
         repositories(first: 100, after: $after) {
@@ -67,7 +65,9 @@ export default defineCachedEventHandler(
       after = result.organization.repositories.pageInfo.endCursor
     }
 
-    return projects.map((project) => {
+    const appConfig = await queryCollection(event, 'app').first()
+
+    return appConfig?.projects.map((project) => {
       const repo = repos.find((repo) => repo.name === project.name)!
 
       return {
