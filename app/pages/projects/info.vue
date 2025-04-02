@@ -1,12 +1,16 @@
 <script setup lang="ts">
-const projects = ref<ProjectData[]>([])
+const projects = ref<ProjectInfo[]>([])
 
-projects.value = await $fetch<ProjectData[]>('/api/project')
+projects.value = await $fetch<ProjectInfo[]>('/api/projects', {
+  query: {
+    scope: 'all',
+  },
+})
 
 const getCompare = async (repo: string) => {
-  const result = await $fetch(`/api/project/compare?repo=${repo}`)
   const project = projects.value.find((project) => project.name === repo)
-  if (project && result) project.newCommit = result.newCommit
+  const { newCommit } = await $fetch(`/api/projects/compare?repo=${repo}`)
+  if (project && newCommit) project.newCommit = newCommit
 }
 
 onMounted(() => {

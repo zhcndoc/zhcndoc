@@ -6,9 +6,9 @@ const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
 const UTooltip = resolveComponent('UTooltip')
 
-defineProps<{ data: ProjectData[] }>()
+defineProps<{ data?: ProjectInfo[] }>()
 
-const tableColumns: TableColumn<ProjectData>[] = [
+const tableColumns: TableColumn<ProjectInfo>[] = [
   {
     accessorKey: 'title',
     header: '项目',
@@ -17,7 +17,7 @@ const tableColumns: TableColumn<ProjectData>[] = [
         color: 'neutral',
         label: row.original.title,
         target: '_blank',
-        to: row.original.url,
+        to: row.original.link,
         trailingIcon: 'tabler:external-link',
         variant: 'ghost',
       })
@@ -108,7 +108,7 @@ const tableColumns: TableColumn<ProjectData>[] = [
     },
   },
   {
-    accessorKey: 'openIssues',
+    accessorKey: 'issues',
     header: ({ column }) => {
       return getHeader(column, 'Issue')
     },
@@ -116,13 +116,13 @@ const tableColumns: TableColumn<ProjectData>[] = [
       return h(UBadge, {
         color: 'neutral',
         icon: 'tabler:message',
-        label: row.original.openIssues.toString(),
+        label: row.original.issues.toString(),
         variant: 'soft',
       })
     },
   },
   {
-    accessorKey: 'openPullRequests',
+    accessorKey: 'pullRequests',
     header: ({ column }) => {
       return getHeader(column, 'Pull')
     },
@@ -130,7 +130,7 @@ const tableColumns: TableColumn<ProjectData>[] = [
       return h(UBadge, {
         color: 'neutral',
         icon: 'tabler:git-pull-request',
-        label: row.original.openPullRequests.toString(),
+        label: row.original.pullRequests.toString(),
         variant: 'soft',
       })
     },
@@ -145,7 +145,7 @@ const tableColumns: TableColumn<ProjectData>[] = [
         original: { newCommit },
       },
     }) {
-      if (newCommit === null) {
+      if (newCommit === undefined) {
         return h(UBadge, {
           color: 'neutral',
           variant: 'subtle',
@@ -228,7 +228,7 @@ const tableColumns: TableColumn<ProjectData>[] = [
   },
 ]
 
-const getHeader = (column: Column<ProjectData>, label: string) => {
+const getHeader = (column: Column<ProjectInfo>, label: string) => {
   const isSorted = column.getIsSorted()
   return h(UButton, {
     label,
