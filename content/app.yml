@@ -1,163 +1,217 @@
 projects:
   - name: elysia
+    description: 基于 Bun 构建的高性能 TypeScript 后端框架，提供极致开发体验。
     type: translate
     upstream:
       owner: elysiajs
       repo: documentation
       branch: main
+      link: https://elysiajs.com
   - name: drizzle
+    description: 轻量级 TypeScript ORM，支持静态 SQL 语法，类型安全且易扩展。
     type: translate
     upstream:
       owner: drizzle-team
       repo: drizzle-orm-docs
       branch: main
+      link: https://orm.drizzle.team
   - name: vueuse
+    description: 基于 Vue 组合式 API 的工具库，提供丰富的实用函数，提升开发效率。
     type: translate
     upstream:
       owner: vueuse
       repo: vueuse
       branch: main
+      link: https://vueuse.org
   - name: unocss
+    description: 灵活可定制的原子 CSS 引擎，具备即时编译和高效性能。
     type: translate
     upstream:
       owner: unocss
       repo: unocss
       branch: main
+      link: https://unocss.dev
   - name: shiki
+    description: 基于 VS Code 语法高亮的代码着色库，支持多种主题和语言。
     type: translate
     upstream:
       owner: shikijs
       repo: shiki
       branch: main
+      link: https://shiki.style
   - name: vitest
+    description: Vite 生态的极速单元测试框架，支持原生 ES 模块和 TypeScript。
     type: mirror
     upstream:
       owner: vitest-dev
       repo: docs-cn
       branch: dev
+      link: https://vitest.dev
   - name: umami
+    description: 轻量级、开源的隐私友好型网站分析工具，支持自托管部署。
     type: translate
     upstream:
       owner: umami-software
       repo: website
       branch: master
+      link: https://umami.is
   - name: astro
+    description: 现代 Web 框架，专注于构建快速、优化良好的静态网站。
     type: mirror
     upstream:
       owner: withastro
       repo: docs
       branch: main
+      link: https://astro.build
   - name: nuxt-color-mode
+    description: Nuxt 生态的主题模式管理插件，支持多种配色方案。
     type: translate
     upstream:
       owner: nuxt-modules
       repo: color-mode
       branch: main
+      link: https://color-mode.nuxt.dev
   - name: vue
+    description: 渐进式 JavaScript 框架，提供组件化开发模式，专注于 UI 构建。
     type: mirror
     upstream:
       owner: vuejs-translations
       repo: docs-zh-cn
       branch: main
+      link: https://vuejs.org
   - name: unjs
+    description: 高效的 JavaScript 工具库生态，提供多种实用开发工具和框架。
     type: translate
     upstream:
       owner: unjs
       repo: website
       branch: main
+      link: https://unjs.io
   - name: nitro
+    description: 通用服务器端框架，支持多种运行环境，驱动 Nuxt 后端能力。
     type: translate
     upstream:
       owner: nitrojs
       repo: nitro
       branch: v2
+      link: https://nitro.unjs.io
   - name: h3
+    description: 轻量级 HTTP 处理框架，适用于 Nitro，提供高效 API 开发能力。
     type: translate
     upstream:
       owner: unjs
       repo: h3
       branch: main
+      link: https://h3.unjs.io
   - name: nuxt
+    description: 基于 Vue.js 的全栈应用框架，支持服务端渲染和静态站点生成。
     type: translate
     upstream:
       owner: nuxt
       repo: nuxt.com
       branch: main
+      link: https://nuxt.com
   - name: nuxt-docs
+    description: 官方 Nuxt 文档，提供详细的框架指南和 API 参考。
     type: translate
     upstream:
       owner: nuxt
       repo: nuxt
       branch: main
+      link: https://nuxtjs.org
   - name: nuxt-examples
+    description: 官方 Nuxt 示例，展示最佳实践和项目模板。
     type: translate
     upstream:
       owner: nuxt
       repo: examples
       branch: main
+      link: https://nuxtjs.org/examples
   - name: vite
+    description: 极速前端构建工具，支持模块热替换，优化现代 Web 开发体验。
     type: mirror
     upstream:
       owner: vitejs
       repo: docs-cn
       branch: main
+      link: https://vitejs.dev
   - name: vitepress
+    description: 基于 Vite 的 Markdown 静态站点生成器，适用于文档编写。
     type: mirror
     upstream:
       owner: vuejs
       repo: vitepress
       branch: main
+      link: https://vitepress.dev
   - name: konva
+    description: 专为 HTML5 Canvas 设计的 2D 图形库，支持交互和动画。
     type: translate
     upstream:
       owner: konvajs
       repo: site
       branch: master
+      link: https://konvajs.org
   - name: nuxt-i18n
+    description: Nuxt 生态的国际化解决方案，支持多语言切换和翻译管理。
     type: translate
     upstream:
       owner: nuxt-modules
       repo: i18n
       branch: main
+      link: https://i18n.nuxtjs.org
   - name: deno
+    description: 安全高效的 JavaScript 和 TypeScript 运行时，内置现代标准库。
     type: translate
     upstream:
       owner: denoland
       repo: docs
       branch: main
+      link: https://deno.com
   - name: tailwindcss
+    description: 实用优先的原子 CSS 框架，提供灵活的样式组合和优化体验。
     type: translate
     upstream:
       owner: tailwindlabs
       repo: tailwindcss.com
       branch: main
+      link: https://tailwindcss.com
   - name: sharp
+    description: 高性能 Node.js 图片处理库，支持多种格式和高效转换。
     type: translate
     upstream:
       owner: lovell
       repo: sharp
       branch: main
+      link: https://sharp.pixelplumbing.com
   - name: react
+    description: 声明式 UI 库，专注于组件化开发，提升前端交互体验。
     type: mirror
     upstream:
       owner: reactjs
       repo: zh-hans.react.dev
       branch: main
+      link: https://react.dev
   - name: node
+    description: 基于 V8 引擎的 JavaScript 运行时，适用于构建高性能后端应用。
     type: mirror
     upstream:
       owner: nodejs
       repo: nodejs.org
       branch: main
+      link: https://nodejs.org
   - name: shadcn
+    description: 基于 Radix UI 构建的现代 React 组件库，提供简洁优雅的 UI 设计。
     type: translate
     upstream:
       owner: shadcn-ui
       repo: ui
       branch: main
+      link: https://ui.shadcn.com
   - name: radix
+    description: 可访问性强、可组合的 React 组件库，专注于交互体验和无障碍设计。
     type: translate
     upstream:
       owner: radix-ui
       repo: website
       branch: main
+      link: https://www.radix-ui.com
