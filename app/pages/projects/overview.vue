@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const projects = ref<ProjectInfo[]>([])
 
-projects.value = await $fetch<ProjectInfo[]>('/api/projects', {
+projects.value = await $fetch('/api/projects', {
   query: {
     scope: 'all',
   },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: projects } = useFetch<ProjectInfo[]>('/api/projects', {
+const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects', {
   transform: (data) => {
     return data.sort((a, b) => {
       return a.stars > b.stars ? -1 : 1
@@ -12,13 +12,18 @@ const { data: projects } = useFetch<ProjectInfo[]>('/api/projects', {
   <UContainer class="py-4">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <template v-for="project in projects" :key="project.name">
-        <UCard
+        <UPageCard
           :ui="{
-            body: 'p-3 sm:p-4',
+            container: 'p-3 sm:p-4',
           }"
+          spotlight
+          spotlight-color="primary"
         >
           <div class="flex flex-col">
-            <div class="flex gap-4">
+            <NuxtLink
+              class="flex cursor-pointer gap-4"
+              :to="`/projects/${project.name}`"
+            >
               <div class="h-20 min-w-20 overflow-hidden rounded-xl">
                 <img
                   :src="`/images/projects/${project.name}.png`"
@@ -33,17 +38,27 @@ const { data: projects } = useFetch<ProjectInfo[]>('/api/projects', {
                   {{ project.description }}
                 </span>
               </div>
-            </div>
+            </NuxtLink>
             <div class="mt-3 flex justify-between">
               <div class="flex gap-4 text-sm text-gray-500">
-                <div class="flex items-center gap-1">
-                  <UIcon name="tabler:star" />
-                  {{ project.stars }}
-                </div>
-                <div class="flex items-center gap-1">
-                  <UIcon name="tabler:git-fork" />
-                  {{ project.forks }}
-                </div>
+                <NuxtLink
+                  :to="`https://github.com/zhcndoc/${project.name}/stargazers`"
+                  target="_blank"
+                >
+                  <div class="flex items-center gap-1">
+                    <UIcon name="tabler:star" />
+                    {{ project.stars }}
+                  </div>
+                </NuxtLink>
+                <NuxtLink
+                  :to="`https://github.com/zhcndoc/${project.name}/forks`"
+                  target="_blank"
+                >
+                  <div class="flex items-center gap-1">
+                    <UIcon name="tabler:git-fork" />
+                    {{ project.forks }}
+                  </div>
+                </NuxtLink>
               </div>
               <div class="flex gap-2">
                 <UButton
@@ -63,7 +78,7 @@ const { data: projects } = useFetch<ProjectInfo[]>('/api/projects', {
               </div>
             </div>
           </div>
-        </UCard>
+        </UPageCard>
       </template>
     </div>
   </UContainer>
