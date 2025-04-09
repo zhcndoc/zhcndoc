@@ -19,6 +19,7 @@
     "@nuxt/eslint": "^1.3.0",
     "@nuxt/ui-pro": "^3.0.2",
     "@octokit/graphql-schema": "^15.26.0",
+    "@umami/api-client": "^0.78.0",
     "dayjs": "^1.11.13",
     "eslint": "^9.23.0",
     "nuxt": "^3.16.2",
