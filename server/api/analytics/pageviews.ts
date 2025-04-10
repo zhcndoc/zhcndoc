@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
 
-  let { startAt, endAt } = getTodayTimeRange()
+  let { startAt, endAt } = getTimeRange()
 
   if (query.startAt && query.endAt) {
     startAt = Number(query.startAt)

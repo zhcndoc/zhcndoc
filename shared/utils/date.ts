@@ -1,15 +1,15 @@
-export const getTodayTimeRange = () => {
+export const getTimeRange = (start?: string, end?: string) => {
   const today = new Date().toLocaleString('zh-CN', {
     timeZone: 'Asia/Shanghai',
   })
   return {
-    startAt: new Date(today).setHours(0, 0, 0, 0),
-    endAt: new Date(today).setHours(23, 59, 59, 999),
+    startAt: new Date(start || today).setHours(0, 0, 0, 0),
+    endAt: new Date(end || start || today).setHours(23, 59, 59, 999),
   }
 }
 
-export const getUnitByTime = (startAt: number, endAt: number) => {
-  const diff = endAt - startAt
+export const getUnitByTime = (start: number, end: number) => {
+  const diff = end - start
   if (diff <= 24 * 60 * 60 * 1000) {
     return 'hour'
   } else if (diff > 90 * 24 * 60 * 60 * 1000) {
