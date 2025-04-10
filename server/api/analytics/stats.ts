@@ -14,15 +14,9 @@ export default defineEventHandler(async (event) => {
 
   if (!success) return
 
-  const unit = getUnitByTime(query.startAt, query.endAt)
-
-  const { data } = await umami.getWebsitePageviews(
+  const { data } = await umami.getWebsiteStats(
     'f0e90b0d-e086-4fdc-b173-de4857b71900',
-    {
-      ...query,
-      unit,
-      timezone: 'Asia/Shanghai',
-    },
+    query,
   )
 
   return data
