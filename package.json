@@ -23,6 +23,7 @@
     "dayjs": "^1.11.13",
     "eslint": "^9.23.0",
     "nuxt": "^3.16.2",
+    "nuxt-echarts": "^0.3.0",
     "octokit": "^4.1.2",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",

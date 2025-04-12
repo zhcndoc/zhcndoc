@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   devtools: { enabled: true },
-  modules: ['@nuxt/content', '@nuxt/ui-pro', '@nuxt/eslint'],
+  modules: ['@nuxt/content', '@nuxt/ui-pro', '@nuxt/eslint', 'nuxt-echarts'],
 
   css: ['~/assets/css/main.css'],
   fonts: {
@@ -24,6 +24,15 @@ export default defineNuxtConfig({
         prefix: 'icon',
         dir: './app/assets/icons',
       },
+    ],
+  },
+  echarts: {
+    charts: ['BarChart'],
+    components: [
+      'TooltipComponent',
+      'GridComponent',
+      'TitleComponent',
+      'LegendComponent',
     ],
   },
 })
