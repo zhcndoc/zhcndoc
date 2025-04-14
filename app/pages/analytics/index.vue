@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const timeRange = ref(getTimeRange())
+</script>
 
 <template>
-  <div></div>
+  <UContainer class="py-4">
+    <AnalyticsStatsBar :time-range="timeRange"></AnalyticsStatsBar>
+  </UContainer>
 </template>
