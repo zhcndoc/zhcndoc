@@ -1,96 +1,117 @@
 <script setup lang="ts">
-const props = defineProps<{
-  timeRange: {
-    startAt: number
-    endAt: number
-  }
-}>()
+import type { DropdownMenuItem } from '@nuxt/ui'
+
+const startAt = defineModel<number>('startAt')
+const endAt = defineModel<number>('endAt')
 
 const { data } = await useFetch('/api/analytics/stats', {
   query: {
-    startAt: props.timeRange.startAt,
-    endAt: props.timeRange.endAt,
+    startAt: startAt,
+    endAt: endAt,
   },
 })
 
-const statsItem = [
-  {
-    prop: 'pageviews',
-    name: '浏览量',
-    format: (value: number) => {
-      return formatLongNumber(value)
+const metrics = computed(() => {
+  return [
+    {
+      ...data.value.pageviews,
+      label: '浏览量',
+      change: data.value.pageviews.value - data.value.pageviews.prev,
+      formatValue: formatLongNumber,
     },
-    change: (value: number, prev: number) => {
-      const change = ((value - prev) / prev) * 100
-      return Math.round(+change) + '%'
+    {
+      ...data.value.visitors,
+      label: '访问次数',
+      change: data.value.visitors.value - data.value.visitors.prev,
+      formatValue: formatLongNumber,
+    },
+    {
+      ...data.value.visits,
+      label: '访客',
+      change: data.value.visits.value - data.value.visits.prev,
+      formatValue: formatLongNumber,
+    },
+    {
+      ...data.value.bounces,
+      label: '跳出率',
+      change: data.value.bounces.value - data.value.bounces.prev,
+      formatValue: (value: number) => {
+        const { visits } = data.value
+        const bounces = (Math.min(visits.value, value) / visits.value) * 100
+        return Math.round(+bounces) + '%'
+      },
+    },
+    {
+      ...data.value.totaltime,
+      label: '平均时间',
+      change: data.value.totaltime.value - data.value.totaltime.prev,
+      formatValue: (value: number) => {
+        const { visits } = data.value
+        return formatSeconds(value / visits.value)
+      },
+    },
+  ]
+})
+
+const items = ref<DropdownMenuItem[]>([
+  {
+    label: '过去 7 天',
+    value: 'last-7-days',
+    onSelect: () => {
+      startAt.value = Date.now() - 7 * 24 * 60 * 60 * 1000
+      endAt.value = Date.now()
     },
   },
   {
-    prop: 'visitors',
-    name: '访问次数',
-    format: (value: number) => {
-      return formatLongNumber(value)
-    },
-    change: (value: number, prev: number) => {
-      const change = ((value - prev) / prev) * 100
-      return Math.round(+change) + '%'
+    label: '过去 30 天',
+    value: 'last-30-days',
+    onSelect: () => {
+      startAt.value = Date.now() - 30 * 24 * 60 * 60 * 1000
+      endAt.value = Date.now()
     },
   },
   {
-    prop: 'visits',
-    name: '访客',
-    format: (value: number) => {
-      return formatLongNumber(value)
-    },
-    change: (value: number, prev: number) => {
-      const change = ((value - prev) / prev) * 100
-      return Math.round(+change) + '%'
+    label: '过去 90 天',
+    value: 'last-90-days',
+    onSelect: () => {
+      startAt.value = Date.now() - 90 * 24 * 60 * 60 * 1000
+      endAt.value = Date.now()
     },
   },
-  {
-    prop: 'bounces',
-    name: '跳出率',
-    format: (value: number) => {
-      const { visits } = data.value
-      const bounces = (Math.min(visits.value, value) / visits.value) * 100
-      return Math.round(+bounces) + '%'
-    },
-    change: (value: number, prev: number) => {
-      const change = ((value - prev) / prev) * 100
-      return Math.round(+change) + '%'
-    },
-  },
-  {
-    prop: 'totaltime',
-    name: '平均时间',
-    format: (value: number) => {
-      const { visits } = data.value
-      return formatSeconds(value / visits.value)
-    },
-    change: (value: number, prev: number) => {
-      const change = ((value - prev) / prev) * 100
-      return Math.round(+change) + '%'
-    },
-  },
-]
+])
 </script>
 
 <template>
-  <div class="grid grid-cols-[2fr_1fr]">
+  <div class="grid grid-cols-[3fr_1fr] gap-4">
     <div class="grid w-full grid-cols-5 gap-5">
-      <template v-for="item in statsItem" :key="item.prop">
-        <div>
-          <div class="text-sm font-bold">{{ item.name }}</div>
-          <div class="text-4xl leading-[1.5] font-bold">
-            {{ item.format(data[item.prop].value) }}
-          </div>
-          <div>
-            <UBadge icon="tabler:arrow-up" color="success" variant="soft">
-              {{ item?.change(data[item.prop].value, data[item.prop].prev) }}
-            </UBadge>
-          </div>
-        </div>
+      <template v-for="item in metrics" :key="item.prop">
+        <AnalyticsMetricCard
+          :value="item.value"
+          :change="item.change"
+          :label="item.label"
+          :format-value="item.formatValue"
+        />
       </template>
+    </div>
+    <div>
+      <UDropdownMenu
+        :items="items"
+        :content="{
+          align: 'start',
+          side: 'bottom',
+          sideOffset: 8,
+        }"
+        :ui="{
+          content: 'w-48',
+        }"
+      >
+        <UButton
+          label="Open"
+          icon="i-lucide-menu"
+          color="neutral"
+          variant="outline"
+        />
+      </UDropdownMenu>
     </div>
   </div>
 </template>

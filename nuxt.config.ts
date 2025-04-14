@@ -5,7 +5,13 @@ const umamiAuth = await $fetch(
 )
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/content', '@nuxt/ui-pro', '@nuxt/eslint', 'nuxt-echarts'],
+  modules: [
+    '@nuxt/content',
+    '@nuxt/eslint',
+    '@nuxt/ui-pro',
+    '@vueuse/nuxt',
+    'nuxt-echarts',
+  ],
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
