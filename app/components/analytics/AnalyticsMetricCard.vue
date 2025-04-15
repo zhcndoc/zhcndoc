@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { TransitionPresets, useTransition } from '@vueuse/core'
+import { TransitionPresets } from '@vueuse/core'
+
 const props = defineProps<{
   value: number
   change: number
@@ -8,24 +9,25 @@ const props = defineProps<{
   formatValue: (value: number) => string
 }>()
 
-const { value, change, label, formatValue } = toRefs(props)
+const { value, change } = toRefs(props)
 
-const changeIcon = ref('tabler:equal')
-const changeColor = ref<'neutral' | 'error' | 'success'>('neutral')
+const changeIcon = computed(() => {
+  return change.value >= 0 ? 'tabler:arrow-up' : 'tabler:arrow-down'
+})
 
-watchEffect(() => {
-  if (props.change > 0) {
-    changeIcon.value = props.reverseColors
-      ? 'tabler:arrow-down'
-      : 'tabler:arrow-up'
-    changeColor.value = props.reverseColors ? 'error' : 'success'
-  }
-  if (props.change < 0) {
-    changeIcon.value = props.reverseColors
-      ? 'tabler:arrow-up'
-      : 'tabler:arrow-down'
-    changeColor.value = props.reverseColors ? 'success' : 'error'
-  }
+const changeColor = computed(() => {
+  return change.value >= 0
+    ? props.reverseColors
+      ? 'error'
+      : 'success'
+    : props.reverseColors
+      ? 'success'
+      : 'error'
+})
+
+const pct = computed(() => {
+  const diff = value.value - change.value
+  return ((value.value - diff) / diff) * 100
 })
 
 const _value = useTransition(value, {
@@ -33,7 +35,7 @@ const _value = useTransition(value, {
   transition: TransitionPresets.easeInOutCubic,
 })
 
-const _change = useTransition(change, {
+const _pct = useTransition(pct, {
   duration: 1000,
   transition: TransitionPresets.easeInOutCubic,
 })
@@ -41,12 +43,20 @@ const _change = useTransition(change, {
 
 <template>
   <div>
-    <div class="text-sm font-bold">{{ label }}</div>
-    <div class="text-4xl leading-[1.5] font-bold" :title="value.toString()">
+    <div class="text-sm font-bold text-nowrap">{{ label }}</div>
+    <div
+      class="text-4xl leading-[1.5] font-bold text-nowrap"
+      :title="value.toString()"
+    >
       {{ formatValue(_value) }}
     </div>
-    <UBadge :icon="changeIcon" :color="changeColor" variant="soft">
-      {{ formatValue(_change) }}
+    <UBadge
+      :icon="changeIcon"
+      :color="changeColor"
+      variant="soft"
+      class="font-bold text-nowrap"
+    >
+      {{ `${Math.abs(~~_pct)}%` }}
     </UBadge>
   </div>
 </template>

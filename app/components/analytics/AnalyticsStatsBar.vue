@@ -11,47 +11,55 @@ const { data } = await useFetch('/api/analytics/stats', {
   },
 })
 
-const metrics = computed(() => {
-  return [
-    {
-      ...data.value.pageviews,
-      label: '浏览量',
-      change: data.value.pageviews.value - data.value.pageviews.prev,
-      formatValue: formatLongNumber,
-    },
-    {
-      ...data.value.visitors,
-      label: '访问次数',
-      change: data.value.visitors.value - data.value.visitors.prev,
-      formatValue: formatLongNumber,
-    },
-    {
-      ...data.value.visits,
-      label: '访客',
-      change: data.value.visits.value - data.value.visits.prev,
-      formatValue: formatLongNumber,
-    },
-    {
-      ...data.value.bounces,
-      label: '跳出率',
-      change: data.value.bounces.value - data.value.bounces.prev,
-      formatValue: (value: number) => {
-        const { visits } = data.value
-        const bounces = (Math.min(visits.value, value) / visits.value) * 100
-        return Math.round(+bounces) + '%'
-      },
-    },
-    {
-      ...data.value.totaltime,
-      label: '平均时间',
-      change: data.value.totaltime.value - data.value.totaltime.prev,
-      formatValue: (value: number) => {
-        const { visits } = data.value
-        return formatSeconds(value / visits.value)
-      },
-    },
-  ]
-})
+const metrics = computed(() => [
+  {
+    ...data.value?.pageviews,
+    label: '浏览量',
+    change: data.value?.pageviews.value - data.value?.pageviews.prev,
+    formatValue: formatLongNumber,
+  },
+  {
+    ...data.value?.visits,
+    label: '访问次数',
+    change: data.value?.visits.value - data.value?.visits.prev,
+    formatValue: formatLongNumber,
+  },
+  {
+    ...data.value?.visitors,
+    label: '访客',
+    change: data.value?.visitors.value - data.value?.visitors.prev,
+    formatValue: formatLongNumber,
+  },
+  {
+    label: '跳出率',
+    value:
+      (Math.min(data.value?.visits.value, data.value?.bounces.value) /
+        data.value?.visits.value) *
+      100,
+    prev:
+      (Math.min(data.value?.visits.prev, data.value?.bounces.prev) /
+        data.value?.visits.prev) *
+      100,
+    change:
+      (Math.min(data.value?.visits.value, data.value?.bounces.value) /
+        data.value?.visits.value) *
+        100 -
+      (Math.min(data.value?.visits.prev, data.value?.bounces.prev) /
+        data.value?.visits.prev) *
+        100,
+    formatValue: (value: number) => Math.round(+value) + '%',
+    reverseColors: true,
+  },
+  {
+    label: '平均时间',
+    value: data.value?.totaltime.value / data.value?.visits.value,
+    prev: data.value?.totaltime.prev / data.value?.visits.prev,
+    change:
+      data.value?.totaltime.value / data.value?.visits.value -
+      data.value?.totaltime.prev / data.value?.visits.prev,
+    formatValue: formatSeconds,
+  },
+])
 
 const items = ref<DropdownMenuItem[]>([
   {
@@ -83,12 +91,13 @@ const items = ref<DropdownMenuItem[]>([
 
 <template>
   <div class="grid grid-cols-[3fr_1fr] gap-4">
-    <div class="grid w-full grid-cols-5 gap-5">
+    <div class="grid w-full grid-cols-5 gap-2">
       <template v-for="item in metrics" :key="item.prop">
         <AnalyticsMetricCard
           :value="item.value"
           :change="item.change"
           :label="item.label"
+          :reverse-colors="item.reverseColors"
           :format-value="item.formatValue"
         />
       </template>
