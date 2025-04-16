@@ -92,7 +92,7 @@ const items = ref<DropdownMenuItem[]>([
 <template>
   <div class="grid grid-cols-[3fr_1fr] gap-4">
     <div class="grid w-full grid-cols-5 gap-2">
-      <template v-for="item in metrics" :key="item.prop">
+      <template v-for="item in metrics" :key="item.label">
         <AnalyticsMetricCard
           :value="item.value"
           :change="item.change"
