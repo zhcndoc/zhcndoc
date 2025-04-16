@@ -1,9 +1,3 @@
-import { $fetch } from 'ofetch'
-
-const umamiAuth = await $fetch(
-  `https://umami.ikxin.com/api/share/aHYOn5YKtcPoS5v7`,
-)
-
 export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
@@ -16,9 +10,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
-  runtimeConfig: {
-    umamiToken: umamiAuth?.token,
-  },
   future: {
     compatibilityVersion: 4,
   },
