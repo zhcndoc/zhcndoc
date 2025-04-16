@@ -1,10 +1,22 @@
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc.js'
+import timezone from 'dayjs/plugin/timezone.js'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
 export const getTimeRange = (start?: string, end?: string) => {
-  const today = new Date().toLocaleString('zh-CN', {
-    timeZone: 'Asia/Shanghai',
-  })
+  const today = dayjs().tz('Asia/Shanghai').format('YYYY-MM-DD')
+
   return {
-    startAt: new Date(start || today).setHours(0, 0, 0, 0),
-    endAt: new Date(end || start || today).setHours(23, 59, 59, 999),
+    startAt: dayjs(start || today)
+      .tz('Asia/Shanghai')
+      .startOf('day')
+      .valueOf(),
+    endAt: dayjs(end || start || today)
+      .tz('Asia/Shanghai')
+      .endOf('day')
+      .valueOf(),
   }
 }
 
