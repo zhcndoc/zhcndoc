@@ -24,6 +24,8 @@ function loadWwads() {
   document.head.appendChild(script)
 }
 
-loadBaiduAnalytics()
-loadUmami()
-loadWwads()
+if (window.location.hostname.endsWith('zhcndoc.com')) {
+  loadBaiduAnalytics()
+  loadUmami()
+  loadWwads()
+}
