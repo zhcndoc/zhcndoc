@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
   modules: [
+    '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/ui-pro',
@@ -10,6 +11,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
+  site: {
+    url: 'https://www.zhcndoc.com',
+    name: '简中文档',
+  },
   future: {
     compatibilityVersion: 4,
   },
@@ -54,5 +59,8 @@ export default defineNuxtConfig({
         dir: './app/assets/icons',
       },
     ],
+  },
+  sitemap: {
+    discoverImages: false,
   },
 })

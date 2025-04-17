@@ -6,27 +6,27 @@ const comments = [
       name: 'Liang',
       description: '@lianginx',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/lianginx  ',
+        src: 'https://avatar.ikxin.com/github/lianginx',
       },
     },
   },
   {
-    quote: `国内服务器的加载速度就像本地文件一样流畅，文档结构设计得很贴心，每次我需要某个技术方案时，总能在三层目录内精准定位到想要的内容。`,
+    quote: `国内服务器的加载速度就像本地文件一样流畅，文档结构设计得很贴心，每次我需要某个方案时，总能在三层目录内精准定位到想要的内容。`,
     user: {
       name: '馬腊咯稽',
       description: '@ElementRef',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/ElementRef  ',
+        src: 'https://avatar.ikxin.com/github/ElementRef',
       },
     },
   },
   {
-    quote: `开源技术指南整合得就像精心编排的技术剧集，记得上周调试接口时，按着指南操作一次就成功了，连同事都来问我要秘籍。`,
+    quote: `开源技术指南整合得就像精心编排的技术剧集，记得上周调试后端接口时，按着指南操作一次就成功了，连同事都来问我要秘籍。`,
     user: {
       name: 'libchaos',
       description: '@libchaos',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/libchaos  ',
+        src: 'https://avatar.ikxin.com/github/libchaos',
       },
     },
   },
@@ -36,7 +36,7 @@ const comments = [
       name: 'Ali_Eljerrari',
       description: '@ali-eljerrari',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/ali-eljerrari  ',
+        src: 'https://avatar.ikxin.com/github/ali-eljerrari',
       },
     },
   },
@@ -46,7 +46,7 @@ const comments = [
       name: 'Yu Hengliang',
       description: '@yuhengliang',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/yuhengliang  ',
+        src: 'https://avatar.ikxin.com/github/yuhengliang',
       },
     },
   },
@@ -56,7 +56,7 @@ const comments = [
       name: 'PP Kun',
       description: '@PPKunOfficial',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/PPKunOfficial  ',
+        src: 'https://avatar.ikxin.com/github/PPKunOfficial',
       },
     },
   },
@@ -66,17 +66,17 @@ const comments = [
       name: 'YassineZhang',
       description: '@yassine-zhang',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/yassine-zhang  ',
+        src: 'https://avatar.ikxin.com/github/yassine-zhang',
       },
     },
   },
   {
-    quote: `文档能做到这种专业程度实在难得，每个技术点都深入浅出地讲解，配套代码可以复制到项目里调试，省去了大量适配时间。`,
+    quote: `中文文档能做到这种专业程度实在难得，每个技术点都深入浅出地讲解，配套的示例代码可以复制到项目里调试，省去了大量适配时间。`,
     user: {
       name: 'David Muriithi',
       description: '@BarriosXJavier',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/BarriosXJavier  ',
+        src: 'https://avatar.ikxin.com/github/BarriosXJavier',
       },
     },
   },
@@ -86,7 +86,7 @@ const comments = [
       name: 'winnie xiong',
       description: '@winnie-xzh',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/winnie-xzh  ',
+        src: 'https://avatar.ikxin.com/github/winnie-xzh',
       },
     },
   },
@@ -96,7 +96,7 @@ const comments = [
       name: 'nnqqss',
       description: '@nnqqss',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/nnqqss  ',
+        src: 'https://avatar.ikxin.com/github/nnqqss',
       },
     },
   },
