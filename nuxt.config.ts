@@ -5,7 +5,6 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/ui-pro',
     '@vueuse/nuxt',
-    'dayjs-nuxt',
     'nuxt-echarts',
   ],
   devtools: { enabled: true },
@@ -19,12 +18,6 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   compatibilityDate: '2025-01-20',
-  dayjs: {
-    defaultLocale: 'zh-cn',
-    defaultTimezone: 'Asia/Shanghai',
-    locales: ['zh-cn'],
-    plugins: ['relativeTime', 'utc', 'timezone'],
-  },
   echarts: {
     charts: ['BarChart'],
     components: [

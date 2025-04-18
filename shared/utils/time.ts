@@ -1,22 +1,15 @@
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc.js'
-import timezone from 'dayjs/plugin/timezone.js'
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
+import { DateTime } from 'luxon'
 
 export const getTimeRange = (start?: string, end?: string) => {
-  const today = dayjs().tz('Asia/Shanghai').format('YYYY-MM-DD')
+  const timeZone = 'Asia/Shanghai'
+  const today = DateTime.local().setZone(timeZone).toFormat('yyyy-MM-dd')
+
+  const startDate = DateTime.fromISO(start || today).setZone(timeZone)
+  const endDate = DateTime.fromISO(end || start || today).setZone(timeZone)
 
   return {
-    startAt: dayjs(start || today)
-      .tz('Asia/Shanghai')
-      .startOf('day')
-      .valueOf(),
-    endAt: dayjs(end || start || today)
-      .tz('Asia/Shanghai')
-      .endOf('day')
-      .valueOf(),
+    startAt: startDate.startOf('day').toMillis(),
+    endAt: endDate.endOf('day').toMillis(),
   }
 }
 
