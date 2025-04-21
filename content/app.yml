@@ -93,16 +93,16 @@ projects:
     upstream:
       owner: nitrojs
       repo: nitro
-      branch: v2
-      link: https://nitro.unjs.io
+      branch: v3
+      link: https://nitro.build
   - name: h3
     description: 轻量级 HTTP 处理框架，适用于 Nitro，提供高效 API 开发能力。
     type: translate
     upstream:
-      owner: unjs
+      owner: h3js
       repo: h3
       branch: main
-      link: https://h3.unjs.io
+      link: https://h3.dev
   - name: nuxt
     description: 基于 Vue.js 的全栈应用框架，支持服务端渲染和静态站点生成。
     type: translate
