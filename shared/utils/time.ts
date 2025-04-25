@@ -2,14 +2,22 @@ import { DateTime } from 'luxon'
 
 export const getTimeRange = (start?: string, end?: string) => {
   const timeZone = 'Asia/Shanghai'
-  const today = DateTime.local().setZone(timeZone).toFormat('yyyy-MM-dd')
+  if (start && end) {
+    const startDate = DateTime.fromISO(start).setZone(timeZone)
+    const endDate = DateTime.fromISO(end).setZone(timeZone)
 
-  const startDate = DateTime.fromISO(start || today).setZone(timeZone)
-  const endDate = DateTime.fromISO(end || start || today).setZone(timeZone)
+    return {
+      startAt: startDate.startOf('day').toMillis(),
+      endAt: endDate.endOf('day').toMillis(),
+    }
+  } else {
+    const now = DateTime.local().setZone(timeZone)
+    const twentyFourHoursAgo = now.minus({ hours: 23 })
 
-  return {
-    startAt: startDate.startOf('day').toMillis(),
-    endAt: endDate.endOf('day').toMillis(),
+    return {
+      startAt: twentyFourHoursAgo.startOf('hour').toMillis(),
+      endAt: now.endOf('hour').toMillis(),
+    }
   }
 }
 
