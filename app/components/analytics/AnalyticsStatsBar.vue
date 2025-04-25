@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import type { DropdownMenuItem } from '@nuxt/ui'
-
 const startAt = defineModel<number>('startAt')
 const endAt = defineModel<number>('endAt')
 
-const { data } = await useFetch('/api/analytics/stats', {
+const { data, status } = await useFetch('/api/analytics/stats', {
   query: {
     startAt: startAt,
     endAt: endAt,
@@ -60,40 +58,14 @@ const metrics = computed(() => [
     formatValue: formatSeconds,
   },
 ])
-
-const items = ref<DropdownMenuItem[]>([
-  {
-    label: '过去 7 天',
-    value: 'last-7-days',
-    onSelect: () => {
-      startAt.value = Date.now() - 7 * 24 * 60 * 60 * 1000
-      endAt.value = Date.now()
-    },
-  },
-  {
-    label: '过去 30 天',
-    value: 'last-30-days',
-    onSelect: () => {
-      startAt.value = Date.now() - 30 * 24 * 60 * 60 * 1000
-      endAt.value = Date.now()
-    },
-  },
-  {
-    label: '过去 90 天',
-    value: 'last-90-days',
-    onSelect: () => {
-      startAt.value = Date.now() - 90 * 24 * 60 * 60 * 1000
-      endAt.value = Date.now()
-    },
-  },
-])
 </script>
 
 <template>
   <div class="grid grid-cols-[3fr_1fr] gap-4">
-    <div class="grid w-full grid-cols-5 gap-2">
+    <div class="relative grid w-full grid-cols-5 gap-2">
       <template v-for="item in metrics" :key="item.label">
         <AnalyticsMetricCard
+          :loading="status === 'pending'"
           :value="item.value"
           :change="item.change"
           :label="item.label"
@@ -101,26 +73,6 @@ const items = ref<DropdownMenuItem[]>([
           :format-value="item.formatValue"
         />
       </template>
-    </div>
-    <div>
-      <UDropdownMenu
-        :items="items"
-        :content="{
-          align: 'start',
-          side: 'bottom',
-          sideOffset: 8,
-        }"
-        :ui="{
-          content: 'w-48',
-        }"
-      >
-        <UButton
-          label="Open"
-          icon="i-lucide-menu"
-          color="neutral"
-          variant="outline"
-        />
-      </UDropdownMenu>
     </div>
   </div>
 </template>

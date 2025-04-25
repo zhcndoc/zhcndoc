@@ -6,6 +6,7 @@ const props = defineProps<{
   change: number
   label: string
   reverseColors?: boolean
+  loading?: boolean
   formatValue: (value: number) => string
 }>()
 
@@ -45,18 +46,22 @@ const _pct = useTransition(pct, {
   <div>
     <div class="text-sm font-bold text-nowrap">{{ label }}</div>
     <div
+      v-if="!loading"
       class="text-4xl leading-[1.5] font-bold text-nowrap"
       :title="value.toString()"
     >
       {{ formatValue(_value) }}
     </div>
+    <USkeleton v-else class="my-2 h-[38px] w-36" />
     <UBadge
+      v-if="!loading"
       :icon="changeIcon"
       :color="changeColor"
       variant="soft"
-      class="font-bold text-nowrap"
+      class="font-bold"
     >
       {{ `${Math.abs(~~_pct)}%` }}
     </UBadge>
+    <USkeleton v-else class="h-6 w-16" />
   </div>
 </template>

@@ -5,7 +5,7 @@ const { startAt, endAt } = toRefs(timeRange)
 
 <template>
   <UContainer class="">
-    <AnalyticsHeader />
+    <AnalyticsHeader v-model:start-at="startAt" v-model:end-at="endAt" />
     <AnalyticsStatsBar v-model:start-at="startAt" v-model:end-at="endAt" />
   </UContainer>
 </template>
