@@ -14,9 +14,12 @@ export default defineEventHandler(async (event) => {
 
   if (!success) return
 
-  const data = await umami(`/websites/${UMAMI_WEBSITE_ID}/stats`, {
-    query,
-  })
+  const data = await umami<AnalyticsStats>(
+    `/websites/${UMAMI_WEBSITE_ID}/stats`,
+    {
+      query,
+    },
+  )
 
   return data
 })
