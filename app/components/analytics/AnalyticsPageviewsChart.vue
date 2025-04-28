@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
+  host: string
   startAt: number
   endAt: number
 }>()

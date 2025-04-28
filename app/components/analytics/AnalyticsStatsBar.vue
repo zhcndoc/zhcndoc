@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const startAt = defineModel<number>('startAt')
-const endAt = defineModel<number>('endAt')
+const props = defineProps<{
+  host: string
+  startAt: number
+  endAt: number
+}>()
 
 const { data, status } = await useFetch('/api/analytics/stats', {
-  query: {
-    startAt: startAt,
-    endAt: endAt,
-  },
+  query: props,
 })
 
 const metrics = computed(() => {
@@ -35,11 +35,11 @@ const metrics = computed(() => {
         value:
           (Math.min(data.value?.visits.value, data.value?.bounces.value) /
             data.value?.visits.value) *
-          100,
+            100 || 0,
         prev:
           (Math.min(data.value?.visits.prev, data.value?.bounces.prev) /
             data.value?.visits.prev) *
-          100,
+            100 || 0,
         change:
           (Math.min(data.value?.visits.value, data.value?.bounces.value) /
             data.value?.visits.value) *
@@ -52,11 +52,11 @@ const metrics = computed(() => {
       },
       {
         label: '平均时间',
-        value: data.value?.totaltime.value / data.value?.visits.value,
-        prev: data.value?.totaltime.prev / data.value?.visits.prev,
+        value: data.value?.totaltime.value / data.value?.visits.value || 0,
+        prev: data.value?.totaltime.prev / data.value?.visits.prev || 0,
         change:
           data.value?.totaltime.value / data.value?.visits.value -
-          data.value?.totaltime.prev / data.value?.visits.prev,
+            data.value?.totaltime.prev / data.value?.visits.prev || 0,
         formatValue: formatSeconds,
       },
     ]

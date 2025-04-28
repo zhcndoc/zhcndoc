@@ -3,6 +3,10 @@ import { z } from 'zod'
 const { startAt, endAt } = getTimeRange()
 
 const querySchema = z.object({
+  host: z
+    .string()
+    .transform((val) => (val === 'www.zhcndoc.com' ? undefined : val))
+    .optional(),
   startAt: z.coerce.number().default(startAt),
   endAt: z.coerce.number().default(endAt),
 })

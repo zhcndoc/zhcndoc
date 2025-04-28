@@ -9,7 +9,7 @@ const sortedProjects =
 
 const siteItems = computed(() => {
   const items = sortedProjects.map((project) => ({
-    value: project.name,
+    value: `${project.name}.zhcndoc.com`,
     label: project.title,
     avatar: {
       src: `/images/projects/${project.name}.svg`,
@@ -18,7 +18,7 @@ const siteItems = computed(() => {
   }))
 
   items.unshift({
-    value: 'www',
+    value: 'www.zhcndoc.com',
     label: '所有站点',
     avatar: {
       src: `/images/projects/www.svg`,
@@ -29,13 +29,12 @@ const siteItems = computed(() => {
   return items
 })
 
-const selectedSite = ref('www')
+const selectedSite = defineModel<string>('host')
 
-const selectedIcon = computed(() =>
-  selectedSite.value === 'www'
-    ? 'https://avatar.ikxin.com/favicon/www.zhcndoc.com'
-    : `/images/projects/${selectedSite.value}.svg`,
-)
+const selectedIcon = computed(() => {
+  const prefix = selectedSite.value?.replace(/.zhcndoc.com/, '')
+  return `/images/projects/${prefix}.svg`
+})
 
 const timeRangeItems: SelectMenuItem[][] = [
   [
@@ -123,14 +122,14 @@ watch(selectedTimeRange, (newValue) => {
       v-model="selectedSite"
       :items="siteItems"
       :avatar="{
-        src: `/images/projects/${selectedSite}.svg`,
+        src: selectedIcon,
       }"
       :ui="{
         itemLeadingAvatar: 'rounded-md',
       }"
       value-key="value"
-      placeholder="选择站点"
       size="xl"
+      placeholder="选择站点"
       class="w-64"
     >
     </USelectMenu>
