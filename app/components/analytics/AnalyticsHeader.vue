@@ -12,7 +12,7 @@ const siteItems = computed(() => {
     value: project.name,
     label: project.title,
     avatar: {
-      src: `/images/projects/${project.name}.png`,
+      src: `/images/projects/${project.name}.svg`,
       alt: project.title,
     },
   }))
@@ -21,7 +21,7 @@ const siteItems = computed(() => {
     value: 'www',
     label: '所有站点',
     avatar: {
-      src: 'https://avatar.ikxin.com/favicon/www.zhcndoc.com',
+      src: `/images/projects/www.svg`,
       alt: '简中文档',
     },
   })
@@ -34,7 +34,7 @@ const selectedSite = ref('www')
 const selectedIcon = computed(() =>
   selectedSite.value === 'www'
     ? 'https://avatar.ikxin.com/favicon/www.zhcndoc.com'
-    : `/images/projects/${selectedSite.value}.png`,
+    : `/images/projects/${selectedSite.value}.svg`,
 )
 
 const timeRangeItems: SelectMenuItem[][] = [
@@ -123,7 +123,7 @@ watch(selectedTimeRange, (newValue) => {
       v-model="selectedSite"
       :items="siteItems"
       :avatar="{
-        src: selectedIcon,
+        src: `/images/projects/${selectedSite}.svg`,
       }"
       :ui="{
         itemLeadingAvatar: 'rounded-md',

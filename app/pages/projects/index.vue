@@ -26,7 +26,7 @@ const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects', {
             >
               <div class="h-20 min-w-20 overflow-hidden rounded-xl">
                 <img
-                  :src="`/images/projects/${project.name}.png`"
+                  :src="`/images/projects/${project.name}.svg`"
                   class="h-full w-full object-cover object-center"
                 />
               </div>
