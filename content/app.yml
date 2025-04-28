@@ -48,7 +48,7 @@ projects:
       branch: dev
       link: https://vitest.dev
   - name: umami
-    description: 轻量级、开源的隐私友好型网站分析工具，支持自托管部署。
+    description: 轻量级、开源的、注重用户隐私的网站分析工具，支持自托管部署。
     type: translate
     upstream:
       owner: umami-software
@@ -136,7 +136,7 @@ projects:
       branch: main
       link: https://vitejs.dev
   - name: vitepress
-    description: 基于 Vite 的 Markdown 静态站点生成器，适用于文档编写。
+    description: 基于 Vite 构建的 Markdown 静态站点生成器，适用于文档编写。
     type: mirror
     upstream:
       owner: vuejs
@@ -144,7 +144,7 @@ projects:
       branch: main
       link: https://vitepress.dev
   - name: konva
-    description: 专为 HTML5 Canvas 设计的 2D 图形库，支持交互和动画。
+    description: 专为 HTML5 Canvas 画布设计的 2D 图形库，支持交互和动画。
     type: translate
     upstream:
       owner: konvajs
@@ -152,7 +152,7 @@ projects:
       branch: master
       link: https://konvajs.org
   - name: nuxt-i18n
-    description: Nuxt 生态的国际化解决方案，支持多语言切换和翻译管理。
+    description: Nuxt 生态的 I18n 国际化解决方案，支持多语言切换和翻译管理。
     type: translate
     upstream:
       owner: nuxt-modules
@@ -200,7 +200,7 @@ projects:
       branch: main
       link: https://nodejs.org
   - name: shadcn
-    description: 基于 Radix UI 构建的现代 React 组件库，提供简洁优雅的 UI 设计。
+    description: 基于 Radix UI 的现代 React 组件库，提供简洁优雅的 UI 设计。
     type: translate
     upstream:
       owner: shadcn-ui
