@@ -118,7 +118,7 @@ watch(selectedTimeRange, (newValue) => {
 </script>
 
 <template>
-  <div class="flex items-center justify-between gap-4 py-8">
+  <div class="flex items-center justify-between gap-4 pt-8">
     <USelectMenu
       v-model="selectedSite"
       :items="siteItems"
