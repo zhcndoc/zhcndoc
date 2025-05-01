@@ -5,12 +5,10 @@ const props = defineProps<{
   endAt: number
 }>()
 
-const { data: pageviews, status } = await useFetch<AnalyticsPageviews>(
-  '/api/analytics/pageviews',
-  {
-    query: props,
-  },
-)
+const { data: pageviews, status } = await useFetch('/api/analytics/pageviews', {
+  key: 'analytics-pageviews',
+  query: props,
+})
 
 const chartOptions = computed<ECOption>(() => {
   return {

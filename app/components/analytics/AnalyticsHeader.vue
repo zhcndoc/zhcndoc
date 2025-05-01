@@ -38,24 +38,98 @@ const selectedIcon = computed(() => {
 
 const timeRangeItems: SelectMenuItem[][] = [
   [
-    { value: 'today', label: '今天' },
-    { value: 'last24hours', label: '最近 24 小时' },
+    {
+      value: 'today',
+      label: '今天',
+      onSelect() {
+        startAt.value = DateTime.now().startOf('day').toMillis()
+        endAt.value = DateTime.now().endOf('day').toMillis()
+      },
+    },
+    {
+      value: 'last24hours',
+      label: '最近 24 小时',
+      onSelect() {
+        startAt.value = DateTime.now()
+          .startOf('hour')
+          .minus({ hours: 23 })
+          .toMillis()
+        endAt.value = DateTime.now().endOf('hour').toMillis()
+      },
+    },
   ],
   [
-    { value: 'thisweek', label: '本周' },
-    { value: 'last7days', label: '最近 7 天' },
+    {
+      value: 'thisweek',
+      label: '本周',
+      onSelect() {
+        startAt.value = DateTime.now().startOf('week').toMillis()
+        endAt.value = DateTime.now().endOf('week').toMillis()
+      },
+    },
+    {
+      value: 'last7days',
+      label: '最近 7 天',
+      onSelect() {
+        startAt.value = DateTime.now()
+          .startOf('day')
+          .minus({ days: 6 })
+          .toMillis()
+        endAt.value = DateTime.now().endOf('day').toMillis()
+      },
+    },
   ],
   [
-    { value: 'thismonth', label: '本月' },
-    { value: 'last30days', label: '最近 30 天' },
+    {
+      value: 'thismonth',
+      label: '本月',
+      onSelect() {
+        startAt.value = DateTime.now().startOf('month').toMillis()
+        endAt.value = DateTime.now().endOf('month').toMillis()
+      },
+    },
+    {
+      value: 'last30days',
+      label: '最近 30 天',
+      onSelect() {
+        startAt.value = DateTime.now()
+          .startOf('day')
+          .minus({ days: 29 })
+          .toMillis()
+        endAt.value = DateTime.now().endOf('day').toMillis()
+      },
+    },
   ],
   [
-    { value: 'thisyear', label: '今年' },
-    { value: 'last12months', label: '最近 12 个月' },
+    {
+      value: 'thisyear',
+      label: '今年',
+      onSelect() {
+        startAt.value = DateTime.now().startOf('year').toMillis()
+        endAt.value = DateTime.now().endOf('year').toMillis()
+      },
+    },
+    {
+      value: 'last12months',
+      label: '最近 12 个月',
+      onSelect() {
+        startAt.value = DateTime.now()
+          .startOf('month')
+          .minus({ months: 11 })
+          .toMillis()
+        endAt.value = DateTime.now().endOf('month').toMillis()
+      },
+    },
   ],
   [
-    { value: 'all', label: '所有时间' },
-    { value: 'custom', label: '自定义' },
+    {
+      value: 'all',
+      label: '所有时间',
+    },
+    {
+      value: 'custom',
+      label: '自定义',
+    },
   ],
 ]
 
@@ -63,57 +137,6 @@ const startAt = defineModel<number>('startAt')
 const endAt = defineModel<number>('endAt')
 
 const selectedTimeRange = ref('last24hours')
-
-watch(selectedTimeRange, (newValue) => {
-  switch (newValue) {
-    case 'today':
-      startAt.value = DateTime.now().startOf('day').toMillis()
-      endAt.value = DateTime.now().endOf('day').toMillis()
-      break
-    case 'last24hours':
-      startAt.value = DateTime.now()
-        .startOf('hour')
-        .minus({ hours: 23 })
-        .toMillis()
-      endAt.value = DateTime.now().endOf('hour').toMillis()
-      break
-    case 'thisweek':
-      startAt.value = DateTime.now().startOf('week').toMillis()
-      endAt.value = DateTime.now().endOf('week').toMillis()
-      break
-    case 'last7days':
-      startAt.value = DateTime.now()
-        .startOf('day')
-        .minus({ days: 6 })
-        .toMillis()
-      endAt.value = DateTime.now().endOf('day').toMillis()
-      break
-    case 'thismonth':
-      startAt.value = DateTime.now().startOf('month').toMillis()
-      endAt.value = DateTime.now().endOf('month').toMillis()
-      break
-    case 'last30days':
-      startAt.value = DateTime.now()
-        .startOf('day')
-        .minus({ days: 29 })
-        .toMillis()
-      endAt.value = DateTime.now().endOf('day').toMillis()
-      break
-    case 'thisyear':
-      startAt.value = DateTime.now().startOf('year').toMillis()
-      endAt.value = DateTime.now().endOf('year').toMillis()
-      break
-    case 'last12months':
-      startAt.value = DateTime.now()
-        .startOf('month')
-        .minus({ months: 11 })
-        .toMillis()
-      endAt.value = DateTime.now().endOf('month').toMillis()
-      break
-    default:
-      break
-  }
-})
 </script>
 
 <template>

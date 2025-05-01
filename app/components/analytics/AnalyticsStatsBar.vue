@@ -6,6 +6,7 @@ const props = defineProps<{
 }>()
 
 const { data, status } = await useFetch('/api/analytics/stats', {
+  key: 'analytics-stats',
   query: props,
 })
 
