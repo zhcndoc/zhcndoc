@@ -43,22 +43,22 @@ const _pct = useTransition(pct, {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col gap-2">
     <div class="text-sm font-bold text-nowrap">{{ label }}</div>
     <div
       v-if="!loading"
-      class="text-4xl leading-[1.5] font-bold text-nowrap"
+      class="h-10 text-4xl font-bold text-nowrap"
       :title="value.toString()"
     >
       {{ formatValue(_value) }}
     </div>
-    <USkeleton v-else class="my-2 h-[38px] w-36" />
+    <USkeleton v-else class="h-10 w-36" />
     <UBadge
       v-if="!loading"
       :icon="changeIcon"
       :color="changeColor"
       variant="soft"
-      class="font-bold"
+      class="w-fit font-bold"
     >
       {{ `${Math.abs(~~_pct)}%` }}
     </UBadge>

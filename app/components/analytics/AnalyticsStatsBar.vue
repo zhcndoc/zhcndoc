@@ -68,8 +68,8 @@ const metrics = computed(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-[3fr_1fr] gap-4">
-    <div class="relative grid w-full grid-cols-5 gap-2">
+  <div class="grid gap-4 lg:grid-cols-[3fr_1fr]">
+    <div class="relative grid w-full grid-cols-3 gap-3 lg:grid-cols-5">
       <template v-for="item in metrics" :key="item.label">
         <AnalyticsMetricCard
           :loading="status === 'pending'"
