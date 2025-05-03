@@ -66,6 +66,18 @@ const chartOptions = computed<ECOption>(() => {
     xAxis: {
       type: 'category',
       data: xAxisData.value,
+      axisLabel: {
+        formatter(value: string) {
+          if (unit.value === 'hour') {
+            return DateTime.fromSQL(value).toFormat('HH:mm')
+          } else if (unit.value === 'day') {
+            return DateTime.fromSQL(value).toFormat('MM-dd')
+          } else if (unit.value === 'month') {
+            return DateTime.fromSQL(value).toFormat('yyyy-MM')
+          }
+          return value
+        },
+      },
     },
     yAxis: {
       type: 'value',
