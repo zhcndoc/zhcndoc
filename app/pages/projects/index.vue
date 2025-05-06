@@ -9,7 +9,7 @@ const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects', {
 </script>
 
 <template>
-  <UContainer class="py-4">
+  <UContainer class="py-8">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <template v-for="project in projects" :key="project.name">
         <UPageCard
@@ -24,7 +24,8 @@ const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects', {
                 <NuxtLink :to="`/projects/${project.name}`">
                   <img
                     :src="`/images/projects/${project.name}.svg`"
-                    class="h-full w-full object-cover object-center"
+                    class="bg-elevated h-full w-full object-cover object-center"
+                    loading="lazy"
                   />
                 </NuxtLink>
               </div>
