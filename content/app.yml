@@ -215,3 +215,11 @@ projects:
       repo: website
       branch: main
       link: https://www.radix-ui.com
+  - name: tiptap
+    description: 可扩展的富文本编辑器框架，支持协作编辑、AI 集成和丰富的扩展生态。
+    type: translate
+    upstream:
+      owner: ueberdosis
+      repo: tiptap-docs
+      branch: next
+      link: https://tiptap.dev
