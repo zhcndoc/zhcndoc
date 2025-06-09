@@ -16,18 +16,15 @@ const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects', {
           :ui="{
             container: 'p-3 sm:p-4',
           }"
-          @click="navigateTo(`/projects/${project.name}`)"
         >
           <div class="flex flex-col">
             <div class="flex gap-4">
               <div class="h-20 min-w-20 overflow-hidden rounded-xl">
-                <NuxtLink :to="`/projects/${project.name}`">
                   <img
                     :src="`/images/projects/${project.name}.svg`"
                     class="bg-elevated h-full w-full object-cover object-center"
                     loading="lazy"
                   />
-                </NuxtLink>
               </div>
               <div class="flex min-w-0 flex-1 flex-col gap-2">
                 <h2 class="font-sans text-lg font-semibold">
