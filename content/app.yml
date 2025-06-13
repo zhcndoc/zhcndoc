@@ -118,7 +118,7 @@ projects:
       owner: nuxt
       repo: nuxt
       branch: main
-      link: https://nuxtjs.org
+      link: https://nuxt.com
   - name: nuxt-examples
     description: 官方 Nuxt 示例，展示最佳实践和项目模板。
     type: translate
@@ -126,7 +126,7 @@ projects:
       owner: nuxt
       repo: examples
       branch: main
-      link: https://nuxtjs.org/examples
+      link: https://nuxt.com
   - name: vite
     description: 极速前端构建工具，支持模块热替换，优化现代 Web 开发体验。
     type: mirror
@@ -231,3 +231,19 @@ projects:
       repo: BlockNote
       branch: main
       link: https://www.blocknotejs.org
+  - name: zod
+    description: TypeScript 优先的模式验证与静态类型推断，提供类型安全的验证和解析。
+    type: translate
+    upstream:
+      owner: colinhacks
+      repo: zod
+      branch: main
+      link: https://zod.dev
+  - name: nuxt-content
+    description: 基于 Git 的 Nuxt 项目内容管理系统，提供一种简单的方式管理内容。
+    type: translate
+    upstream:
+      owner: nuxt
+      repo: content
+      branch: main
+      link: https://content.nuxt.com
