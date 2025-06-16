@@ -29,11 +29,15 @@ jobs:
       max-parallel: 5
 
     steps:
-      - name: Sync ${{ matrix.name }}
-        uses: ikxin/sync-upstream@main
+      - uses: actions/checkout@v4
         with:
-          github_token: ${{ secrets.SYNC_TOKEN }}
-          target_repository: 'zhcndoc/${{ matrix.name }}'
-          target_branch: 'upstream'
-          upstream_repository: '${{ matrix.owner }}/${{ matrix.repo }}'
-          upstream_branch: '${{ matrix.branch }}'
+          token: ${{ secrets.SYNC_TOKEN }}
+          repository: zhcndoc/${{ matrix.name }}
+
+      - name: Sync ${{ matrix.name }}
+        run: |
+          git remote add upstream https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git
+          git fetch upstream ${{ matrix.branch }}
+          git checkout -B upstream
+          git reset --hard upstream/${{ matrix.branch }}
+          git push origin upstream --force
