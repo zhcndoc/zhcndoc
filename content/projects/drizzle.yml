@@ -1,0 +1,8 @@
+name: drizzle
+description: 轻量级 TypeScript ORM，支持静态 SQL 语法，类型安全且易扩展。
+type: translate
+upstream:
+  owner: drizzle-team
+  repo: drizzle-orm-docs
+  branch: main
+  link: https://orm.drizzle.team

@@ -1,0 +1,8 @@
+name: elysia
+description: 基于 Bun 构建的高性能 TypeScript 后端框架，提供极致开发体验。
+type: translate
+upstream:
+  owner: elysiajs
+  repo: documentation
+  branch: main
+  link: https://elysiajs.com
