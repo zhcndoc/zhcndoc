@@ -1,0 +1,8 @@
+name: node
+description: 基于 V8 引擎的 JavaScript 运行时，适用于构建高性能后端应用。
+type: mirror
+upstream:
+  owner: nodejs
+  repo: nodejs.org
+  branch: main
+  link: https://nodejs.org

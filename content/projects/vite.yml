@@ -1,0 +1,8 @@
+name: vite
+description: 极速前端构建工具，支持模块热替换，优化现代 Web 开发体验。
+type: mirror
+upstream:
+  owner: vitejs
+  repo: docs-cn
+  branch: main
+  link: https://vitejs.dev

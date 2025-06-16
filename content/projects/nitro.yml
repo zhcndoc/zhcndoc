@@ -1,0 +1,8 @@
+name: nitro
+description: 通用服务器端框架，支持多种运行环境，驱动 Nuxt 后端能力。
+type: translate
+upstream:
+  owner: nitrojs
+  repo: nitro
+  branch: v3
+  link: https://nitro.build

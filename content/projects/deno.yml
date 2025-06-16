@@ -1,0 +1,8 @@
+name: deno
+description: 安全高效的 JavaScript 和 TypeScript 运行时，内置现代标准库。
+type: translate
+upstream:
+  owner: denoland
+  repo: docs
+  branch: main
+  link: https://deno.com

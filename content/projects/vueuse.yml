@@ -1,0 +1,8 @@
+name: vueuse
+description: 基于 Vue 组合式 API 的工具库，提供丰富的实用函数，提升开发效率。
+type: translate
+upstream:
+  owner: vueuse
+  repo: vueuse
+  branch: main
+  link: https://vueuse.org

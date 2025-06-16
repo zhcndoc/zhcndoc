@@ -1,0 +1,8 @@
+name: react
+description: 声明式 UI 库，专注于组件化开发，提升前端交互体验。
+type: mirror
+upstream:
+  owner: reactjs
+  repo: zh-hans.react.dev
+  branch: main
+  link: https://react.dev

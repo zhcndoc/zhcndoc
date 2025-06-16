@@ -1,0 +1,8 @@
+name: astro
+description: 现代 Web 框架，专注于构建快速、优化良好的静态网站。
+type: mirror
+upstream:
+  owner: withastro
+  repo: docs
+  branch: main
+  link: https://astro.build

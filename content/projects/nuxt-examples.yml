@@ -1,0 +1,8 @@
+name: nuxt-examples
+description: 官方 Nuxt 示例，展示最佳实践和项目模板。
+type: translate
+upstream:
+  owner: nuxt
+  repo: examples
+  branch: main
+  link: https://nuxt.com

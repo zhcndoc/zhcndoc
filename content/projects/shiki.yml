@@ -1,0 +1,8 @@
+name: shiki
+description: 基于 VS Code 语法高亮的代码着色库，支持多种主题和语言。
+type: translate
+upstream:
+  owner: shikijs
+  repo: shiki
+  branch: main
+  link: https://shiki.style

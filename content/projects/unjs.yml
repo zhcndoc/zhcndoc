@@ -1,0 +1,8 @@
+name: unjs
+description: 高效的 JavaScript 工具库生态，提供多种实用开发工具和框架。
+type: translate
+upstream:
+  owner: unjs
+  repo: website
+  branch: main
+  link: https://unjs.io

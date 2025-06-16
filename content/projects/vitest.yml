@@ -1,0 +1,8 @@
+name: vitest
+description: Vite 生态的极速单元测试框架，支持原生 ES 模块和 TypeScript。
+type: mirror
+upstream:
+  owner: vitest-dev
+  repo: docs-cn
+  branch: dev
+  link: https://vitest.dev

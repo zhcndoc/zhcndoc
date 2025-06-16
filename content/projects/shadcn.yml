@@ -1,0 +1,8 @@
+name: shadcn
+description: 基于 Radix UI 的现代 React 组件库，提供简洁优雅的 UI 设计。
+type: translate
+upstream:
+  owner: shadcn-ui
+  repo: ui
+  branch: main
+  link: https://ui.shadcn.com

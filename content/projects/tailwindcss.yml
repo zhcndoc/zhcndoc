@@ -1,0 +1,8 @@
+name: tailwindcss
+description: 实用优先的原子 CSS 框架，提供灵活的样式组合和优化体验。
+type: translate
+upstream:
+  owner: tailwindlabs
+  repo: tailwindcss.com
+  branch: main
+  link: https://tailwindcss.com

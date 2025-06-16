@@ -1,0 +1,8 @@
+name: vue
+description: 渐进式 JavaScript 框架，提供组件化开发模式，专注于 UI 构建。
+type: mirror
+upstream:
+  owner: vuejs-translations
+  repo: docs-zh-cn
+  branch: main
+  link: https://vuejs.org

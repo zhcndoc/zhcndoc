@@ -1,0 +1,8 @@
+name: blocknote
+description: 面向 React 的基于块的富文本编辑器，以最小的配置提供出色的体验。
+type: translate
+upstream:
+  owner: TypeCellOS
+  repo: BlockNote
+  branch: main
+  link: https://www.blocknotejs.org

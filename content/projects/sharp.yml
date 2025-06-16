@@ -1,0 +1,8 @@
+name: sharp
+description: 高性能 Node.js 图片处理库，支持多种格式和高效转换。
+type: translate
+upstream:
+  owner: lovell
+  repo: sharp
+  branch: main
+  link: https://sharp.pixelplumbing.com

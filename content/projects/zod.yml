@@ -1,0 +1,8 @@
+name: zod
+description: TypeScript 优先的模式验证与静态类型推断，提供类型安全的验证和解析。
+type: translate
+upstream:
+  owner: colinhacks
+  repo: zod
+  branch: main
+  link: https://zod.dev

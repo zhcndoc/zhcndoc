@@ -1,0 +1,8 @@
+name: konva
+description: 专为 HTML5 Canvas 画布设计的 2D 图形库，支持交互和动画。
+type: translate
+upstream:
+  owner: konvajs
+  repo: site
+  branch: new
+  link: https://konvajs.org

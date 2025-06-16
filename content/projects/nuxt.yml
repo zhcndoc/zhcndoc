@@ -1,0 +1,8 @@
+name: nuxt
+description: 基于 Vue.js 的全栈应用框架，支持服务端渲染和静态站点生成。
+type: translate
+upstream:
+  owner: nuxt
+  repo: nuxt.com
+  branch: main
+  link: https://nuxt.com

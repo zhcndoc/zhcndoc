@@ -1,0 +1,8 @@
+name: h3
+description: 轻量级 HTTP 处理框架，适用于 Nitro，提供高效 API 开发能力。
+type: translate
+upstream:
+  owner: h3js
+  repo: h3
+  branch: main
+  link: https://h3.dev

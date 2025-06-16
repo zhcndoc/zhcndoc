@@ -1,0 +1,8 @@
+name: nuxt-docs
+description: 官方 Nuxt 文档，提供详细的框架指南和 API 参考。
+type: translate
+upstream:
+  owner: nuxt
+  repo: nuxt
+  branch: main
+  link: https://nuxt.com

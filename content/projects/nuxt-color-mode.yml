@@ -1,0 +1,8 @@
+name: nuxt-color-mode
+description: Nuxt 生态的主题模式管理插件，支持多种配色方案。
+type: translate
+upstream:
+  owner: nuxt-modules
+  repo: color-mode
+  branch: main
+  link: https://color-mode.nuxt.dev
