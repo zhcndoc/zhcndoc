@@ -45,9 +45,11 @@ export default defineCachedEventHandler(
       after = result.organization.repositories.pageInfo.endCursor
     }
 
-    const appConfig = await queryCollection(event, 'app').first()
+    const projects = await queryCollection(event, 'projects')
+      .order('name', 'ASC')
+      .all()
 
-    const filteredRepos = appConfig?.projects.filter((repo) => {
+    const filteredRepos = projects.filter((repo) => {
       if (scope === 'all') {
         return true
       } else {
@@ -59,7 +61,10 @@ export default defineCachedEventHandler(
       const repo = repos.find((repo) => repo?.name === project.name)!
 
       return {
-        ...project,
+        name: project.name,
+        description: project.description,
+        type: project.type,
+        upstream: project.upstream,
         title: repo.description || '',
         link: repo.homepageUrl || '',
         license: repo.licenseInfo?.name || '',
