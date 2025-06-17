@@ -6,7 +6,7 @@ const comments = [
       name: 'Liang',
       description: '@lianginx',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/lianginx',
+        src: 'https://mark.ikxin.com/github/lianginx',
       },
     },
   },
@@ -16,7 +16,7 @@ const comments = [
       name: '馬腊咯稽',
       description: '@ElementRef',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/ElementRef',
+        src: 'https://mark.ikxin.com/github/ElementRef',
       },
     },
   },
@@ -26,7 +26,7 @@ const comments = [
       name: 'libchaos',
       description: '@libchaos',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/libchaos',
+        src: 'https://mark.ikxin.com/github/libchaos',
       },
     },
   },
@@ -36,7 +36,7 @@ const comments = [
       name: 'Ali_Eljerrari',
       description: '@ali-eljerrari',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/ali-eljerrari',
+        src: 'https://mark.ikxin.com/github/ali-eljerrari',
       },
     },
   },
@@ -46,7 +46,7 @@ const comments = [
       name: 'Yu Hengliang',
       description: '@yuhengliang',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/yuhengliang',
+        src: 'https://mark.ikxin.com/github/yuhengliang',
       },
     },
   },
@@ -56,7 +56,7 @@ const comments = [
       name: 'PP Kun',
       description: '@PPKunOfficial',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/PPKunOfficial',
+        src: 'https://mark.ikxin.com/github/PPKunOfficial',
       },
     },
   },
@@ -66,7 +66,7 @@ const comments = [
       name: 'YassineZhang',
       description: '@yassine-zhang',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/yassine-zhang',
+        src: 'https://mark.ikxin.com/github/yassine-zhang',
       },
     },
   },
@@ -76,7 +76,7 @@ const comments = [
       name: 'David Muriithi',
       description: '@BarriosXJavier',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/BarriosXJavier',
+        src: 'https://mark.ikxin.com/github/BarriosXJavier',
       },
     },
   },
@@ -86,7 +86,7 @@ const comments = [
       name: 'winnie xiong',
       description: '@winnie-xzh',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/winnie-xzh',
+        src: 'https://mark.ikxin.com/github/winnie-xzh',
       },
     },
   },
@@ -96,7 +96,7 @@ const comments = [
       name: 'nnqqss',
       description: '@nnqqss',
       avatar: {
-        src: 'https://avatar.ikxin.com/github/nnqqss',
+        src: 'https://mark.ikxin.com/github/nnqqss',
       },
     },
   },
