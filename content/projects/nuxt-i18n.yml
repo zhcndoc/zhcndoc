@@ -4,5 +4,5 @@ type: translate
 upstream:
   owner: nuxt-modules
   repo: i18n
-  branch: next
+  branch: main
   link: https://i18n.nuxtjs.org
