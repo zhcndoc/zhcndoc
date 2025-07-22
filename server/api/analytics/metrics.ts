@@ -26,15 +26,21 @@ const querySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { data: query, success } = await getValidatedQuery(event, (query) =>
-    querySchema.safeParse(query),
+  const { data: query, success } = await getValidatedQuery(
+    event,
+    querySchema.safeParse,
   )
 
   if (!success) return
 
-  const { data } = await umami.getWebsiteMetrics(
-    'f0e90b0d-e086-4fdc-b173-de4857b71900',
-    query,
+  const data = await umami<AnalyticsMetric[]>(
+    `/websites/${UMAMI_WEBSITE_ID}/metrics`,
+    {
+      query: {
+        ...query,
+        timezone: 'Asia/Shanghai',
+      },
+    },
   )
 
   return data

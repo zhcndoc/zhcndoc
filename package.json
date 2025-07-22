@@ -24,7 +24,8 @@
     "luxon": "^3.7.1",
     "nuxt": "^4.0.0",
     "nuxt-echarts": "^0.4.0",
-    "octokit": "^5.0.3"
+    "octokit": "^5.0.3",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.6.0",

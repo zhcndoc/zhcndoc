@@ -17,3 +17,8 @@ export interface AnalyticsPageviews {
     y: number
   }[]
 }
+
+export interface AnalyticsMetric {
+  x: string
+  y: number
+}
