@@ -4,5 +4,5 @@ type: translate
 upstream:
   owner: nitrojs
   repo: nitro
-  branch: v3
+  branch: main
   link: https://nitro.build
