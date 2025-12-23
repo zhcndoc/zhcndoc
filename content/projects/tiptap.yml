@@ -4,5 +4,5 @@ type: translate
 upstream:
   owner: ueberdosis
   repo: tiptap-docs
-  branch: next
+  branch: main
   link: https://tiptap.dev
