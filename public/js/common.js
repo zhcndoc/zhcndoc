@@ -15,17 +15,22 @@ function loadUmami() {
   document.head.appendChild(script)
 }
 
-function loadWwads() {
-  const script = document.createElement('script')
-  script.type = 'text/javascript'
-  script.charset = 'UTF-8'
-  script.src = 'https://cdn.wwads.cn/js/makemoney.js'
-  script.async = true
-  document.head.appendChild(script)
+function loadCopyright() {
+  const copyright = document.getElementById('zhcndoc-copyright');
+  
+  if (copyright) {
+    copyright.innerHTML = `
+      <p style="text-decoration: none;">
+        <a target="_blank" href="https://www.zhcndoc.com">简中文档</a>
+        <span> | </span>
+        <a rel="nofollow" target="_blank" href="https://beian.miit.gov.cn">沪ICP备2024070610号-3</a>
+      </p>
+    `;
+  }
 }
 
 if (window.location.hostname.endsWith('zhcndoc.com')) {
   loadBaiduAnalytics()
   loadUmami()
-  loadWwads()
+  loadCopyright()
 }
