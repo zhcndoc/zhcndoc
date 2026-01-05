@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxt/eslint',
-    '@nuxt/ui-pro',
+    '@nuxt/ui',
     '@vueuse/nuxt',
     'nuxt-echarts',
   ],
