@@ -1,0 +1,8 @@
+name: bun
+description: 用于开发现代化 JavaScript 和 TypeScript 应用的一体化工具包。
+type: translate
+upstream:
+  owner: oven-sh
+  repo: bun
+  branch: main
+  link: https://bun.com
