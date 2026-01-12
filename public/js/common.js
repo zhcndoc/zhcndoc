@@ -47,7 +47,7 @@ function loadSwalAndRun() {
             <p>雨云是一家国产云计算服务提供商，提供常见开发与部署场景的云服务产品，包括：</p>
             <ul style="margin:12px 0px 12px 16px; list-style: disc;">
               <li>☁️ 云服务器、🛡️ 物理机、🖥️ 显卡云</li>
-              <li>🌐 域名注册、🚀 CDN 加速、🔒 SSL 证书</li>
+              <li>🌐 域名注册、🔒 SSL 证书、🚀 CDN</li>
               <li>🐳 Docker 云应用、📦 对象存储</li>
             </ul>
             <p>
@@ -64,12 +64,20 @@ function loadSwalAndRun() {
         preConfirm: () => {
           window.open('https://www.rainyun.com/mm_?s=zhcndoc', '_blank')
         },
+        didOpen: () => {
+          Swal.getConfirmButton().dataset.umamiEvent = 'ads-rainyun-confirm'
+          Swal.getCancelButton().dataset.umamiEvent = 'ads-rainyun-cancel'
+        },
       }).then((result) => {
         if (result.dismiss === Swal.DismissReason.cancel) {
           localStorage.setItem(STORAGE_KEY, today)
         }
       })
     }
+  }
+
+  script.onerror = () => {
+    console.error('SweetAlert2 脚本加载失败')
   }
 
   document.head.appendChild(script)
