@@ -15,6 +15,15 @@ function loadUmami() {
   document.head.appendChild(script)
 }
 
+function loadWwads() {
+  const script = document.createElement('script')
+  script.type = 'text/javascript'
+  script.charset = 'UTF-8'
+  script.src = 'https://cdn.wwads.cn/js/makemoney.js'
+  script.async = true
+  document.head.appendChild(script)
+}
+
 function loadSwalAndRun() {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSwal)
@@ -93,4 +102,5 @@ if (window.location.hostname.endsWith('zhcndoc.com')) {
   loadUmami()
 }
 
+loadWwads()
 loadSwalAndRun()
