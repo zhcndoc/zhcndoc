@@ -33,7 +33,8 @@ function loadSwalAndRun() {
 
   function initSwal() {
     const style = document.createElement('style')
-    style.textContent = `.swal2-popup { max-width: 290px; }
+    style.textContent = `.swal2-container { background-color: #0000 !important; pointer-events: none !important;}
+      .swal2-popup { max-width: 290px !important; }
       .swal2-html-container { margin: 0 !important; padding: 2px !important; }
       .swal2-actions { justify-content: flex-end !important; gap: 10px !important; padding: 0 !important; }
       .swal2-styled { margin: 0 !important; padding: 8px !important; font-size: 14px !important; border: none !important; }
@@ -56,7 +57,6 @@ function loadSwalAndRun() {
       if (noRemindDate !== today) {
         Swal.fire({
           allowEscapeKey: false,
-          allowOutsideClick: false,
           cancelButtonText: '稍后再看',
           confirmButtonText: '了解详情',
           position: 'bottom-end',
@@ -64,16 +64,16 @@ function loadSwalAndRun() {
           toast: true,
           html: `
             <div style="text-align: justify; line-height: 1.8; font-size: 15px;">
-              <p><span style="color: #ff3f57; font-weight: bold;">简中文档</span>由社区提供维护，随着访问量不断增长，服务器与 CDN 等基础设施成本也在持续增加。</p>
-              <p>为了文档能够稳定、长期地运行下去，我们与<span style="color: #ff3f57; font-weight: bold;">雨云</span>建立合作关系，由其为本项目提供技术支持。</p>
-              <h2 style="font-size: 17px; font-weight: 900; line-height: 2;">为什么选择雨云</h2>
-              <p>雨云是一家国产云计算服务商，提供常见开发与部署场景的云服务产品：</p>
-              <ul style="margin: 6px 0px; font-size: 14px;">
+              <p style="margin: 0;"><span style="color: #ff3f57; font-weight: bold;">简中文档</span>由社区提供维护，随着访问量不断增长，服务器与 CDN 等基础设施成本也在持续增加。</p>
+              <p style="margin: 0;">为了文档能够稳定、长期地运行下去，我们与<span style="color: #ff3f57; font-weight: bold;">雨云</span>建立合作关系，由其为本项目提供技术支持。</p>
+              <h2 style="margin: 0; font-size: 17px; font-weight: 900; line-height: 2;">为什么选择雨云</h2>
+              <p style="margin: 0;">雨云是一家国产云计算服务商，提供常见开发与部署场景的云服务产品：</p>
+              <ul style="margin: 6px 0px; font-size: 14px; padding-inline-start: 0; list-style-type: none;">
                 <li>☁️ 云服务器、🛡️ 物理机、🖥️ 显卡云</li>
                 <li>🌐 域名注册、🔒 SSL 证书、🚀 CDN</li>
                 <li>🐳 Docker 云应用、📦 对象存储</li>
               </ul>
-              <p>如果您<span style="color: #ff3f57; font-weight: bold;">正好有相关需求</span>，可以了解一下雨云的产品。</p>
+              <p style="margin: 0;">如果您<span style="color: #ff3f57; font-weight: bold;">正好有相关需求</span>，可以了解一下雨云的产品。</p>
             </div>
           `,
           preConfirm: () => {
@@ -83,7 +83,6 @@ function loadSwalAndRun() {
           },
           didOpen: () => {
             Swal.getConfirmButton().dataset.umamiEvent = 'ads-swal-click'
-            // Swal.getCancelButton().dataset.umamiEvent = 'ads-swal-close'
           },
         }).then((result) => {
           if (result.dismiss === Swal.DismissReason.cancel) {
