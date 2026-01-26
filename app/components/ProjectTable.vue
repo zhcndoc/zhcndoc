@@ -18,7 +18,7 @@ const tableColumns: TableColumn<ProjectInfo>[] = [
         label: row.original.title,
         target: '_blank',
         to: row.original.link,
-        trailingIcon: 'tabler:external-link',
+        trailingIcon: row.original.link ? 'tabler:external-link' : undefined,
         variant: 'ghost',
       })
     },
