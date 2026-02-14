@@ -1,0 +1,8 @@
+name: react-native
+description: 基于 React 的跨平台移动应用开发框架，复用 React 语法逻辑。
+type: translate
+upstream:
+  owner: facebook
+  repo: react-native
+  branch: main
+  link: https://reactnative.dev

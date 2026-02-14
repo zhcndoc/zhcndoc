@@ -1,0 +1,8 @@
+name: typeorm
+description: 提供类型安全的实体映射与查询构建，简化数据库操作。
+type: translate
+upstream:
+  owner: typeorm
+  repo: typeorm
+  branch: master
+  link: https://typeorm.io

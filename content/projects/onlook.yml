@@ -1,0 +1,8 @@
+name: onlook
+description: 专属于设计师的 Cursor，浏览器内实时编辑设计，更改自动同步至代码。
+type: translate
+upstream:
+  owner: onlook-dev
+  repo: onlook
+  branch: main
+  link: https://docs.onlook.com

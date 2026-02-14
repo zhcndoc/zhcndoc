@@ -1,0 +1,8 @@
+name: redux
+description: 单向数据流的状态管理库，解耦组件通信，适配复杂应用的状态管控。
+type: translate
+upstream:
+  owner: reduxjs
+  repo: redux
+  branch: master
+  link: https://redux.js.org
