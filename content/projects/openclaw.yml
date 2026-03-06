@@ -1,0 +1,8 @@
+name: openclaw
+description: 可在本地运行的个人 AI 助手平台，支持多渠道接入与自动化能力。
+type: translate
+upstream:
+  owner: openclaw
+  repo: openclaw
+  branch: main
+  link: https://openclaw.ai

@@ -1,0 +1,8 @@
+name: next-intl
+description: 面向 Next.js 的国际化解决方案，提供类型安全、多语言路由和格式化能力。
+type: translate
+upstream:
+  owner: amannn
+  repo: next-intl
+  branch: main
+  link: https://next-intl.dev

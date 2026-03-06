@@ -1,0 +1,8 @@
+name: better-auth
+description: 面向 Web 的认证框架，提供开箱即用的账号体系与可扩展插件生态。
+type: translate
+upstream:
+  owner: better-auth
+  repo: better-auth
+  branch: canary
+  link: https://better-auth.com
