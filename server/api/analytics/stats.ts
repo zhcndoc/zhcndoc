@@ -3,7 +3,7 @@ import { z } from 'zod'
 const { startAt, endAt } = getTimeRange()
 
 const querySchema = z.object({
-  host: z
+  hostname: z
     .string()
     .transform((val) => (val === 'www.zhcndoc.com' ? undefined : val))
     .optional(),
@@ -26,5 +26,18 @@ export default defineEventHandler(async (event) => {
     },
   )
 
-  return data
+  return {
+    pageviews: Number(data?.pageviews ?? 0),
+    visits: Number(data?.visits ?? 0),
+    visitors: Number(data?.visitors ?? 0),
+    bounces: Number(data?.bounces ?? 0),
+    totaltime: Number(data?.totaltime ?? 0),
+    comparison: {
+      pageviews: Number(data?.comparison?.pageviews ?? 0),
+      visits: Number(data?.comparison?.visits ?? 0),
+      visitors: Number(data?.comparison?.visitors ?? 0),
+      bounces: Number(data?.comparison?.bounces ?? 0),
+      totaltime: Number(data?.comparison?.totaltime ?? 0),
+    },
+  } satisfies AnalyticsStats
 })

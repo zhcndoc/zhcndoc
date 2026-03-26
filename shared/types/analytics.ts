@@ -1,9 +1,16 @@
 export interface AnalyticsStats {
-  pageviews: { prev: number; value: number }
-  visits: { prev: number; value: number }
-  visitors: { prev: number; value: number }
-  bounces: { prev: number; value: number }
-  totaltime: { prev: number; value: number }
+  pageviews: number
+  visits: number
+  visitors: number
+  bounces: number
+  totaltime: number
+  comparison?: {
+    pageviews: number
+    visits: number
+    visitors: number
+    bounces: number
+    totaltime: number
+  }
 }
 
 export interface AnalyticsPageviews {

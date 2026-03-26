@@ -18,6 +18,12 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   compatibilityDate: '2025-01-20',
+
+  vite: {
+    optimizeDeps: {
+      include: ['@vue/devtools-core', '@vue/devtools-kit', 'luxon'],
+    },
+  },
   echarts: {
     charts: ['BarChart'],
     components: [

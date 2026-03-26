@@ -5,24 +5,35 @@ const { startAt, endAt } = getTimeRange()
 const querySchema = z.object({
   type: z
     .enum([
-      'url',
+      'path',
+      'entry',
+      'exit',
       'referrer',
       'title',
       'query',
-      'host',
+      'channel',
+      'domain',
       'os',
       'browser',
       'device',
+      'screen',
       'country',
       'region',
       'city',
       'language',
       'event',
+      'hostname',
+      'tag',
+      'distinctId',
     ])
-    .default('host'),
-  startAt: z.number().default(startAt),
-  endAt: z.number().default(endAt),
-  limit: z.number().positive().default(10),
+    .default('hostname'),
+  hostname: z
+    .string()
+    .transform((val) => (val === 'www.zhcndoc.com' ? undefined : val))
+    .optional(),
+  startAt: z.coerce.number().default(startAt),
+  endAt: z.coerce.number().default(endAt),
+  limit: z.coerce.number().positive().default(10),
 })
 
 export default defineEventHandler(async (event) => {

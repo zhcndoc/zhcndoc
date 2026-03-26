@@ -29,7 +29,7 @@ const siteItems = computed(() => {
   return items
 })
 
-const selectedSite = defineModel<string>('host')
+const selectedSite = defineModel<string>('hostname')
 
 const selectedIcon = computed(() => {
   const prefix = selectedSite.value?.replace(/.zhcndoc.com/, '')

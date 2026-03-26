@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const props = defineProps<{
-  host: string
   startAt: number
   endAt: number
+  hostname: string
 }>()
 
 const { data, status } = await useFetch('/api/analytics/stats', {
@@ -12,52 +12,58 @@ const { data, status } = await useFetch('/api/analytics/stats', {
 
 const metrics = computed(() => {
   if (data.value) {
+    const prev = data.value.comparison
+
+    const pageviews = data.value.pageviews || 0
+    const visits = data.value.visits || 0
+    const visitors = data.value.visitors || 0
+    const bounces = data.value.bounces || 0
+    const totaltime = data.value.totaltime || 0
+
+    const prevPageviews = prev?.pageviews || 0
+    const prevVisits = prev?.visits || 0
+    const prevVisitors = prev?.visitors || 0
+    const prevBounces = prev?.bounces || 0
+    const prevTotaltime = prev?.totaltime || 0
+
+    const bounceRate = visits ? (Math.min(visits, bounces) / visits) * 100 : 0
+    const prevBounceRate = prevVisits
+      ? (Math.min(prevVisits, prevBounces) / prevVisits) * 100
+      : 0
+
+    const avgTime = visits ? totaltime / visits : 0
+    const prevAvgTime = prevVisits ? prevTotaltime / prevVisits : 0
+
     return [
       {
-        ...data.value?.pageviews,
+        value: pageviews,
         label: '浏览量',
-        change: data.value?.pageviews.value - data.value?.pageviews.prev,
+        change: pageviews - prevPageviews,
         formatValue: formatLongNumber,
       },
       {
-        ...data.value?.visits,
+        value: visits,
         label: '访问次数',
-        change: data.value?.visits.value - data.value?.visits.prev,
+        change: visits - prevVisits,
         formatValue: formatLongNumber,
       },
       {
-        ...data.value?.visitors,
+        value: visitors,
         label: '访客',
-        change: data.value?.visitors.value - data.value?.visitors.prev,
+        change: visitors - prevVisitors,
         formatValue: formatLongNumber,
       },
       {
         label: '跳出率',
-        value:
-          (Math.min(data.value?.visits.value, data.value?.bounces.value) /
-            data.value?.visits.value) *
-            100 || 0,
-        prev:
-          (Math.min(data.value?.visits.prev, data.value?.bounces.prev) /
-            data.value?.visits.prev) *
-            100 || 0,
-        change:
-          (Math.min(data.value?.visits.value, data.value?.bounces.value) /
-            data.value?.visits.value) *
-            100 -
-          (Math.min(data.value?.visits.prev, data.value?.bounces.prev) /
-            data.value?.visits.prev) *
-            100,
+        value: bounceRate,
+        change: bounceRate - prevBounceRate,
         formatValue: (value: number) => Math.round(+value) + '%',
         reverseColors: true,
       },
       {
         label: '平均时间',
-        value: data.value?.totaltime.value / data.value?.visits.value || 0,
-        prev: data.value?.totaltime.prev / data.value?.visits.prev || 0,
-        change:
-          data.value?.totaltime.value / data.value?.visits.value -
-            data.value?.totaltime.prev / data.value?.visits.prev || 0,
+        value: avgTime,
+        change: avgTime - prevAvgTime,
         formatValue: formatSeconds,
       },
     ]

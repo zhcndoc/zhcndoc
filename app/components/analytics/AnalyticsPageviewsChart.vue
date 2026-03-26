@@ -2,9 +2,9 @@
 import { DateTime } from 'luxon'
 
 const props = defineProps<{
-  host: string
   startAt: number
   endAt: number
+  hostname: string
 }>()
 
 const { data: pageviews, status } = useFetch('/api/analytics/pageviews', {
