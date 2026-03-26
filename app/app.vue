@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { zh_cn } from '@nuxt/ui/locale'
+
 useHead({
   title: '简中文档 - 由开源社区提供支持的中文技术文档',
   meta: [
@@ -25,7 +27,7 @@ useHead({
 </script>
 
 <template>
-  <UApp>
+  <UApp :locale="zh_cn">
     <NuxtLoadingIndicator />
     <NuxtLayout>
       <NuxtPage />

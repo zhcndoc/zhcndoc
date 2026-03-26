@@ -29,3 +29,8 @@ export interface AnalyticsMetric {
   x: string
   y: number
 }
+
+export interface AnalyticsDateRange {
+  startAt: number
+  endAt: number
+}
