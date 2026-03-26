@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { getTimeRange } from '#shared/utils/time'
+import type { AnalyticsMetric } from '#shared/types/analytics'
 
 const { startAt, endAt } = getTimeRange()
 

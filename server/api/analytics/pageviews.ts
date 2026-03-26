@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { getTimeRange, getUnitByTime } from '#shared/utils/time'
+import type { AnalyticsPageviews } from '#shared/types/analytics'
 
 const { startAt, endAt } = getTimeRange()
 

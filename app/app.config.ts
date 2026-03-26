@@ -1,4 +1,6 @@
-export default defineAppConfig({
+import type { AppConfigInput } from 'nuxt/schema'
+
+export default {
   ui: {
     colors: {
       primary: 'cyan',
@@ -15,4 +17,4 @@ export default defineAppConfig({
       },
     },
   },
-})
+} satisfies AppConfigInput

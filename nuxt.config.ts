@@ -15,13 +15,44 @@ export default defineNuxtConfig({
     name: '简中文档',
   },
   future: {
-    compatibilityVersion: 4,
+    compatibilityVersion: 5,
   },
-  compatibilityDate: '2025-01-20',
+  compatibilityDate: '2026-03-26',
+  nitro: {
+    rollupConfig: {
+      onwarn(warning, defaultHandler) {
+        if (
+          warning.code === 'CIRCULAR_DEPENDENCY' ||
+          warning.message?.includes('Circular dependency') ||
+          warning.message?.includes('NO_SIDE_EFFECTS') ||
+          warning.message?.includes('annotation that Rollup cannot interpret')
+        ) {
+          return
+        }
+        defaultHandler(warning)
+      },
+    },
+  },
 
   vite: {
     optimizeDeps: {
       include: ['@vue/devtools-core', '@vue/devtools-kit', 'luxon'],
+    },
+    build: {
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        onwarn(warning, defaultHandler) {
+          if (
+            warning.code === 'PLUGIN_TIMINGS' ||
+            warning.code === 'SOURCEMAP_ERROR' ||
+            warning.message?.includes('Sourcemap is likely to be incorrect') ||
+            warning.message?.includes('[PLUGIN_TIMINGS]')
+          ) {
+            return
+          }
+          defaultHandler(warning)
+        },
+      },
     },
   },
   echarts: {
@@ -35,6 +66,7 @@ export default defineNuxtConfig({
   },
   eslint: {
     config: {
+      typescript: true,
       nuxt: {
         sortConfigKeys: true,
       },
