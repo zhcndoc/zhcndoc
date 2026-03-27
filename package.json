@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.29.3",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host 0.0.0.0",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -17,7 +17,7 @@
     "@iconify-json/tabler": "^1.2.32",
     "@nuxt/content": "^3.12.0",
     "@nuxt/ui": "^4.6.0",
-    "@nuxtjs/sitemap": "^8.0.4",
+    "@nuxtjs/sitemap": "^8.0.8",
     "@octokit/graphql-schema": "^15.26.1",
     "@vueuse/core": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
@@ -42,19 +42,6 @@
     "singleQuote": true,
     "plugins": [
       "prettier-plugin-tailwindcss"
-    ]
-  },
-  "pnpm": {
-    "overrides": {
-      "vite": "^8.0.3"
-    },
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@tailwindcss/oxide",
-      "better-sqlite3",
-      "esbuild",
-      "unrs-resolver",
-      "vue-demi"
     ]
   }
 }

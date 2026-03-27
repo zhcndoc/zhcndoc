@@ -44,29 +44,83 @@ const xAxisData = computed(() => {
   return labels
 })
 
+const chartTheme = {
+  pageviews: '#36A2EB',
+  sessions: '#4BC0C0',
+  axisText: '#64748B',
+  axisLine: 'rgba(148, 163, 184, 0.4)',
+  splitLine: 'rgba(148, 163, 184, 0.18)',
+  tooltipBg: 'rgba(15, 23, 42, 0.92)',
+  tooltipBorder: 'rgba(148, 163, 184, 0.3)',
+  tooltipText: '#F8FAFC',
+}
+
+const seriesData = computed(() => {
+  const pageviewsMap = new Map(
+    (pageviews.value?.pageviews ?? []).map((item) => [item.x, item.y]),
+  )
+  const sessionsMap = new Map(
+    (pageviews.value?.sessions ?? []).map((item) => [item.x, item.y]),
+  )
+
+  return {
+    pageviews: xAxisData.value.map((time) => pageviewsMap.get(time) ?? 0),
+    sessions: xAxisData.value.map((time) => sessionsMap.get(time) ?? 0),
+  }
+})
+
 const chartOptions = computed<ECOption>(() => {
   return {
+    color: [chartTheme.pageviews, chartTheme.sessions],
+    animationDuration: 450,
     tooltip: {
       trigger: 'axis',
+      backgroundColor: chartTheme.tooltipBg,
+      borderColor: chartTheme.tooltipBorder,
+      borderWidth: 1,
+      textStyle: {
+        color: chartTheme.tooltipText,
+      },
       axisPointer: {
         type: 'shadow',
+        shadowStyle: {
+          color: 'rgba(148, 163, 184, 0.12)',
+        },
       },
     },
     legend: {
-      data: ['浏览量', '访客'],
+      data: ['访客', '浏览量'],
       bottom: 0,
+      icon: 'roundRect',
+      itemWidth: 10,
+      itemHeight: 10,
+      textStyle: {
+        color: chartTheme.axisText,
+      },
     },
     grid: {
-      left: '0',
-      right: '0',
-      bottom: '10%',
-      top: '10%',
+      left: '1%',
+      right: '1%',
+      bottom: '12%',
+      top: '12%',
       containLabel: true,
     },
     xAxis: {
       type: 'category',
       data: xAxisData.value,
+      axisLine: {
+        lineStyle: {
+          color: chartTheme.axisLine,
+        },
+      },
+      axisTick: {
+        show: false,
+      },
       axisLabel: {
+        color: chartTheme.axisText,
+        fontSize: 12,
+        hideOverlap: true,
+        margin: 10,
         formatter(value: string) {
           if (unit.value === 'hour') {
             return DateTime.fromSQL(value).toFormat('HH:mm')
@@ -81,35 +135,44 @@ const chartOptions = computed<ECOption>(() => {
     },
     yAxis: {
       type: 'value',
+      axisLabel: {
+        color: chartTheme.axisText,
+        fontSize: 12,
+      },
+      axisLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
       splitLine: {
         lineStyle: {
-          opacity: 0.2,
+          color: chartTheme.splitLine,
         },
       },
     },
     series: [
       {
-        name: '浏览量',
-        type: 'bar',
-        barWidth: '50%',
-        barGap: '-100%',
-        data: xAxisData.value.map((time) => {
-          const found = pageviews.value?.pageviews.find(function (item) {
-            return item.x === time
-          })
-          return found ? found.y : 0
-        }),
-      },
-      {
         name: '访客',
         type: 'bar',
-        barWidth: '50%',
-        data: xAxisData.value.map((time) => {
-          const found = pageviews.value?.sessions.find(function (item) {
-            return item.x === time
-          })
-          return found ? found.y : 0
-        }),
+        barGap: '20%',
+        barCategoryGap: '35%',
+        itemStyle: {
+          color: 'rgba(75, 192, 192, 0.85)',
+          borderRadius: [3, 3, 0, 0],
+        },
+        data: seriesData.value.sessions,
+      },
+      {
+        name: '浏览量',
+        type: 'bar',
+        barGap: '20%',
+        barCategoryGap: '35%',
+        itemStyle: {
+          color: 'rgba(54, 162, 235, 0.85)',
+          borderRadius: [3, 3, 0, 0],
+        },
+        data: seriesData.value.pageviews,
       },
     ],
   }
