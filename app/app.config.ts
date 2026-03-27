@@ -6,6 +6,18 @@ export default {
       primary: 'cyan',
       neutral: 'gray',
     },
+    calendar: {
+      slots: {
+        cellTrigger: 'rounded-md',
+      },
+      variants: {
+        size: {
+          md: {
+            cellTrigger: 'size-7',
+          },
+        },
+      },
+    },
     icons: {
       // @ts-ignore
       dark: 'tabler:moon',

@@ -36,7 +36,7 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: ['@vue/devtools-core', '@vue/devtools-kit', 'luxon'],
+      include: ['luxon'],
     },
     build: {
       chunkSizeWarningLimit: 2000,
