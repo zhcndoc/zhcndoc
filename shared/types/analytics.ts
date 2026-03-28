@@ -30,6 +30,15 @@ export interface AnalyticsMetric {
   y: number
 }
 
+export interface AnalyticsMetricExpanded {
+  name: string
+  pageviews: number
+  visitors: number
+  visits: number
+  bounces: number
+  totaltime: number
+}
+
 export interface AnalyticsDateRange {
   startAt: number
   endAt: number
