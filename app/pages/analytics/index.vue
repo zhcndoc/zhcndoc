@@ -93,9 +93,11 @@ const locationTabs = [
       </div>
       <!-- Card 6 -->
       <div class="sm:order-6 sm:col-span-2 lg:order-0 lg:col-span-7">
-        <UCard class="h-full">
-          <div class="flex items-center justify-center h-full text-muted">占位</div>
-        </UCard>
+        <AnalyticsWeekly
+          :start-at="startAt"
+          :end-at="endAt"
+          :hostname="hostname"
+        />
       </div>
       <!-- Card 7 -->
       <div class="sm:order-7 sm:col-span-2 lg:order-0 lg:col-span-11">

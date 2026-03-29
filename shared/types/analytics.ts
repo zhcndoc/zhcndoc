@@ -44,3 +44,6 @@ export interface AnalyticsDateRange {
   startAt: number
   endAt: number
 }
+
+// 7 rows (0=Sun … 6=Sat) × 24 cols (0=00:00 … 23=23:00)
+export type AnalyticsWeekly = number[][]

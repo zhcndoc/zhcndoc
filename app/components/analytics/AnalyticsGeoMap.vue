@@ -14,6 +14,7 @@ const geoReady = reactive({ world: false, china: false })
 const vchartRef = ref<{ chart: any } | null>(null)
 
 function onGeoRoam() {
+  return // 先注释掉，等需要微调初始视角时再启用这个函数
   const chart = vchartRef.value?.chart
   if (!chart) return
   const option = chart.getOption() as any
@@ -184,18 +185,39 @@ const maxValue = computed(() => {
   return Math.max(...values, 1)
 })
 
+const chartTheme = {
+  axisText: '#64748B',
+  mapColor: 'rgba(54, 162, 235, 0.88)',
+  mapRange: [
+    'rgba(54, 162, 235, 0.06)',
+    'rgba(54, 162, 235, 0.24)',
+    'rgba(54, 162, 235, 0.52)',
+    'rgba(54, 162, 235, 0.88)',
+  ],
+  tooltipBg: 'rgba(15, 23, 42, 0.92)',
+  tooltipBorder: 'rgba(148, 163, 184, 0.3)',
+  tooltipText: '#F8FAFC',
+}
+
 const chartOptions = computed<ECOption>(() => {
   if (!geoReady[mapType.value]) return {}
 
   return {
     tooltip: {
       trigger: 'item',
+      appendToBody: true,
+      confine: true,
+      position: 'top',
+      backgroundColor: chartTheme.tooltipBg,
+      borderColor: chartTheme.tooltipBorder,
+      borderWidth: 1,
+      borderRadius: 12,
+      padding: [10, 12],
+      extraCssText: 'box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);',
+      textStyle: { color: chartTheme.tooltipText },
       formatter(params: any) {
-        const v = Number(params.value)
-        if (params.value != null && !isNaN(v)) {
-          return `${params.name}: ${v.toLocaleString()} 浏览量`
-        }
-        return `${params.name}: 0 浏览量`
+        const value = Number(params.value) || 0
+        return `${params.name}<br/><span style="font-size: 14px; font-weight: 700;">${value.toLocaleString()}</span> 次浏览`
       },
     },
     visualMap: {
@@ -205,11 +227,11 @@ const chartOptions = computed<ECOption>(() => {
       min: 0,
       max: maxValue.value,
       inRange: {
-        color: ['#e0f3f8', '#abd9e9', '#74add1', '#4575b4', '#313695'],
+        color: chartTheme.mapRange,
       },
       text: ['多', '少'],
       calculable: true,
-      textStyle: { color: '#64748B' },
+      textStyle: { color: chartTheme.axisText },
     },
     series: [
       {
@@ -224,12 +246,12 @@ const chartOptions = computed<ECOption>(() => {
         center: geoInitialView[mapType.value].center,
         zoom: geoInitialView[mapType.value].zoom,
         emphasis: {
-          label: { show: true },
-          itemStyle: { areaColor: '#36A2EB' },
+          label: { show: false },
+          itemStyle: { areaColor: chartTheme.mapColor },
         },
         itemStyle: {
-          areaColor: '#f3f4f6',
-          borderColor: '#d1d5db',
+          areaColor: 'rgba(148, 163, 184, 0.12)',
+          borderColor: 'rgba(148, 163, 184, 0.4)',
         },
         select: {
           disabled: true,

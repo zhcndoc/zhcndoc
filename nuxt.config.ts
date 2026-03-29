@@ -56,7 +56,7 @@ export default defineNuxtConfig({
     },
   },
   echarts: {
-    charts: ['BarChart', 'MapChart'],
+    charts: ['BarChart', 'HeatmapChart', 'MapChart'],
     components: [
       'GridComponent',
       'LegendComponent',
