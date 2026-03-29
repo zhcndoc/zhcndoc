@@ -40,15 +40,9 @@ const chartOptions = computed<ECOption>(() => ({
   animationDuration: 450,
   tooltip: {
     trigger: 'item',
-    appendToBody: true,
-    confine: true,
-    position: 'top',
     backgroundColor: chartTheme.tooltipBg,
     borderColor: chartTheme.tooltipBorder,
     borderWidth: 1,
-    borderRadius: 12,
-    padding: [10, 12],
-    extraCssText: 'box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);',
     textStyle: { color: chartTheme.tooltipText },
     formatter(params: any) {
       const [dayIdx, hourIdx, value] = params.data as [number, number, number]
@@ -113,7 +107,7 @@ onMounted(() => {
 
 <template>
   <UCard :ui="{ body: 'p-4 sm:p-4' }">
-    <div class="relative" style="height: 600px">
+    <div class="relative" style="height: 660px">
       <VChart
         :option="chartOptions"
         :autoresize="true"

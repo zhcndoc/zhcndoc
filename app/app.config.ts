@@ -28,5 +28,11 @@ export default {
         list: 'list-none',
       },
     },
+    table: {
+      slots: {
+        th: 'whitespace-nowrap',
+        td: 'whitespace-nowrap',
+      },
+    },
   },
 } satisfies AppConfigInput

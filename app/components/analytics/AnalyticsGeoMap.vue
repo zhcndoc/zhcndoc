@@ -205,15 +205,9 @@ const chartOptions = computed<ECOption>(() => {
   return {
     tooltip: {
       trigger: 'item',
-      appendToBody: true,
-      confine: true,
-      position: 'top',
       backgroundColor: chartTheme.tooltipBg,
       borderColor: chartTheme.tooltipBorder,
       borderWidth: 1,
-      borderRadius: 12,
-      padding: [10, 12],
-      extraCssText: 'box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);',
       textStyle: { color: chartTheme.tooltipText },
       formatter(params: any) {
         const value = Number(params.value) || 0
