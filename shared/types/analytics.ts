@@ -31,12 +31,13 @@ export interface AnalyticsMetric {
 }
 
 export interface AnalyticsMetricExpanded {
-  name: string
-  pageviews: number
+  name: string | null
+  country?: string
+  pageviews: number | string
   visitors: number
   visits: number
   bounces: number
-  totaltime: number
+  totaltime: number | string
 }
 
 export interface AnalyticsDateRange {

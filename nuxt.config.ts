@@ -56,12 +56,13 @@ export default defineNuxtConfig({
     },
   },
   echarts: {
-    charts: ['BarChart'],
+    charts: ['BarChart', 'MapChart'],
     components: [
       'GridComponent',
       'LegendComponent',
       'TitleComponent',
       'TooltipComponent',
+      'VisualMapComponent',
     ],
   },
   eslint: {

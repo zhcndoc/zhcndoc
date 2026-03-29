@@ -27,6 +27,12 @@ const devicesTabs = [
   { label: '设备', type: 'device' },
   { label: '分辨率', type: 'screen' },
 ]
+
+const locationTabs = [
+  { label: '省份', type: 'region' },
+  { label: '国家 / 地区', type: 'country' },
+  { label: '城市', type: 'city' },
+]
 </script>
 
 <template>
@@ -46,25 +52,57 @@ const devicesTabs = [
       :end-at="endAt"
       :hostname="hostname"
     />
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-18 gap-4">
       <AnalyticsMetricsPanel
         :start-at="startAt"
         :end-at="endAt"
         :hostname="hostname"
         :tabs="pagesTabs"
+        class="lg:col-span-6"
       />
       <AnalyticsMetricsPanel
         :start-at="startAt"
         :end-at="endAt"
         :hostname="hostname"
         :tabs="sourcesTabs"
+        class="lg:col-span-6"
       />
       <AnalyticsMetricsPanel
         :start-at="startAt"
         :end-at="endAt"
         :hostname="hostname"
         :tabs="devicesTabs"
+        class="lg:col-span-6"
       />
+      <!-- Card 4 -->
+      <div class="sm:order-5 sm:col-span-2 lg:order-0 lg:col-span-11">
+        <AnalyticsGeoMap
+          :start-at="startAt"
+          :end-at="endAt"
+          :hostname="hostname"
+        />
+      </div>
+      <!-- Card 5 -->
+      <div class="sm:order-4 lg:order-0 lg:col-span-7">
+        <AnalyticsMetricsPanel
+          :start-at="startAt"
+          :end-at="endAt"
+          :hostname="hostname"
+          :tabs="locationTabs"
+        />
+      </div>
+      <!-- Card 6 -->
+      <div class="sm:order-6 sm:col-span-2 lg:order-0 lg:col-span-7">
+        <UCard class="h-full">
+          <div class="flex items-center justify-center h-full text-muted">占位</div>
+        </UCard>
+      </div>
+      <!-- Card 7 -->
+      <div class="sm:order-7 sm:col-span-2 lg:order-0 lg:col-span-11">
+        <UCard class="h-full">
+          <div class="flex items-center justify-center h-full text-muted">占位</div>
+        </UCard>
+      </div>
     </div>
   </UContainer>
 </template>

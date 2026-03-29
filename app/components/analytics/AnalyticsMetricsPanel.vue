@@ -20,7 +20,7 @@ const { data, status } = useFetch('/api/analytics/metrics-expanded', {
     startAt: props.startAt,
     endAt: props.endAt,
     hostname: props.hostname,
-    limit: 8,
+    limit: 10,
   })),
 })
 
@@ -45,7 +45,7 @@ const totalVisitors = computed(() =>
     <div class="flex flex-col divide-y divide-default">
       <template v-if="status === 'pending'">
         <div
-          v-for="i in 8"
+          v-for="i in 10"
           :key="i"
           class="flex items-center justify-between py-2"
         >
