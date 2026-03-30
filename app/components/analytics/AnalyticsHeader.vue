@@ -107,7 +107,8 @@ const customRangeLabel = computed(() => {
 })
 
 const offsetRangeLabel = computed(() => {
-  if (!startAt.value || !endAt.value) return TIME_RANGE_LABELS[selectedTimeRange.value]
+  if (!startAt.value || !endAt.value)
+    return TIME_RANGE_LABELS[selectedTimeRange.value]
 
   if (selectedTimeRange.value === '24hour') {
     return `${formatLabelDateTime(startAt.value)} - ${formatLabelDateTime(endAt.value)}`
@@ -210,7 +211,10 @@ const getPresetRange = (
         .minus({ hours: 23 })
         .plus({ hours: offset * 24 })
         .toMillis(),
-      endAt: now.endOf('hour').plus({ hours: offset * 24 }).toMillis(),
+      endAt: now
+        .endOf('hour')
+        .plus({ hours: offset * 24 })
+        .toMillis(),
     }
   }
 
@@ -229,7 +233,10 @@ const getPresetRange = (
         .minus({ days: 6 })
         .plus({ days: offset * 7 })
         .toMillis(),
-      endAt: now.endOf('day').plus({ days: offset * 7 }).toMillis(),
+      endAt: now
+        .endOf('day')
+        .plus({ days: offset * 7 })
+        .toMillis(),
     }
   }
 
@@ -248,7 +255,10 @@ const getPresetRange = (
         .minus({ days: 29 })
         .plus({ days: offset * 30 })
         .toMillis(),
-      endAt: now.endOf('day').plus({ days: offset * 30 }).toMillis(),
+      endAt: now
+        .endOf('day')
+        .plus({ days: offset * 30 })
+        .toMillis(),
     }
   }
 
@@ -259,7 +269,10 @@ const getPresetRange = (
         .minus({ days: 89 })
         .plus({ days: offset * 90 })
         .toMillis(),
-      endAt: now.endOf('day').plus({ days: offset * 90 }).toMillis(),
+      endAt: now
+        .endOf('day')
+        .plus({ days: offset * 90 })
+        .toMillis(),
     }
   }
 
@@ -278,7 +291,10 @@ const getPresetRange = (
         .minus({ months: 5 })
         .plus({ months: offset * 6 })
         .toMillis(),
-      endAt: now.endOf('month').plus({ months: offset * 6 }).toMillis(),
+      endAt: now
+        .endOf('month')
+        .plus({ months: offset * 6 })
+        .toMillis(),
     }
   }
 
@@ -289,7 +305,10 @@ const getPresetRange = (
         .minus({ months: 11 })
         .plus({ months: offset * 12 })
         .toMillis(),
-      endAt: now.endOf('month').plus({ months: offset * 12 }).toMillis(),
+      endAt: now
+        .endOf('month')
+        .plus({ months: offset * 12 })
+        .toMillis(),
     }
   }
 
@@ -328,7 +347,10 @@ const handleTimeRangeChange = (value: string) => {
 }
 
 const shiftTimeRange = (increment: number) => {
-  if (selectedTimeRange.value === 'custom' || selectedTimeRange.value === 'all') {
+  if (
+    selectedTimeRange.value === 'custom' ||
+    selectedTimeRange.value === 'all'
+  ) {
     if (!startAt.value || !endAt.value) return
 
     const windowSize = endAt.value - startAt.value + 1

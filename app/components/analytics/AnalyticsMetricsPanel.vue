@@ -11,7 +11,7 @@ const props = defineProps<{
 const activeTab = ref(props.tabs[0]?.type ?? '')
 
 const tabItems = computed<TabsItem[]>(() =>
-  props.tabs.map(tab => ({ label: tab.label, value: tab.type })),
+  props.tabs.map((tab) => ({ label: tab.label, value: tab.type })),
 )
 
 const { data, status } = useFetch('/api/analytics/metrics-expanded', {
@@ -42,7 +42,7 @@ const totalVisitors = computed(() =>
       />
     </template>
 
-    <div class="flex flex-col divide-y divide-default">
+    <div class="divide-default flex flex-col divide-y">
       <template v-if="status === 'pending'">
         <div
           v-for="i in 10"
@@ -59,14 +59,18 @@ const totalVisitors = computed(() =>
           :key="item.name"
           class="flex items-center justify-between gap-4 py-2"
         >
-          <span class="truncate text-sm flex-1">{{ item.name }}</span>
-          <div class="flex items-center gap-3 shrink-0 text-sm">
+          <span class="flex-1 truncate text-sm">{{ item.name }}</span>
+          <div class="flex shrink-0 items-center gap-3 text-sm">
             <span class="text-muted hidden sm:inline">
               {{ item.pageviews.toLocaleString() }} PV
             </span>
             <span class="font-bold">{{ item.visitors.toLocaleString() }}</span>
             <span class="text-muted w-10 text-right">
-              {{ totalVisitors > 0 ? `${Math.round((item.visitors / totalVisitors) * 100)}%` : '0%' }}
+              {{
+                totalVisitors > 0
+                  ? `${Math.round((item.visitors / totalVisitors) * 100)}%`
+                  : '0%'
+              }}
             </span>
           </div>
         </div>

@@ -143,13 +143,12 @@ const geoInitialView: Record<
   { center: [number, number]; zoom: number }
 > = {
   china: {
-    center: [103.20744907696428, 35.88842392631007],
-    zoom: 1.6105100000000014,
+    center: [104.3182, 35.8051],
+    zoom: 1.64,
   },
   world: {
-    // 中国在世界地图中的初始视角；如果后续想微调，只改这里即可。
-    center: [-0.05216586370656273, 5.942875886235669],
-    zoom: 1.2100000000000009,
+    center: [-3.7892, 3.2963],
+    zoom: 1.12,
   },
 } as const
 

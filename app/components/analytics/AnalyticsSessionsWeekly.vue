@@ -5,13 +5,19 @@ const props = defineProps<{
   hostname: string
 }>()
 
-const { data: weeklyData, status } = useFetch('/api/analytics/sessions-weekly', {
-  key: 'analytics-weekly',
-  query: props,
-})
+const { data: weeklyData, status } = useFetch(
+  '/api/analytics/sessions-weekly',
+  {
+    key: 'analytics-weekly',
+    query: props,
+  },
+)
 
 const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-const hours = Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, '0')}:00`)
+const hours = Array.from(
+  { length: 24 },
+  (_, i) => `${String(i).padStart(2, '0')}:00`,
+)
 
 const chartTheme = {
   axisText: '#64748B',
@@ -62,7 +68,6 @@ const chartOptions = computed<ECOption>(() => ({
     axisLine: { lineStyle: { color: chartTheme.axisLine } },
     axisTick: { show: false },
     axisLabel: { color: chartTheme.axisText },
-    splitArea: { show: true, areaStyle: { color: chartTheme.splitArea } },
   },
   yAxis: {
     type: 'category',
@@ -71,7 +76,6 @@ const chartOptions = computed<ECOption>(() => ({
     axisLine: { lineStyle: { color: chartTheme.axisLine } },
     axisTick: { show: false },
     axisLabel: { color: chartTheme.axisText, fontSize: 11 },
-    splitArea: { show: true, areaStyle: { color: chartTheme.splitArea } },
   },
   visualMap: {
     min: 0,
@@ -79,7 +83,7 @@ const chartOptions = computed<ECOption>(() => ({
     show: false,
     inRange: {
       color: [
-        'rgba(8,145,178,0.06)',
+        'transparent',
         'rgba(8,145,178,0.3)',
         'rgba(8,145,178,0.6)',
         '#0891b2',
@@ -91,9 +95,9 @@ const chartOptions = computed<ECOption>(() => ({
       type: 'heatmap',
       data: seriesData.value,
       label: { show: false },
-      emphasis: {
-        label: { show: false },
-        itemStyle: { shadowBlur: 8, shadowColor: 'rgba(0,0,0,0.4)' },
+      itemStyle: {
+        borderColor: 'rgba(148, 163, 184, 0.1)',
+        borderWidth: 0.5,
       },
     },
   ],

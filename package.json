@@ -10,7 +10,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.99",
@@ -34,14 +36,6 @@
     "@nuxt/eslint": "^1.15.2",
     "@types/luxon": "^3.7.1",
     "eslint": "^10.1.0",
-    "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2"
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "plugins": [
-      "prettier-plugin-tailwindcss"
-    ]
+    "oxfmt": "^0.42.0"
   }
 }

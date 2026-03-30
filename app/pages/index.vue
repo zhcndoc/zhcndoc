@@ -125,7 +125,7 @@ const comments = [
 
       <template #top>
         <div
-          class="absolute left-1/2 size-60 -translate-x-1/2 -translate-y-80 transform rounded-full blur-[300px] sm:size-80 dark:bg-primary"
+          class="dark:bg-primary absolute left-1/2 size-60 -translate-x-1/2 -translate-y-80 transform rounded-full blur-[300px] sm:size-80"
         />
         <StarsBg />
       </template>
@@ -187,7 +187,7 @@ const comments = [
       ]"
     >
       <div
-        class="absolute left-1/2 size-40 -translate-x-1/2 -translate-y-80 transform rounded-full blur-[250px] sm:size-50 dark:bg-primary"
+        class="dark:bg-primary absolute left-1/2 size-40 -translate-x-1/2 -translate-y-80 transform rounded-full blur-[250px] sm:size-50"
       />
       <StarsBg />
     </UPageCTA>

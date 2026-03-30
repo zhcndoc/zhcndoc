@@ -52,7 +52,7 @@ const locationTabs = [
       :end-at="endAt"
       :hostname="hostname"
     />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <AnalyticsMetricsPanel
         :start-at="startAt"
         :end-at="endAt"
@@ -98,7 +98,7 @@ const locationTabs = [
       </div>
       <!-- Card 7 -->
       <div class="sm:order-7 sm:col-span-2 lg:order-0 lg:col-span-2">
-         <AnalyticsSessions
+        <AnalyticsSessions
           :start-at="startAt"
           :end-at="endAt"
           :hostname="hostname"
