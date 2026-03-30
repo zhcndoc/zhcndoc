@@ -162,6 +162,12 @@ async function loadGeo(type: 'world' | 'china') {
 onMounted(() => loadGeo('china'))
 watch(mapType, (type) => loadGeo(type))
 
+const chinaSpecialRegions: Record<string, string> = {
+  TW: '台湾省',
+  HK: '香港特别行政区',
+  MO: '澳门特别行政区',
+}
+
 const mapData = computed(() => {
   if (mapType.value === 'world') {
     return (countryData.value ?? [])
@@ -171,12 +177,19 @@ const mapData = computed(() => {
         value: Number(item.pageviews) || 0,
       }))
   }
-  return (regionData.value ?? [])
+  const regionItems = (regionData.value ?? [])
     .filter((item) => item.name && regionCodeToName[item.name])
     .map((item) => ({
       name: regionCodeToName[item.name!],
       value: Number(item.pageviews) || 0,
     }))
+  const specialItems = (countryData.value ?? [])
+    .filter((item) => item.name && chinaSpecialRegions[item.name])
+    .map((item) => ({
+      name: chinaSpecialRegions[item.name!],
+      value: Number(item.pageviews) || 0,
+    }))
+  return [...regionItems, ...specialItems]
 })
 
 const maxValue = computed(() => {

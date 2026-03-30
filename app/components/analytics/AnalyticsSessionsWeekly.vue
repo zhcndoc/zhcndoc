@@ -65,6 +65,7 @@ const chartOptions = computed<ECOption>(() => ({
   xAxis: {
     type: 'category',
     data: days,
+    position: 'top',
     axisLine: { lineStyle: { color: chartTheme.axisLine } },
     axisTick: { show: false },
     axisLabel: { color: chartTheme.axisText },

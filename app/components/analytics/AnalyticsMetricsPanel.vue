@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TabsItem } from '@nuxt/ui'
+import type { AnalyticsMetricExpanded } from '#shared/types/analytics'
 
 const props = defineProps<{
   startAt: number
@@ -14,18 +15,25 @@ const tabItems = computed<TabsItem[]>(() =>
   props.tabs.map((tab) => ({ label: tab.label, value: tab.type })),
 )
 
-const { data, status } = useFetch('/api/analytics/metrics-expanded', {
-  query: computed(() => ({
-    type: activeTab.value,
-    startAt: props.startAt,
-    endAt: props.endAt,
-    hostname: props.hostname,
-    limit: 10,
-  })),
-})
+const { data, status } = useFetch<AnalyticsMetricExpanded[]>(
+  '/api/analytics/metrics-expanded',
+  {
+    query: computed(() => ({
+      type: activeTab.value,
+      startAt: props.startAt,
+      endAt: props.endAt,
+      hostname: props.hostname,
+      limit: 10,
+    })),
+    transform: (items) =>
+      [...items].sort(
+        (left, right) => Number(right.pageviews) - Number(left.pageviews),
+      ),
+  },
+)
 
-const totalVisitors = computed(() =>
-  (data.value ?? []).reduce((sum, item) => sum + item.visitors, 0),
+const totalPageviews = computed(() =>
+  (data.value ?? []).reduce((sum, item) => sum + Number(item.pageviews), 0),
 )
 </script>
 
@@ -60,15 +68,14 @@ const totalVisitors = computed(() =>
           class="flex items-center justify-between gap-4 py-2"
         >
           <span class="flex-1 truncate text-sm">{{ item.name }}</span>
-          <div class="flex shrink-0 items-center gap-3 text-sm">
-            <span class="text-muted hidden sm:inline">
-              {{ item.pageviews.toLocaleString() }} PV
-            </span>
-            <span class="font-bold">{{ item.visitors.toLocaleString() }}</span>
-            <span class="text-muted w-10 text-right">
+          <div class="flex shrink-0 items-center gap-2 text-sm">
+            <span class="font-bold">{{
+              Number(item.pageviews).toLocaleString()
+            }}</span>
+            <span class="text-muted border-default w-10 border-l pl-2">
               {{
-                totalVisitors > 0
-                  ? `${Math.round((item.visitors / totalVisitors) * 100)}%`
+                totalPageviews > 0
+                  ? `${Math.round((Number(item.pageviews) / totalPageviews) * 100)}%`
                   : '0%'
               }}
             </span>

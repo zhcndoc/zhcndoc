@@ -47,15 +47,18 @@ export default defineEventHandler(async (event) => {
 
   if (!success) return
 
+  const { limit, ...queryWithoutLimit } = query
+
   const data = await umami<AnalyticsMetricExpanded[]>(
     `/websites/${UMAMI_WEBSITE_ID}/metrics/expanded`,
     {
       query: {
-        ...query,
+        ...queryWithoutLimit,
+        limit: limit + 10,
         timezone: 'Asia/Shanghai',
       },
     },
   )
 
-  return data
+  return data ? data.filter((item) => item.name !== null).slice(0, limit) : data
 })
