@@ -14,6 +14,9 @@ export default defineNuxtConfig({
     url: 'https://www.zhcndoc.com',
     name: '简中文档',
   },
+  runtimeConfig: {
+    umamiToken: '',
+  },
   future: {
     compatibilityVersion: 5,
   },
