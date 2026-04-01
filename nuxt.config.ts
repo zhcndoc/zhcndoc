@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     'nuxt-echarts',
   ],
   devtools: { enabled: true },
-
   css: ['~/assets/css/main.css'],
   site: {
     url: 'https://www.zhcndoc.com',
@@ -36,7 +35,6 @@ export default defineNuxtConfig({
       },
     },
   },
-
   vite: {
     optimizeDeps: {
       include: ['luxon'],
@@ -56,6 +54,11 @@ export default defineNuxtConfig({
           defaultHandler(warning)
         },
       },
+    },
+  },
+  postcss: {
+    plugins: {
+      '@csstools/postcss-oklab-function': { preserve: true },
     },
   },
   echarts: {

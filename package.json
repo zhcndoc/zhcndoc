@@ -15,11 +15,11 @@
     "format:check": "oxfmt --check"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.99",
-    "@iconify-json/tabler": "^1.2.32",
+    "@iconify-json/lucide": "^1.2.101",
+    "@iconify-json/tabler": "^1.2.33",
     "@nuxt/content": "^3.12.0",
     "@nuxt/ui": "^4.6.0",
-    "@nuxtjs/sitemap": "^8.0.8",
+    "@nuxtjs/sitemap": "^8.0.11",
     "@octokit/graphql-schema": "^15.26.1",
     "@vueuse/core": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
@@ -33,9 +33,10 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@csstools/postcss-oklab-function": "^5.0.2",
     "@nuxt/eslint": "^1.15.2",
     "@types/luxon": "^3.7.1",
     "eslint": "^10.1.0",
-    "oxfmt": "^0.42.0"
+    "oxfmt": "^0.43.0"
   }
 }
