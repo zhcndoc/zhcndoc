@@ -1,0 +1,8 @@
+name: hono
+description: 轻量快速的 Web 框架，适合构建边缘与服务端应用。
+type: translate
+upstream:
+  owner: honojs
+  repo: website
+  branch: main
+  link: https://hono.dev

@@ -1,0 +1,8 @@
+name: nodemailer
+description: 基于 Node.js 的邮件发送库，适合构建稳定可靠的邮件投递能力。
+type: translate
+upstream:
+  owner: nodemailer
+  repo: nodemailer
+  branch: master
+  link: https://nodemailer.com

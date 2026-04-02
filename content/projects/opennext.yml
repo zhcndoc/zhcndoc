@@ -1,0 +1,8 @@
+name: opennext
+description: OpenNext 文档站点，介绍 Next.js 在多平台上的部署与适配。
+type: translate
+upstream:
+  owner: opennextjs
+  repo: docs
+  branch: main
+  link: https://opennext.js.org

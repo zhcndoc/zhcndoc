@@ -4,5 +4,5 @@ type: translate
 upstream:
   owner: better-auth
   repo: better-auth
-  branch: canary
+  branch: main
   link: https://better-auth.com

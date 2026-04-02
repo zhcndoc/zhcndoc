@@ -45,7 +45,7 @@ const siteItems = computed(() => {
     value: 'www.zhcndoc.com',
     label: '所有站点',
     avatar: {
-      src: `/images/projects/www.svg`,
+      src: `/images/projects/zhcndoc.svg`,
       alt: '简中文档',
     },
   })
