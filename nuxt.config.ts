@@ -56,11 +56,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  postcss: {
-    plugins: {
-      '@csstools/postcss-oklab-function': { preserve: true },
-    },
-  },
   echarts: {
     charts: ['BarChart', 'HeatmapChart', 'MapChart'],
     components: [

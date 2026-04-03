@@ -1,11 +1,5 @@
 <script setup lang="ts">
-const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects', {
-  transform: (data) => {
-    return data.sort((a, b) => {
-      return a.stars > b.stars ? -1 : 1
-    })
-  },
-})
+const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects')
 </script>
 
 <template>

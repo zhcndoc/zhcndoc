@@ -28,11 +28,8 @@ const { data: allTimeRange } = await useFetch<AnalyticsDateRange | null>(
   },
 )
 
-const sortedProjects =
-  projects?.sort((a, b) => (a.stars > b.stars ? -1 : 1)) || []
-
 const siteItems = computed(() => {
-  const items = sortedProjects.map((project) => ({
+  const items = projects?.map((project) => ({
     value: `${project.name}.zhcndoc.com`,
     label: project.title,
     avatar: {
@@ -57,10 +54,11 @@ const selectedSite = defineModel<string>('hostname')
 const startAt = defineModel<number>('startAt')
 const endAt = defineModel<number>('endAt')
 
-const selectedIcon = computed(() => {
-  const prefix = selectedSite.value?.replace(/\.zhcndoc\.com$/, '')
-  return `/images/projects/${prefix}.svg`
-})
+const selectedIcon = computed(() =>
+  `/images/projects/${((selectedSite.value || '')
+    .replace(/\.zhcndoc\.com$/, '')
+    .replace(/^www$/, '') || 'zhcndoc')}.svg`
+)
 
 const selectedTimeRange = ref<TimeRangeValue>('24hour')
 const timeOffset = ref(0)

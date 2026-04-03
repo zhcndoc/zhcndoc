@@ -33,7 +33,6 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@csstools/postcss-oklab-function": "^5.0.2",
     "@nuxt/eslint": "^1.15.2",
     "@types/luxon": "^3.7.1",
     "eslint": "^10.1.0",
