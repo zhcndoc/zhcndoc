@@ -1,0 +1,8 @@
+name: lucide
+description: 开源 SVG 图标库，提供统一风格的多框架图标组件和工具集。
+type: translate
+upstream:
+  owner: lucide-icons
+  repo: lucide
+  branch: main
+  link: https://lucide.dev
