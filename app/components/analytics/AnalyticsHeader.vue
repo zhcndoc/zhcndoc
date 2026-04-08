@@ -54,10 +54,13 @@ const selectedSite = defineModel<string>('hostname')
 const startAt = defineModel<number>('startAt')
 const endAt = defineModel<number>('endAt')
 
-const selectedIcon = computed(() =>
-  `/images/projects/${((selectedSite.value || '')
-    .replace(/\.zhcndoc\.com$/, '')
-    .replace(/^www$/, '') || 'zhcndoc')}.svg`
+const selectedIcon = computed(
+  () =>
+    `/images/projects/${
+      (selectedSite.value || '')
+        .replace(/\.zhcndoc\.com$/, '')
+        .replace(/^www$/, '') || 'zhcndoc'
+    }.svg`,
 )
 
 const selectedTimeRange = ref<TimeRangeValue>('24hour')

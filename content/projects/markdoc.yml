@@ -1,0 +1,8 @@
+name: markdoc
+description: 基于 Markdown 的文档工具链，用于构建灵活的文档站点。
+type: translate
+upstream:
+  owner: markdoc
+  repo: docs
+  branch: main
+  link: https://markdoc.dev

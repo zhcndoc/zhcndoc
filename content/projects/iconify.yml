@@ -1,0 +1,8 @@
+name: iconify
+description: Iconify 开源图标库，展示图标生态与完整的开发资源。
+type: translate
+upstream:
+  owner: iconify
+  repo: website
+  branch: main
+  link: https://iconify.design

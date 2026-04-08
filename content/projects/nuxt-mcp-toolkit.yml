@@ -1,0 +1,8 @@
+name: nuxt-mcp-toolkit
+description: Nuxt MCP 工具套件，帮助快速搭建工具、资源和提示词。
+type: translate
+upstream:
+  owner: nuxt-modules
+  repo: mcp-toolkit
+  branch: main
+  link: https://mcp-toolkit.nuxt.dev
