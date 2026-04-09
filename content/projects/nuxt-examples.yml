@@ -1,5 +1,5 @@
 name: nuxt-examples
-description: 官方 Nuxt 示例，展示最佳实践和项目模板。
+description: Nuxt 全栈框架的实用示例与模板，涵盖多种场景的配置与实践。
 type: translate
 upstream:
   owner: nuxt

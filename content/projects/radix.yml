@@ -1,5 +1,5 @@
 name: radix
-description: 可访问性强、可组合的 React 组件库，专注于交互体验和无障碍设计。
+description: 高可访问、可组合的 React UI 组件库，专注交互和无障碍体验。
 type: translate
 upstream:
   owner: radix-ui

@@ -1,5 +1,5 @@
 name: next-intl
-description: 面向 Next.js 的国际化解决方案，提供类型安全、多语言路由和格式化能力。
+description: 面向 Next.js 的国际化方案，支持多语言路由与丰富格式化能力。
 type: translate
 upstream:
   owner: amannn

@@ -1,5 +1,5 @@
 name: iconify
-description: Iconify 开源图标库，展示图标生态与完整的开发资源。
+description: 统一的开源图标框架，聚合数十万图标并提供多框架组件和工具。
 type: translate
 upstream:
   owner: iconify

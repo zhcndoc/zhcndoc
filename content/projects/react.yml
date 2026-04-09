@@ -1,5 +1,5 @@
 name: react
-description: 声明式 UI 库，专注于组件化开发，提升前端交互体验。
+description: 声明式 UI 构建库，专注组件化开发模式，构建丰富的用户界面。
 type: mirror
 upstream:
   owner: reactjs

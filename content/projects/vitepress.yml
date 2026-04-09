@@ -1,5 +1,5 @@
 name: vitepress
-description: 基于 Vite 构建的 Markdown 静态站点生成器，适用于文档编写。
+description: 基于 Vite 的 Markdown 静态页面生成器，适用于技术内容编写。
 type: mirror
 upstream:
   owner: vuejs

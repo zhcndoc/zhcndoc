@@ -1,5 +1,5 @@
 name: openclaw
-description: 可在本地运行的个人 AI 助手平台，支持多渠道接入与自动化能力。
+description: 可本地运行的个人 AI 助手平台，支持多渠道接入和任务自动化。
 type: translate
 upstream:
   owner: openclaw

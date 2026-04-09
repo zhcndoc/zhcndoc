@@ -1,5 +1,5 @@
 name: markdoc
-description: 基于 Markdown 的文档工具链，用于构建灵活的文档站点。
+description: 基于 Markdown 的内容创作工具链，构建可扩展的结构化内容。
 type: translate
 upstream:
   owner: markdoc

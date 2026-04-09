@@ -1,5 +1,5 @@
 name: typeorm
-description: 提供类型安全的实体映射与查询构建，简化数据库操作。
+description: TypeScript ORM 框架，提供类型安全的实体映射与灵活的查询。
 type: translate
 upstream:
   owner: typeorm

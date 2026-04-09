@@ -1,5 +1,5 @@
 name: nitro
-description: 通用服务器端框架，支持多种运行环境，驱动 Nuxt 后端能力。
+description: 通用服务端引擎框架，支持多种运行环境部署，驱动 Nuxt 后端。
 type: translate
 upstream:
   owner: nitrojs

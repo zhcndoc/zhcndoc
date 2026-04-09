@@ -1,5 +1,5 @@
 name: nuxt-mcp-toolkit
-description: Nuxt MCP 工具套件，帮助快速搭建工具、资源和提示词。
+description: Nuxt 的 MCP 协议工具模块，用于搭建 AI 工具、资源和提示词。
 type: translate
 upstream:
   owner: nuxt-modules

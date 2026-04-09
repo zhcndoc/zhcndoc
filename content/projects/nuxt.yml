@@ -1,5 +1,5 @@
 name: nuxt
-description: 基于 Vue.js 的全栈应用框架，支持服务端渲染和静态站点生成。
+description: 基于 Vue.js 的全栈框架，支持 SSR 服务端渲染和静态页面生成。
 type: translate
 upstream:
   owner: nuxt

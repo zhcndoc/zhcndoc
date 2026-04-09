@@ -1,5 +1,5 @@
 name: nuxt-color-mode
-description: Nuxt 生态的主题模式管理插件，支持多种配色方案。
+description: Nuxt 生态主题模式管理模块，支持亮色、暗色和系统偏好配色。
 type: translate
 upstream:
   owner: nuxt-modules

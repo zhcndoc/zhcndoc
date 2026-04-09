@@ -1,5 +1,5 @@
 name: lucide
-description: 开源 SVG 图标库，提供统一风格的多框架图标组件和工具集。
+description: 开源 SVG 图标库，提供统一设计风格的多框架图标组件和工具。
 type: translate
 upstream:
   owner: lucide-icons

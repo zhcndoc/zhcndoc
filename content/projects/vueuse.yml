@@ -1,5 +1,5 @@
 name: vueuse
-description: 基于 Vue 组合式 API 的工具库，提供丰富的实用函数，提升开发效率。
+description: 基于 Vue 组合式 API 的工具库合集，提供丰富实用组合式函数。
 type: translate
 upstream:
   owner: vueuse

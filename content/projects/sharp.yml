@@ -1,5 +1,5 @@
 name: sharp
-description: 高性能 Node.js 图片处理库，支持多种格式和高效转换。
+description: 高性能 Node.js 图片处理库，支持裁剪、缩放、旋转和格式转换。
 type: translate
 upstream:
   owner: lovell

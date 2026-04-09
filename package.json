@@ -33,8 +33,10 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@chenglou/pretext": "^0.0.5",
     "@nuxt/eslint": "^1.15.2",
     "@types/luxon": "^3.7.1",
+    "canvas": "^3.2.3",
     "eslint": "^10.1.0",
     "oxfmt": "^0.43.0"
   }

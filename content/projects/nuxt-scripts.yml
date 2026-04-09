@@ -1,5 +1,5 @@
 name: nuxt-scripts
-description: Nuxt 官方脚本管理模块，简化第三方脚本加载与性能优化。
+description: Nuxt 生态脚本管理模块，简化第三方脚本加载与页面性能优化。
 type: translate
 upstream:
   owner: nuxt

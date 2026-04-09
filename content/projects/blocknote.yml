@@ -1,5 +1,5 @@
 name: blocknote
-description: 面向 React 的基于块的富文本编辑器，以最小的配置提供出色的体验。
+description: 面向 React 的块级富文本编辑器，以极简配置提供出色编辑体验。
 type: translate
 upstream:
   owner: TypeCellOS

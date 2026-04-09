@@ -1,5 +1,5 @@
 name: umami
-description: 轻量级、开源的、注重用户隐私的网站分析工具，支持自托管部署。
+description: 轻量开源且注重隐私的网站分析工具，可简单灵活地自托管部署。
 type: translate
 upstream:
   owner: umami-software

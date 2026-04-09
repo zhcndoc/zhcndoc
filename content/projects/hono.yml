@@ -1,5 +1,5 @@
 name: hono
-description: 轻量快速的 Web 框架，适合构建边缘与服务端应用。
+description: 轻量快速的多运行时 Web 框架，适合构建边缘和服务端的应用。
 type: translate
 upstream:
   owner: honojs
