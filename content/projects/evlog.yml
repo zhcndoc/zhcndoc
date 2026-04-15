@@ -1,0 +1,8 @@
+name: evlog
+description: 为 Nuxt 提供宽事件日志，聚合单次请求的上下文为结构化记录。
+type: translate
+upstream:
+  owner: HugoRCD
+  repo: evlog
+  branch: main
+  link: https://evlog.dev

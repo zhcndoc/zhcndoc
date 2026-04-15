@@ -1,0 +1,8 @@
+name: mcp
+description: 规定 AI 模型与外部工具及数据源标准通信接口的开放协议规范。
+type: translate
+upstream:
+  owner: modelcontextprotocol
+  repo: modelcontextprotocol
+  branch: main
+  link: https://modelcontextprotocol.io

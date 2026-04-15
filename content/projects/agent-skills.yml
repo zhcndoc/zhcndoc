@@ -1,0 +1,8 @@
+name: agent-skills
+description: 一种为 AI 助手提供特定领域专业知识和能力的可共享技能格式。
+type: translate
+upstream:
+  owner: agentskills
+  repo: agentskills
+  branch: main
+  link: https://agentskills.io

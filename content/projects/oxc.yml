@@ -1,0 +1,8 @@
+name: oxc
+description: 用 Rust 编写的高性能工具集，提供解析、检查和格式化等功能。
+type: translate
+upstream:
+  owner: oxc-project
+  repo: oxc
+  branch: main
+  link: https://oxc.rs

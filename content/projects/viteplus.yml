@@ -1,0 +1,8 @@
+name: viteplus
+description: 集成 Vite 等前端工具的统一 CLI，涵盖开发、测试和构建全流程。
+type: translate
+upstream:
+  owner: voidzero-dev
+  repo: vite-plus
+  branch: main
+  link: https://viteplus.dev
