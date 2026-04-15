@@ -16,7 +16,8 @@ globalThis.OffscreenCanvas = class OffscreenCanvas {
   }
 }
 
-const font = '14px ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
+const font =
+  '14px ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
 const TARGET = 400
 
 const dir = 'content/projects'

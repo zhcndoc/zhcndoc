@@ -1,3 +1,6 @@
+packages:
+  - 'website'
+
 overrides:
   vite: '^8.0.3'
 

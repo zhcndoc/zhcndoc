@@ -1,43 +1,13 @@
 {
-  "name": "nuxt-app",
+  "name": "zhcndoc",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.29.3",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev --host 0.0.0.0",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
   },
-  "dependencies": {
-    "@iconify-json/lucide": "^1.2.101",
-    "@iconify-json/tabler": "^1.2.33",
-    "@nuxt/content": "^3.12.0",
-    "@nuxt/ui": "^4.6.0",
-    "@nuxtjs/sitemap": "^8.0.11",
-    "@octokit/graphql-schema": "^15.26.1",
-    "@vueuse/core": "^14.2.1",
-    "@vueuse/nuxt": "^14.2.1",
-    "better-sqlite3": "^12.8.0",
-    "echarts": "^6.0.0",
-    "luxon": "^3.7.2",
-    "nuxt": "^4.4.2",
-    "nuxt-echarts": "^1.0.1",
-    "octokit": "^5.0.5",
-    "tailwindcss": "^4.2.2",
-    "zod": "^4.3.6"
-  },
   "devDependencies": {
-    "@chenglou/pretext": "^0.0.5",
-    "@nuxt/eslint": "^1.15.2",
-    "@types/luxon": "^3.7.1",
-    "canvas": "^3.2.3",
-    "eslint": "^10.1.0",
     "oxfmt": "^0.43.0"
   }
 }

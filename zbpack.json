@@ -1,0 +1,8 @@
+{
+  "app_dir": "/",
+  "build_command": "NITRO_PRESET=node-server pnpm --filter @zhcndoc/website build",
+  "ignore_dockerfile": true,
+  "install_command": "pnpm install",
+  "output_dir": "",
+  "start_command": "cd website && NITRO_HOST=0.0.0.0 node .output/server/index.mjs"
+}
