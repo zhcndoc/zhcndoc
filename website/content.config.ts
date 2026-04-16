@@ -17,5 +17,34 @@ export default defineContentConfig({
         }),
       }),
     }),
+    posts: defineCollection({
+      type: 'page',
+      source: 'blog/**/*.md',
+      schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        date: z.string(),
+        image: z
+          .object({
+            src: z.string(),
+            alt: z.string().optional(),
+          })
+          .optional(),
+        authors: z
+          .array(
+            z.object({
+              name: z.string(),
+              avatar: z.object({ src: z.string() }),
+              to: z.string().optional(),
+            }),
+          )
+          .optional(),
+        badge: z
+          .object({
+            label: z.string(),
+          })
+          .optional(),
+      }),
+    }),
   },
 })

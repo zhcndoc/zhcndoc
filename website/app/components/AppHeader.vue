@@ -31,6 +31,13 @@ const items = computed<NavigationMenuItem[]>(() => [
     description: '深入了解各项数据的统计信息，掌握业务动态',
     active: route.path.startsWith('/analytics'),
   },
+  {
+    label: '博客',
+    icon: 'tabler:article',
+    to: '/blog',
+    description: '简中文档的最新动态和文章',
+    active: route.path.startsWith('/blog'),
+  },
 ])
 </script>
 

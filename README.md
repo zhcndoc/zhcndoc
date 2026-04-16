@@ -28,6 +28,33 @@ zhcndoc/
 - **图表**：[ECharts](https://echarts.apache.org)（通过 nuxt-echarts）
 - **包管理**：[pnpm](https://pnpm.io) workspace
 
+## 开发约定
+
+### 时间处理
+
+所有时间相关的处理都应该使用 [Luxon](https://moment.github.io/luxon/) 库实现：
+
+- **日期格式化**：使用 `DateTime` 对象的 `toFormat()` 方法
+- **时间戳转换**：使用 `DateTime.fromMillis()` 或 `DateTime.fromISO()` 等方法
+- **时区处理**：通过 `setZone()` 方法处理不同时区
+
+**示例**：
+
+```typescript
+import { DateTime } from 'luxon'
+
+// 格式化 ISO 字符串
+DateTime.fromISO(post.date).toFormat('yyyy 年 MM 月 dd 日')
+
+// 格式化时间戳
+DateTime.fromMillis(timestamp)
+  .setZone('Asia/Shanghai')
+  .setLocale('zh-CN')
+  .toFormat('yyyy 年 MM 月 dd 日 HH:mm')
+```
+
+> ⚠️ 不应使用 `new Date().toLocaleDateString()` 等原生 JavaScript Date API
+
 ## 本地开发
 
 安装依赖：
