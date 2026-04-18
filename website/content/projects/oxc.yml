@@ -3,6 +3,6 @@ description: 用 Rust 编写的高性能工具集，提供解析、检查和格�
 type: translate
 upstream:
   owner: oxc-project
-  repo: oxc
+  repo: website
   branch: main
   link: https://oxc.rs
