@@ -7,7 +7,7 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check"
   },
-  "devDependencies": {
-    "oxfmt": "^0.43.0"
+  "dependencies": {
+    "oxfmt": "^0.45.0"
   }
 }
