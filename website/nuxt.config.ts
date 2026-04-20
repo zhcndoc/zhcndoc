@@ -16,44 +16,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     umamiToken: '',
   },
-  future: {
-    compatibilityVersion: 5,
-  },
   compatibilityDate: '2026-03-26',
-  nitro: {
-    rollupConfig: {
-      onwarn(warning, defaultHandler) {
-        if (
-          warning.code === 'CIRCULAR_DEPENDENCY' ||
-          warning.message?.includes('Circular dependency') ||
-          warning.message?.includes('NO_SIDE_EFFECTS') ||
-          warning.message?.includes('annotation that Rollup cannot interpret')
-        ) {
-          return
-        }
-        defaultHandler(warning)
-      },
-    },
-  },
   vite: {
     optimizeDeps: {
       include: ['luxon'],
-    },
-    build: {
-      chunkSizeWarningLimit: 2000,
-      rollupOptions: {
-        onwarn(warning, defaultHandler) {
-          if (
-            warning.code === 'PLUGIN_TIMINGS' ||
-            warning.code === 'SOURCEMAP_ERROR' ||
-            warning.message?.includes('Sourcemap is likely to be incorrect') ||
-            warning.message?.includes('[PLUGIN_TIMINGS]')
-          ) {
-            return
-          }
-          defaultHandler(warning)
-        },
-      },
     },
   },
   echarts: {

@@ -22,7 +22,7 @@ zhcndoc/
 
 ## 技术栈
 
-- **框架**：[Nuxt 4](https://nuxt.com)（兼容性版本 5）
+- **框架**：[Nuxt 4](https://nuxt.com)
 - **UI**：[@nuxt/ui](https://ui.nuxt.com) + [Tailwind CSS v4](https://tailwindcss.com)
 - **内容**：[@nuxt/content](https://content.nuxt.com)
 - **图表**：[ECharts](https://echarts.apache.org)（通过 nuxt-echarts）
@@ -57,6 +57,8 @@ DateTime.fromMillis(timestamp)
 
 ## 本地开发
 
+根目录脚本会转发到 `@zhcndoc/website` workspace 包执行；如果你进入 `website/`，也可以直接运行同名脚本。
+
 安装依赖：
 
 ```bash
@@ -87,7 +89,7 @@ pnpm run preview
 
 ### Vercel
 
-项目通过 `vercel.json` 配置，构建完成后将 Nitro 的 Vercel Build Output API 产物从 `website/.vercel/output` 复制到仓库根目录，Vercel 可自动识别并部署 SSR：
+项目通过 `vercel.json` 配置，从仓库根目录调用 workspace 脚本；构建完成后会将 Nitro 的 Vercel Build Output API 产物从 `website/.vercel/output` 复制到仓库根目录，Vercel 可自动识别并部署 SSR：
 
 ```json
 {
@@ -100,12 +102,12 @@ pnpm run preview
 
 ### Zeabur
 
-通过 `zbpack.json` 配置，使用 `node-server` 预设以持久服务器模式运行：
+通过 `zbpack.json` 配置，从仓库根目录构建，并使用 workspace 过滤到 `website` 包启动 `node-server` 产物：
 
 ```json
 {
   "build_command": "NITRO_PRESET=node-server pnpm run build",
-  "start_command": "cd website && node .output/server/index.mjs"
+  "start_command": "NITRO_HOST=0.0.0.0 pnpm --filter @zhcndoc/website exec node .output/server/index.mjs"
 }
 ```
 

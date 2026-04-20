@@ -4,5 +4,5 @@
   "ignore_dockerfile": true,
   "install_command": "pnpm install",
   "output_dir": "",
-  "start_command": "cd website && NITRO_HOST=0.0.0.0 node .output/server/index.mjs"
+  "start_command": "NITRO_HOST=0.0.0.0 pnpm --filter @zhcndoc/website exec node .output/server/index.mjs"
 }
