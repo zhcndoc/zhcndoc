@@ -1,4 +1,14 @@
 <script setup lang="ts">
+useHead({
+  titleTemplate: '%s',
+})
+
+useSeoMeta({
+  title: '简中文档 - 由社区提供支持的中文文档',
+  description:
+    '由开源社区提供支持的中文技术文档，帮助中文开发者更稳定地查阅优质开源项目文档。',
+})
+
 const comments = [
   {
     quote: `这文档真是我的开发好帮手，从基础概念到高阶应用都讲得透彻，特别是那些实战案例，每次卡壳的时候总能在这里找到灵感，更新速度也完全跟得上技术迭代节奏。`,

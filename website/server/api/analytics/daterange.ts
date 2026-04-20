@@ -1,5 +1,4 @@
 import { DateTime } from 'luxon'
-import type { AnalyticsDateRange } from '#shared/types/analytics'
 
 interface UmamiDateRange {
   startDate?: string | null

@@ -26,9 +26,7 @@ const description = post.value.seo?.description || post.value.description
 
 useSeoMeta({
   title,
-  ogTitle: title,
   description,
-  ogDescription: description,
 })
 </script>
 

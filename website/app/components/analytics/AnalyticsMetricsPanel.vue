@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { TabsItem } from '@nuxt/ui'
-import type { AnalyticsMetricExpanded } from '#shared/types/analytics'
 
 const props = defineProps<{
   startAt: number

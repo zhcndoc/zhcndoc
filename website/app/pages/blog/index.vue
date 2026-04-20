@@ -7,9 +7,7 @@ const { data: posts } = await useAsyncData('posts', () =>
 
 useSeoMeta({
   title: '博客',
-  ogTitle: '博客 - 简中文档',
   description: '简中文档的最新动态和文章',
-  ogDescription: '简中文档的最新动态和文章',
 })
 </script>
 

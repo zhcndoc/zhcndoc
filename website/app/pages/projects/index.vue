@@ -1,4 +1,10 @@
 <script setup lang="ts">
+useSeoMeta({
+  title: '项目探索',
+  description:
+    '探索简中文档支持的中文技术文档项目，快速进入中文文档与官方文档入口。',
+})
+
 const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects')
 </script>
 

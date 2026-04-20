@@ -10,10 +10,6 @@ authors:
     avatar:
       src: https://mark.ikxin.com/github/ikxin
     to: https://github.com/ikxin
-  - name: ChatGPT
-    avatar:
-      src: https://mark.ikxin.com/github/openai
-    to: https://chatgpt.com
 badge:
   label: 里程碑
 ---

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import AnalyticsHeader from '~/components/analytics/AnalyticsHeader.vue'
 
+useSeoMeta({
+  title: '站点统计',
+  description: '简中文档站点统计面板，仅供站内浏览。',
+})
+
 const timeRange = reactive(getTimeRange())
 const { startAt, endAt } = toRefs(timeRange)
 

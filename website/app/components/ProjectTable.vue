@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
-import type { Column } from '@tanstack/vue-table'
 
 const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
@@ -228,7 +227,14 @@ const tableColumns: TableColumn<ProjectInfo>[] = [
   },
 ]
 
-const getHeader = (column: Column<ProjectInfo>, label: string) => {
+const getHeader = (
+  column: {
+    getIsSorted: () => false | 'asc' | 'desc'
+    toggleSorting: (desc?: boolean) => void
+    clearSorting: () => void
+  },
+  label: string,
+) => {
   const isSorted = column.getIsSorted()
   return h(UButton, {
     label,

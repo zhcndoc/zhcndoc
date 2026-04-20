@@ -1,6 +1,5 @@
 export default defineNuxtConfig({
   modules: [
-    '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -8,13 +7,33 @@ export default defineNuxtConfig({
     'nuxt-echarts',
   ],
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
-  site: {
-    url: 'https://www.zhcndoc.com',
-    name: '简中文档',
+  app: {
+    head: {
+      meta: [
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1, viewport-fit=cover',
+        },
+      ],
+      link: [
+        {
+          href: '/site.webmanifest',
+          rel: 'manifest',
+          crossorigin: 'use-credentials',
+        },
+      ],
+      script: [{ src: '/js/common.js', async: true }],
+      templateParams: {
+        separator: ' - ',
+      },
+    },
   },
+  css: ['~/assets/css/main.css'],
   runtimeConfig: {
     umamiToken: '',
+  },
+  experimental: {
+    serverAppConfig: false,
   },
   compatibilityDate: '2026-03-26',
   vite: {
@@ -59,8 +78,5 @@ export default defineNuxtConfig({
         dir: './app/assets/icons',
       },
     ],
-  },
-  sitemap: {
-    discoverImages: false,
   },
 })

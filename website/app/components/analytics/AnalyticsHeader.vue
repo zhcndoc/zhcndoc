@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { DateTime } from 'luxon'
 import type { SelectMenuItem } from '@nuxt/ui'
-import type { AnalyticsDateRange } from '#shared/types/analytics'
 
 const TIMEZONE = 'Asia/Shanghai'
 const LOCALE = 'zh-CN'
@@ -20,7 +19,16 @@ type TimeRangeValue =
   | 'all'
   | 'custom'
 
-const projects = await $fetch('/api/projects')
+type SiteItem = SelectMenuItem & {
+  value: string
+  label: string
+  avatar: {
+    src: string
+    alt: string
+  }
+}
+
+const projects = await $fetch<ProjectInfo[]>('/api/projects')
 const { data: allTimeRange } = await useFetch<AnalyticsDateRange | null>(
   '/api/analytics/daterange',
   {
@@ -28,8 +36,8 @@ const { data: allTimeRange } = await useFetch<AnalyticsDateRange | null>(
   },
 )
 
-const siteItems = computed(() => {
-  const items = projects?.map((project) => ({
+const siteItems = computed<SiteItem[]>(() => {
+  const items: SiteItem[] = projects.map((project) => ({
     value: `${project.name}.zhcndoc.com`,
     label: project.title,
     avatar: {

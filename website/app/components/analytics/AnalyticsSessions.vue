@@ -2,10 +2,6 @@
 import { h } from 'vue'
 import { DateTime } from 'luxon'
 import type { TableColumn } from '@nuxt/ui'
-import type {
-  AnalyticsSession,
-  AnalyticsSessionsResponse,
-} from '#shared/types/analytics'
 
 const props = defineProps<{
   startAt: number

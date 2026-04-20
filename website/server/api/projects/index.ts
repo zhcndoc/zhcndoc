@@ -1,3 +1,5 @@
+import { queryCollection } from '@nuxt/content/server'
+
 export default defineCachedEventHandler(
   async (event) => {
     const { scope } = getQuery(event)
