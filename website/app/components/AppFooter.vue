@@ -121,7 +121,7 @@ function onSubmit() {
           target="_blank"
           class="hover:text-primary-500 flex items-center"
         >
-          <Icon name="icon:miit" />
+          <img src="~/assets/icons/miit.svg" class="h-4 w-4" />
           <span class="ml-2">沪ICP备2024070610号-3</span>
         </NuxtLink>
         <NuxtLink
@@ -129,7 +129,7 @@ function onSubmit() {
           target="_blank"
           class="hover:text-primary-500 flex items-center"
         >
-          <Icon name="icon:mps" />
+          <img src="~/assets/icons/mps.svg" class="h-4 w-4" />
           <span class="ml-2">粤公网安备44200002445480号</span>
         </NuxtLink>
       </div>

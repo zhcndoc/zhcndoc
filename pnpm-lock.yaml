@@ -11,15 +11,15 @@ importers:
 
   .:
     dependencies:
+      '@chenglou/pretext':
+        specifier: ^0.0.5
+        version: 0.0.5
       oxfmt:
         specifier: ^0.45.0
         version: 0.45.0
 
   website:
     dependencies:
-      '@chenglou/pretext':
-        specifier: ^0.0.5
-        version: 0.0.5
       '@iconify-json/lucide':
         specifier: ^1.2.102
         version: 1.2.102

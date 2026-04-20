@@ -2,17 +2,7 @@
   "name": "@zhcndoc/website",
   "private": true,
   "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev --host 0.0.0.0",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
   "dependencies": {
-    "@chenglou/pretext": "^0.0.5",
     "@iconify-json/lucide": "^1.2.102",
     "@iconify-json/tabler": "^1.2.33",
     "@nuxt/content": "^3.13.0",

@@ -66,7 +66,7 @@ pnpm install
 启动开发服务器（`http://localhost:3000`）：
 
 ```bash
-pnpm --filter @zhcndoc/website dev
+pnpm run dev
 ```
 
 ## 构建与预览
@@ -74,13 +74,13 @@ pnpm --filter @zhcndoc/website dev
 构建生产版本：
 
 ```bash
-pnpm --filter @zhcndoc/website build
+pnpm run build
 ```
 
 预览生产构建：
 
 ```bash
-pnpm --filter @zhcndoc/website preview
+pnpm run preview
 ```
 
 ## 部署
@@ -91,7 +91,7 @@ pnpm --filter @zhcndoc/website preview
 
 ```json
 {
-  "buildCommand": "pnpm --filter @zhcndoc/website build && cp -r website/.vercel/output .vercel/output",
+  "buildCommand": "pnpm run build:vercel",
   "installCommand": "pnpm install"
 }
 ```
@@ -104,7 +104,7 @@ pnpm --filter @zhcndoc/website preview
 
 ```json
 {
-  "build_command": "NITRO_PRESET=node-server pnpm --filter @zhcndoc/website build",
+  "build_command": "NITRO_PRESET=node-server pnpm run build",
   "start_command": "cd website && node .output/server/index.mjs"
 }
 ```

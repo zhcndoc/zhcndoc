@@ -1,6 +1,6 @@
 {
   "app_dir": "/",
-  "build_command": "NITRO_PRESET=node-server pnpm --filter @zhcndoc/website build",
+  "build_command": "NITRO_PRESET=node-server pnpm run build",
   "ignore_dockerfile": true,
   "install_command": "pnpm install",
   "output_dir": "",

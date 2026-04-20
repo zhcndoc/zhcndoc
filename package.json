@@ -4,10 +4,19 @@
   "type": "module",
   "packageManager": "pnpm@10.29.3",
   "scripts": {
+    "dev": "pnpm --dir website exec nuxt dev",
+    "build": "pnpm --dir website exec nuxt build",
+    "build:vercel": "pnpm run build && cp -r website/.vercel/output .vercel/output",
+    "generate": "pnpm --dir website exec nuxt generate",
+    "preview": "pnpm --dir website exec nuxt preview",
+    "postinstall": "pnpm --dir website exec nuxt prepare",
+    "lint": "pnpm --dir website exec eslint .",
+    "lint:fix": "pnpm --dir website exec eslint . --fix",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
   },
   "dependencies": {
+    "@chenglou/pretext": "^0.0.5",
     "oxfmt": "^0.45.0"
   }
 }

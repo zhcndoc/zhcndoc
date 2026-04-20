@@ -81,6 +81,7 @@ export default defineNuxtConfig({
     },
   },
   icon: {
+    mode: 'css',
     clientBundle: {
       scan: true,
       includeCustomCollections: true,

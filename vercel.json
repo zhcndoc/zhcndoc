@@ -1,4 +1,4 @@
 {
-  "buildCommand": "pnpm --filter @zhcndoc/website build && cp -r website/.vercel/output .vercel/output",
+  "buildCommand": "pnpm run build:vercel",
   "installCommand": "pnpm install"
 }
