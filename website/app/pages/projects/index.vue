@@ -13,6 +13,7 @@ const { data: projects } = await useFetch<ProjectInfo[]>('/api/projects')
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <template v-for="project in projects" :key="project.name">
         <UPageCard
+          :to="`/projects/${project.name}`"
           :ui="{
             container: 'p-3 sm:p-4',
           }"

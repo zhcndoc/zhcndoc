@@ -1,4 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
+import { withContentDatabaseRetry } from '../../utils/content'
 
 export default defineCachedEventHandler(
   async (event) => {
@@ -47,9 +48,11 @@ export default defineCachedEventHandler(
       after = result.organization.repositories.pageInfo.endCursor
     }
 
-    const projects = await queryCollection(event, 'projects')
-      .order('name', 'ASC')
-      .all()
+    const projects = await withContentDatabaseRetry(() =>
+      queryCollection(event, 'projects')
+        .order('name', 'ASC')
+        .all(),
+    )
 
     const filteredRepos = projects.filter((repo) => {
       if (scope === 'all') {
