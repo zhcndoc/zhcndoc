@@ -1,12 +1,11 @@
 import { queryCollection } from '@nuxt/content/server'
 import { withContentDatabaseRetry } from '../../utils/content'
 
-export default defineCachedEventHandler(
-  async (event) => {
-    const { scope } = getQuery(event)
-    const defaultIgnore = ['nuxt-docs', 'nuxt-examples']
+export default defineEventHandler(async (event) => {
+  const { scope } = getQuery(event)
+  const defaultIgnore = ['nuxt-docs', 'nuxt-examples']
 
-    const query = `query ($after: String) {
+  const query = `query ($after: String) {
       organization(login: "zhcndoc") {
         repositories(first: 100, after: $after) {
           nodes {
@@ -32,61 +31,54 @@ export default defineCachedEventHandler(
       }
     }`
 
-    let hasNextPage = true
-    let after = null
+  let hasNextPage = true
+  let after = null
 
-    const repos: OrgReposQuery['organization']['repositories']['nodes'] = []
+  const repos: OrgReposQuery['organization']['repositories']['nodes'] = []
 
-    while (hasNextPage) {
-      const result: OrgReposQuery = await octokit.graphql({
-        query,
-        after,
-      })
-      repos.push(...result.organization.repositories.nodes)
+  while (hasNextPage) {
+    const result: OrgReposQuery = await octokit.graphql({
+      query,
+      after,
+    })
+    repos.push(...result.organization.repositories.nodes)
 
-      hasNextPage = result.organization.repositories.pageInfo.hasNextPage
-      after = result.organization.repositories.pageInfo.endCursor
+    hasNextPage = result.organization.repositories.pageInfo.hasNextPage
+    after = result.organization.repositories.pageInfo.endCursor
+  }
+
+  const projects = await withContentDatabaseRetry(() =>
+    queryCollection(event, 'projects').order('name', 'ASC').all(),
+  )
+
+  const filteredRepos = projects.filter((repo) => {
+    if (scope === 'all') {
+      return true
+    } else {
+      return !defaultIgnore.includes(repo.name)
     }
+  })
 
-    const projects = await withContentDatabaseRetry(() =>
-      queryCollection(event, 'projects')
-        .order('name', 'ASC')
-        .all(),
-    )
+  return filteredRepos?.map((project) => {
+    const repo = repos.find((repo) => repo?.name === project.name)!
 
-    const filteredRepos = projects.filter((repo) => {
-      if (scope === 'all') {
-        return true
-      } else {
-        return !defaultIgnore.includes(repo.name)
-      }
-    })
-
-    return filteredRepos?.map((project) => {
-      const repo = repos.find((repo) => repo?.name === project.name)!
-
-      return {
-        name: project.name,
-        description: project.description,
-        type: project.type,
-        upstream: project.upstream,
-        title: repo.description || '',
-        link: repo.homepageUrl || '',
-        license: repo.licenseInfo?.name || '',
-        stars: repo.stargazerCount,
-        forks: repo.forkCount,
-        watchers: repo.watchers.totalCount,
-        openIssues: repo.openIssues.totalCount,
-        issues: repo.issues.totalCount,
-        openPullRequests: repo.openPullRequests.totalCount,
-        pullRequests: repo.pullRequests.totalCount,
-        createdAt: repo.createdAt,
-        updatedAt: repo.updatedAt,
-      }
-    })
-  },
-  {
-    swr: true,
-    maxAge: 10,
-  },
-)
+    return {
+      name: project.name,
+      description: project.description,
+      type: project.type,
+      upstream: project.upstream,
+      title: repo.description || '',
+      link: repo.homepageUrl || '',
+      license: repo.licenseInfo?.name || '',
+      stars: repo.stargazerCount,
+      forks: repo.forkCount,
+      watchers: repo.watchers.totalCount,
+      openIssues: repo.openIssues.totalCount,
+      issues: repo.issues.totalCount,
+      openPullRequests: repo.openPullRequests.totalCount,
+      pullRequests: repo.pullRequests.totalCount,
+      createdAt: repo.createdAt,
+      updatedAt: repo.updatedAt,
+    }
+  })
+})

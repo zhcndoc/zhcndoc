@@ -9,7 +9,6 @@
     "build:vercel": "pnpm run build && cp -r website/.vercel/output .vercel/output",
     "generate": "pnpm --filter @zhcndoc/website run generate",
     "preview": "pnpm --filter @zhcndoc/website run preview",
-    "postinstall": "pnpm --filter @zhcndoc/website run postinstall",
     "lint": "pnpm --filter @zhcndoc/website run lint",
     "lint:fix": "pnpm --filter @zhcndoc/website run lint:fix",
     "format": "oxfmt",

@@ -4,5 +4,6 @@
   "singleQuote": true,
   "sortTailwindcss": {},
   "printWidth": 80,
-  "sortPackageJson": false
+  "sortPackageJson": false,
+  "endOfLine": "lf"
 }

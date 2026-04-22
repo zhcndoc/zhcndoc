@@ -1,12 +1,14 @@
 const CONTENT_DB_RETRY_DELAYS = [120, 240, 400]
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const isTransientContentDatabaseError = (error: unknown) => {
   const message = error instanceof Error ? error.message : String(error)
 
-  return message.includes('no such table: _content_')
-    || message.includes('Database integrity check failed')
+  return (
+    message.includes('no such table: _content_') ||
+    message.includes('Database integrity check failed')
+  )
 }
 
 export const withContentDatabaseRetry = async <T>(loader: () => Promise<T>) => {
@@ -14,7 +16,10 @@ export const withContentDatabaseRetry = async <T>(loader: () => Promise<T>) => {
     try {
       return await loader()
     } catch (error) {
-      if (!isTransientContentDatabaseError(error) || attempt === CONTENT_DB_RETRY_DELAYS.length) {
+      if (
+        !isTransientContentDatabaseError(error) ||
+        attempt === CONTENT_DB_RETRY_DELAYS.length
+      ) {
         throw error
       }
 

@@ -8,6 +8,8 @@ export default defineContentConfig({
       schema: z.object({
         name: z.string(),
         description: z.string(),
+        contributing: z.string().optional(),
+        readme: z.string().optional(),
         type: z.enum(['mirror', 'translate']),
         upstream: z.object({
           owner: z.string(),
