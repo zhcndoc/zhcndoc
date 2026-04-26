@@ -5,6 +5,10 @@ upstream:
   repo: bun
   branch: main
   link: https://bun.com
+  sparse: 
+    - docs
+    - LICENSE.md
+    - README.md
 contributing: |
   ## 贡献指南
   

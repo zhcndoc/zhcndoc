@@ -6,3 +6,7 @@ upstream:
   repo: node
   branch: main
   link: https://nodejs.org
+  sparse: 
+    - doc
+    - LICENSE
+    - README.md

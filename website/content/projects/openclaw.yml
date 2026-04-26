@@ -6,3 +6,7 @@ upstream:
   repo: openclaw
   branch: main
   link: https://openclaw.ai
+  sparse: 
+    - docs
+    - LICENSE
+    - README.md
