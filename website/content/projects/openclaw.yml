@@ -7,6 +7,7 @@ upstream:
   branch: main
   link: https://openclaw.ai
   sparse: 
+    - .gitignore
     - docs
     - LICENSE
     - README.md

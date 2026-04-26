@@ -6,6 +6,7 @@ upstream:
   branch: main
   link: https://bun.com
   sparse: 
+    - .gitignore
     - docs
     - LICENSE.md
     - README.md

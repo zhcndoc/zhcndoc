@@ -40,8 +40,46 @@ jobs:
 
       - name: Sync ${{ matrix.name }}
         run: |
-          git remote add upstream https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git
-          git fetch upstream ${{ matrix.branch }}
-          git checkout -B upstream
-          git reset --hard upstream/${{ matrix.branch }}
-          git push origin upstream --force
+          set -euo pipefail
+          SPARSE_JSON='${{ toJson(matrix.sparse) }}'
+          SPARSE_PATHS="$RUNNER_TEMP/sparse-paths.txt"
+          SOURCE_DIR="$RUNNER_TEMP/upstream-source"
+
+          if [ "$SPARSE_JSON" != "null" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+            printf '%s\n' "$SPARSE_JSON" | jq -r '.[] | if startswith("/") then . else "/" + . end' > "$SPARSE_PATHS"
+            rm -rf "$SOURCE_DIR"
+
+            git clone --depth=1 --filter=blob:none --sparse --branch "${{ matrix.branch }}" https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git "$SOURCE_DIR"
+            git -C "$SOURCE_DIR" sparse-checkout set --no-cone --stdin < "$SPARSE_PATHS"
+
+            upstream_sha=$(git -C "$SOURCE_DIR" rev-parse HEAD)
+
+            if git fetch --no-tags --depth=1 --filter=blob:none origin upstream; then
+              git checkout -B upstream FETCH_HEAD
+            else
+              git checkout --orphan upstream
+            fi
+
+            git rm -r --ignore-unmatch . >/dev/null 2>&1 || true
+            git clean -fdx
+            rsync -a --delete --exclude='.git' "$SOURCE_DIR"/ ./
+            
+            git add -A
+            sed 's#^/##' "$SPARSE_PATHS" | git add -f --pathspec-from-file=-
+
+            if git diff --cached --quiet; then
+              echo "No sparse upstream changes for ${{ matrix.name }}"
+            else
+              git commit -m "sync upstream ${{ matrix.owner }}/${{ matrix.repo }}@$upstream_sha"
+              git push origin upstream --force
+            fi
+          else
+            git remote add upstream https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git
+            git fetch upstream ${{ matrix.branch }}
+            git checkout -B upstream
+            git reset --hard upstream/${{ matrix.branch }}
+            git push origin upstream --force
+          fi
