@@ -68,7 +68,7 @@ jobs:
             rsync -a --delete --exclude='.git' "$SOURCE_DIR"/ ./
             
             git add -A
-            sed 's#^/##' "$SPARSE_PATHS" | git add -f --pathspec-from-file=-
+            sed 's#^/##' "$SPARSE_PATHS" | git add -f --pathspec-from-file=- || true
 
             if git diff --cached --quiet; then
               echo "No sparse upstream changes for ${{ matrix.name }}"
