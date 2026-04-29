@@ -9,8 +9,5 @@ upstream:
   sparse: 
     - .gitignore
     - doc
-    - Dockerfile
     - LICENSE
     - README.md
-    - vercel.json
-    - zbpack.json

@@ -1,0 +1,8 @@
+name: dicebear
+description: 可生成统一风格头像的开源库，提供可定制的 SVG 插画头像集。
+type: translate
+upstream:
+  owner: dicebear
+  repo: dicebear
+  branch: 10.x
+  link: https://www.dicebear.com

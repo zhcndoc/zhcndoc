@@ -3,6 +3,6 @@ description: 声明式 UI 构建库，专注组件化开发模式，构建丰富
 type: mirror
 upstream:
   owner: reactjs
-  repo: zh-hans.react.dev
+  repo: react.dev
   branch: main
   link: https://react.dev

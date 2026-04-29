@@ -11,6 +11,9 @@ importers:
       '@chenglou/pretext':
         specifier: ^0.0.5
         version: 0.0.5
+      canvas:
+        specifier: ^3.2.3
+        version: 3.2.3
       oxfmt:
         specifier: ^0.45.0
         version: 0.45.0
@@ -50,9 +53,6 @@ importers:
       better-sqlite3:
         specifier: ^12.9.0
         version: 12.9.0
-      canvas:
-        specifier: ^3.2.3
-        version: 3.2.3
       echarts:
         specifier: ^6.0.0
         version: 6.0.0

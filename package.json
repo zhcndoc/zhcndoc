@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@chenglou/pretext": "^0.0.5",
+    "canvas": "^3.2.3",
     "oxfmt": "^0.45.0"
   }
 }

@@ -1,0 +1,8 @@
+name: rolldown
+description: Rust 驱动的 JS 打包器，兼顾高效构建与 Rollup 兼容 API 能力。
+type: translate
+upstream:
+  owner: rolldown
+  repo: rolldown
+  branch: main
+  link: https://rolldown.rs
