@@ -65,7 +65,6 @@ export default defineEventHandler(async (event) => {
     return {
       name: project.name,
       description: project.description,
-      type: project.type,
       upstream: project.upstream,
       title: repo.description || '',
       link: repo.homepageUrl || '',

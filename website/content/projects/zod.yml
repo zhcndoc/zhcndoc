@@ -1,6 +1,5 @@
 name: zod
 description: 安全高效的 TypeScript 模式验证库，支持静态类型推断和解析。
-type: translate
 upstream:
   owner: colinhacks
   repo: zod

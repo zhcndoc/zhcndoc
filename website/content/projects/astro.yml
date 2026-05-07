@@ -1,6 +1,5 @@
 name: astro
 description: 内容驱动的现代 Web 框架，支持多种 UI 库，专注构建高速网站。
-type: mirror
 upstream:
   owner: withastro
   repo: docs

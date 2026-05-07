@@ -5,7 +5,7 @@
     <Body>
       <AppHeader />
 
-      <UMain class="mt-(--ui-header-height)">
+      <UMain class="mt-[72px]">
         <slot></slot>
       </UMain>
 

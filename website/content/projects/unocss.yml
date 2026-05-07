@@ -1,6 +1,5 @@
 name: unocss
 description: 灵活定制的即时原子 CSS 引擎，支持多种预设与高效按需编译。
-type: translate
 upstream:
   owner: unocss
   repo: unocss

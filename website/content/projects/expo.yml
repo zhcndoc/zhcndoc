@@ -1,6 +1,5 @@
 name: expo
 description: 面向 React Native 的开发工具链，覆盖构建、调试和发布流程。
-type: translate
 upstream:
   owner: expo
   repo: expo

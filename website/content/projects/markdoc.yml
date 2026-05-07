@@ -1,6 +1,5 @@
 name: markdoc
 description: 基于 Markdown 的内容创作工具链，构建可扩展的结构化内容。
-type: translate
 upstream:
   owner: markdoc
   repo: docs

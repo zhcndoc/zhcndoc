@@ -1,6 +1,5 @@
 name: redux
 description: 单向数据流状态管理库，有效解耦组件通信，适配复杂应用开发。
-type: translate
 upstream:
   owner: reduxjs
   repo: redux

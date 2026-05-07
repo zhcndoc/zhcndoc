@@ -1,6 +1,6 @@
 # 简中文档 / zhcndoc
 
-[简中文档](https://www.zhcndoc.com) 是一个开源项目的文档平台，收录并维护了 Nuxt、Bun、OpenClaw 等主流开源项目的简体中文翻译文档站点。
+[简中文档](https://www.zhcndoc.com) 是一个开源项目的文档平台，收录并维护了 Nuxt、Bun、OpenClaw 等主流开源项目的简体中文技术文档入口。
 
 ## 项目结构
 
@@ -118,7 +118,6 @@ pnpm run preview
 ```yaml
 name: project-name
 description: 一句话描述该项目的功能（约 400px 宽度内）。
-type: mirror
 upstream:
   owner: github-org
   repo: repo-name
@@ -126,12 +125,11 @@ upstream:
   link: https://project-official-site.com
 ```
 
-如果上游仓库过大，不适合完整镜像到 `zhcndoc/<name>`，可以为项目增加 `sparse` 配置，只同步文档相关路径：
+如果上游仓库过大，不适合完整同步到 `zhcndoc/<name>`，可以为项目增加 `sparse` 配置，只同步文档相关路径：
 
 ```yaml
 name: project-name
 description: 一句话描述该项目的功能（约 400px 宽度内）。
-type: translate
 upstream:
   owner: github-org
   repo: repo-name
@@ -153,7 +151,7 @@ upstream:
 适用场景：
 
 - `zhcndoc/<name>` 已经存在
-- 远端 `main` 分支里已经有中文翻译内容
+- 远端 `main` 分支里已经有中文文档内容
 - 需要把 `upstream` 和 `main` 都切换成 docs-only 历史
 
 推荐步骤：
@@ -253,7 +251,7 @@ git push origin main --force-with-lease
 适用场景：
 
 - 新项目还没有迁移到 `zhcndoc/<name>`
-- 上游仓库体积过大，不适合做完整镜像
+- 上游仓库体积过大，不适合做完整同步
 
 推荐步骤：
 

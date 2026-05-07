@@ -1,6 +1,5 @@
 name: nuxt-examples
 description: Nuxt 全栈框架的实用示例与模板，涵盖多种场景的配置与实践。
-type: translate
 upstream:
   owner: nuxt
   repo: examples

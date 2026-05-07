@@ -25,6 +25,7 @@
     "better-sqlite3": "^12.9.0",
     "echarts": "^6.0.0",
     "eslint": "^10.2.1",
+    "gsap": "^3.15.0",
     "luxon": "^3.7.2",
     "nuxt": "^4.4.2",
     "nuxt-echarts": "^1.0.1",

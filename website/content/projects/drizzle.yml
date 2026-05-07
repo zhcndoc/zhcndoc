@@ -1,6 +1,5 @@
 name: drizzle
 description: 轻量级 TypeScript ORM 库，提供类 SQL 语法和完备类型安全。
-type: translate
 upstream:
   owner: drizzle-team
   repo: drizzle-orm-docs

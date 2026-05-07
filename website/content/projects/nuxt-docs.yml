@@ -1,6 +1,5 @@
 name: nuxt-docs
 description: Nuxt 全栈框架使用指南，全面涵盖配置、路由和 API 参考内容。
-type: translate
 upstream:
   owner: nuxt
   repo: nuxt

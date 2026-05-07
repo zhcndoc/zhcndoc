@@ -1,6 +1,5 @@
 name: opennext
 description: 开源适配层框架，帮助 Next.js 应用部署到各种云和自托管环境。
-type: translate
 upstream:
   owner: opennextjs
   repo: docs

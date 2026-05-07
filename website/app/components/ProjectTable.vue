@@ -23,30 +23,6 @@ const tableColumns: TableColumn<ProjectInfo>[] = [
     },
   },
   {
-    accessorKey: 'type',
-    header: '类型',
-    cell({ row }) {
-      switch (row.original.type) {
-        case 'translate':
-          return h(UBadge, {
-            color: 'info',
-            icon: 'tabler:pencil-code',
-            label: '翻译',
-            variant: 'solid',
-          })
-        case 'mirror':
-          return h(UBadge, {
-            color: 'warning',
-            icon: 'tabler:copy',
-            label: '镜像',
-            variant: 'solid',
-          })
-        default:
-          return '无'
-      }
-    },
-  },
-  {
     accessorKey: 'license',
     header: '开源协议',
     cell({ row }) {

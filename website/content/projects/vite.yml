@@ -1,6 +1,5 @@
 name: vite
 description: 极速前端构建工具，支持模块热替换，优化现代 Web 开发体验。
-type: translate
 upstream:
   owner: vitejs
   repo: vite

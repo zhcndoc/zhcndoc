@@ -1,6 +1,5 @@
 name: tiptap
 description: 可扩展的富文本编辑器框架，支持实时协作编辑与 AI 辅助集成。
-type: translate
 upstream:
   owner: ueberdosis
   repo: tiptap-docs

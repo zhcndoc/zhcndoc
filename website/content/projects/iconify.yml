@@ -1,6 +1,5 @@
 name: iconify
 description: 统一的开源图标框架，聚合数十万图标并提供多框架组件和工具。
-type: translate
 upstream:
   owner: iconify
   repo: website

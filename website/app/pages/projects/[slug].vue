@@ -5,7 +5,6 @@ interface ProjectPageData {
     description: string
     contributing?: string
     readme?: string
-    type: string
     upstream?: {
       link?: string
     }
@@ -62,10 +61,7 @@ const { data, status } = await useFetch<ProjectPageData>(
 )
 
 useSeoMeta({
-  title:
-    data.value?.project?.type === 'ecosystem'
-      ? `${data.value?.project?.name} - 生态项目`
-      : `${data.value?.project?.name} - 中文文档`,
+  title: `${data.value?.project?.name} - 中文文档`,
   description: data.value?.project?.description || '项目详情',
 })
 

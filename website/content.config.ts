@@ -10,7 +10,6 @@ export default defineContentConfig({
         description: z.string(),
         contributing: z.string().optional(),
         readme: z.string().optional(),
-        type: z.enum(['mirror', 'translate']),
         upstream: z.object({
           owner: z.string(),
           repo: z.string(),

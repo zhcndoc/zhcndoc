@@ -1,6 +1,5 @@
 name: nuxt-content
 description: 基于 Git 的 Nuxt 内容管理模块，提供简洁方式组织和管理内容。
-type: translate
 upstream:
   owner: nuxt
   repo: content

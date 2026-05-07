@@ -1,6 +1,5 @@
 name: nuxt-i18n
-description: Nuxt 生态的 I18n 国际化解决方案，支持多语言切换和翻译管理。
-type: translate
+description: Nuxt I18n 为应用提供多语言路由、区域设置和完整本地化体验。
 upstream:
   owner: nuxt-modules
   repo: i18n

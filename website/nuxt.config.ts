@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-03-26',
   vite: {
     optimizeDeps: {
-      include: ['luxon'],
+      include: ['gsap', 'gsap/ScrollTrigger', 'luxon'],
     },
   },
   echarts: {

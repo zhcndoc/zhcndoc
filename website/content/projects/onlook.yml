@@ -1,6 +1,5 @@
 name: onlook
 description: 面向设计师的可视化开发工具，浏览器内实时编辑并同步至代码。
-type: translate
 upstream:
   owner: onlook-dev
   repo: onlook

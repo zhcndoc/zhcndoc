@@ -5,7 +5,6 @@ export interface ProjectInfo {
   title: string
   link: string
   description: string
-  type: string
   license: string
   stars: number
   forks: number
