@@ -32,6 +32,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     umamiToken: '',
   },
+  routeRules: {
+    '/projects/overview': {
+      redirect: {
+        to: '/overview',
+        statusCode: 301,
+      },
+    },
+  },
   experimental: {
     serverAppConfig: false,
   },

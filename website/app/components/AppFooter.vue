@@ -7,7 +7,7 @@ const linkGroups = [
     title: '文档索引',
     links: [
       { label: '探索项目', to: '/projects' },
-      { label: '项目概览', to: '/projects/overview' },
+      { label: '项目概览', to: '/overview' },
       { label: '访问统计', to: '/analytics' },
     ],
   },
@@ -47,14 +47,12 @@ const linkGroups = [
 <template>
   <footer class="relative overflow-hidden border-t border-muted bg-default">
     <div
-      class="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--ui-border-muted)_1px,transparent_1px),linear-gradient(90deg,var(--ui-border-muted)_1px,transparent_1px)] opacity-20 [background-size:44px_44px] [mask-image:linear-gradient(180deg,transparent,black_22%,black_72%,transparent)]"
+      class="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--ui-border-muted)_1px,transparent_1px),linear-gradient(90deg,var(--ui-border-muted)_1px,transparent_1px)] bg-size-[44px_44px] opacity-20 mask-[linear-gradient(180deg,transparent,black_22%,black_72%,transparent)]"
     />
 
     <UContainer class="relative py-12 lg:py-16">
       <div class="mb-10 grid gap-px border border-muted bg-border lg:grid-cols-[1.2fr_repeat(3,1fr)]">
-        <section
-          class="relative bg-default p-5 before:pointer-events-none before:absolute before:right-0 before:top-0 before:size-[18px] before:border-r before:border-t before:border-accented before:opacity-60 sm:p-6"
-        >
+        <section class="bg-default p-5 sm:p-6">
           <Logo />
           <p class="mt-5 max-w-sm text-sm leading-7 text-muted">
             收录、维护并索引开源项目的简体中文文档，让中文开发者更快进入可靠资料。
@@ -66,7 +64,7 @@ const linkGroups = [
               icon="tabler:folder-search"
               color="neutral"
               variant="subtle"
-              class="rounded-[2px]"
+              class="rounded-xs"
             />
             <UButton
               to="https://github.com/zhcndoc/zhcndoc"
@@ -75,7 +73,7 @@ const linkGroups = [
               icon="tabler:brand-github"
               color="neutral"
               variant="ghost"
-              class="rounded-[2px]"
+              class="rounded-xs"
             />
           </div>
         </section>
@@ -83,7 +81,7 @@ const linkGroups = [
         <nav
           v-for="group in linkGroups"
           :key="group.title"
-          class="relative bg-default p-5 before:pointer-events-none before:absolute before:right-0 before:top-0 before:size-[18px] before:border-r before:border-t before:border-accented before:opacity-60 sm:p-6"
+          class="bg-default p-5 sm:p-6"
         >
           <div class="mb-6 flex items-center justify-between border-b border-muted pb-3">
             <h2 class="text-sm font-semibold text-highlighted">

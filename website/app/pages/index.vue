@@ -338,11 +338,11 @@ onBeforeUnmount(() => {
   <div ref="homeRoot" class="relative overflow-hidden bg-default">
     <div
       data-zh-parallax="grid"
-      class="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--ui-border-muted)_1px,transparent_1px),linear-gradient(90deg,var(--ui-border-muted)_1px,transparent_1px)] opacity-20 [background-size:44px_44px] [mask-image:linear-gradient(180deg,transparent,black_22%,black_72%,transparent)]"
+      class="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--ui-border-muted)_1px,transparent_1px),linear-gradient(90deg,var(--ui-border-muted)_1px,transparent_1px)] bg-size-[44px_44px] opacity-20 mask-[linear-gradient(180deg,transparent,black_22%,black_72%,transparent)]"
     />
 
     <section data-zh-hero class="relative">
-      <UContainer class="relative grid min-h-[calc(100svh_-_var(--ui-header-height))] items-center gap-10 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:py-20">
+      <UContainer class="relative grid min-h-[calc(100svh-var(--ui-header-height))] items-center gap-10 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:py-20">
         <div class="relative z-10">
           <div
             data-zh-hero-kicker
@@ -369,7 +369,7 @@ onBeforeUnmount(() => {
               trailing-icon="tabler:arrow-right"
               color="primary"
               size="xl"
-              class="rounded-[2px]"
+              class="rounded-xs"
             />
             <UButton
               to="https://github.com/zhcndoc/zhcndoc"
@@ -379,7 +379,7 @@ onBeforeUnmount(() => {
               color="neutral"
               variant="outline"
               size="xl"
-              class="rounded-[2px]"
+              class="rounded-xs"
             />
           </div>
 
@@ -402,7 +402,7 @@ onBeforeUnmount(() => {
                 :key="project.name"
                 data-zh-archive-card
                 :to="`/projects/${project.name}`"
-                class="group relative min-h-56 bg-default p-4 transition-colors after:pointer-events-none after:absolute after:bottom-3 after:right-3 after:size-[7px] after:border-b after:border-r after:border-accented after:opacity-0 after:transition-opacity hover:bg-elevated hover:after:opacity-100"
+                class="group relative min-h-56 bg-default p-4 transition-colors after:pointer-events-none after:absolute after:bottom-3 after:right-3 after:size-1.75 after:border-b after:border-r after:border-accented after:opacity-0 after:transition-opacity hover:bg-elevated hover:after:opacity-100"
               >
                 <div class="mb-6 flex items-start justify-between gap-4">
                   <div class="flex items-center gap-3">
@@ -525,7 +525,7 @@ onBeforeUnmount(() => {
             trailing-icon="tabler:arrow-right"
             color="neutral"
             variant="outline"
-            class="w-fit rounded-[2px]"
+            class="w-fit rounded-xs"
           />
         </div>
 
@@ -633,7 +633,7 @@ onBeforeUnmount(() => {
                   trailing-icon="tabler:arrow-right"
                   color="primary"
                   size="xl"
-                  class="rounded-[2px]"
+                  class="rounded-xs"
                 />
                 <UButton
                   to="/analytics"
@@ -642,7 +642,7 @@ onBeforeUnmount(() => {
                   color="neutral"
                   variant="outline"
                   size="xl"
-                  class="rounded-[2px]"
+                  class="rounded-xs"
                 />
               </div>
             </div>

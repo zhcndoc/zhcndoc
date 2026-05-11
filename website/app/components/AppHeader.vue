@@ -12,20 +12,14 @@ const items = computed<NavigationMenuItem[]>(() => [
     icon: 'tabler:list-details',
     to: '/projects',
     active: route.path.startsWith('/projects'),
-    children: [
-      {
-        label: '探索',
-        icon: 'tabler:search',
-        to: '/projects',
-        description: '浏览已收录的中文技术文档项目',
-      },
-      {
-        label: '概览',
-        icon: 'tabler:layout-dashboard',
-        to: '/projects/overview',
-        description: '查看项目仓库与同步状态的整体图景',
-      },
-    ],
+    description: '浏览已收录的中文技术文档项目',
+  },
+  {
+    label: '概览',
+    icon: 'tabler:layout-dashboard',
+    to: '/overview',
+    description: '查看项目仓库与同步状态的整体图景',
+    active: route.path.startsWith('/overview'),
   },
   {
     label: '统计',
@@ -48,10 +42,10 @@ const items = computed<NavigationMenuItem[]>(() => [
   <UHeader
     title="简中文档"
     :class="[
-      'fixed inset-x-0 top-0 z-50 border-b border-muted bg-default/85 backdrop-blur-xl transition-[height,box-shadow,background-color] duration-300 before:pointer-events-none before:absolute before:inset-0 before:bg-[repeating-linear-gradient(90deg,transparent_0,transparent_33px,var(--ui-border-muted)_34px)] before:opacity-20 after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary/60 after:to-transparent after:opacity-45 after:animate-pulse motion-reduce:after:animate-none',
+      'fixed inset-x-0 top-0 z-50 border-b border-muted bg-default/85 backdrop-blur-xl transition-[height,box-shadow,background-color] duration-300 before:pointer-events-none before:absolute before:inset-0 before:bg-[repeating-linear-gradient(90deg,transparent_0,transparent_33px,var(--ui-border-muted)_34px)] before:opacity-20 after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-px after:bg-linear-to-r after:from-transparent after:via-primary/60 after:to-transparent after:opacity-45 after:animate-pulse motion-reduce:after:animate-none',
       isScrolled
-        ? '!h-[60px] bg-default/95 shadow-[0_22px_60px_-44px_var(--ui-text)]'
-        : '!h-[72px]',
+        ? 'h-15! bg-default/95 shadow-[0_22px_60px_-44px_var(--ui-text)]'
+        : 'h-18!',
     ]"
     :ui="{
       container: 'h-full max-w-7xl border-x border-muted px-3 sm:px-4 lg:px-6',
@@ -108,7 +102,7 @@ const items = computed<NavigationMenuItem[]>(() => [
         variant="ghost"
         icon="tabler:brand-github"
         color="neutral"
-        class="rounded-[2px]"
+        class="rounded-xs"
       />
     </template>
   </UHeader>

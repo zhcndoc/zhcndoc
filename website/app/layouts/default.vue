@@ -5,7 +5,7 @@
     <Body>
       <AppHeader />
 
-      <UMain class="mt-[72px]">
+      <UMain class="mt-18">
         <slot></slot>
       </UMain>
 
