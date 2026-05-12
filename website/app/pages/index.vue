@@ -391,7 +391,7 @@ onBeforeUnmount(() => {
         </div>
 
         <div data-zh-parallax="wall" class="relative z-10">
-          <div class="border border-muted bg-border p-px shadow-[0_34px_90px_-62px_var(--ui-text)]">
+          <div class="border border-muted bg-default shadow-[0_34px_90px_-62px_var(--ui-text)]">
             <div class="flex items-center justify-between border-b border-muted bg-default px-4 py-3">
               <span class="font-mono text-xs tracking-[0.24em] text-muted">LIVE INDEX</span>
               <span class="font-mono text-xs text-dimmed">ZHCN-{{ featuredProjects.length }}</span>
@@ -606,7 +606,7 @@ onBeforeUnmount(() => {
       <UContainer>
         <div
           data-zh-reveal
-          class="border border-muted bg-border p-px"
+          class="border border-muted bg-default"
         >
           <div class="grid gap-px bg-border lg:grid-cols-[1fr_0.8fr]">
             <div class="bg-default p-6 sm:p-8">
