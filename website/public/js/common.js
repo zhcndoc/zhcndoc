@@ -24,75 +24,77 @@ function loadWwads() {
   document.head.appendChild(script)
 }
 
-function loadSwalAndRun() {
+function loadMarkHubAd() {
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSwal)
+    document.addEventListener('DOMContentLoaded', initAd)
   } else {
-    initSwal()
+    initAd()
   }
 
-  function initSwal() {
+  function initAd() {
     const style = document.createElement('style')
-    style.textContent = `.swal2-container { background-color: #0000 !important; pointer-events: none !important;}
-      .swal2-popup { max-width: 290px !important; }
-      .swal2-html-container { margin: 0 !important; padding: 2px !important; }
-      .swal2-actions { justify-content: flex-end !important; gap: 10px !important; padding: 0 !important; }
-      .swal2-styled { margin: 0 !important; padding: 8px !important; font-size: 14px !important; border: none !important; }
-      .swal2-confirm { background-color: #ff3f57 !important; color: white !important; }
-      .swal2-confirm:hover { background-color: #f1223c !important; }
-      .swal2-cancel { background-color: #6b7280 !important; color: white !important; }
-      .swal2-cancel:hover { background-color: #4b5563 !important; }`
+    style.textContent = `.markhub-ad {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
+      width: 200px;
+      max-width: calc(100vw - 24px);
+      line-height: 0;
+    }
+    .markhub-ad__link {
+      display: block;
+    }
+    .markhub-ad__image {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 18px 45px rgb(15 23 42 / 22%);
+    }
+    .markhub-ad__close {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      display: grid;
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      place-items: center;
+      border: none;
+      border-radius: 999px;
+      background: rgb(255 255 255 / 20%);
+      color: rgb(75 85 99 / 32%);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      opacity: 0.3;
+      transition:
+        background-color 160ms ease,
+        color 160ms ease,
+        opacity 160ms ease;
+    }
+    .markhub-ad__close:hover {
+      background: rgb(255 255 255 / 62%);
+      color: rgb(75 85 99 / 72%);
+      opacity: 0.72;
+    }`
     document.head.appendChild(style)
 
-    const script = document.createElement('script')
-    script.src =
-      'https://unpkg.com/sweetalert2@11.26.17/dist/sweetalert2.all.min.js'
-    script.crossOrigin = 'anonymous'
+    const ad = document.createElement('div')
+    ad.className = 'markhub-ad'
+    ad.innerHTML = `
+      <a class="markhub-ad__link" href="https://open.markhub.top" target="_blank" rel="noopener">
+        <img class="markhub-ad__image" src="https://img.meituan.net/poiugc/52bca2debb6f7933630da63c98a8d824101010.webp" alt="MarkHub AI">
+      </a>
+      <button class="markhub-ad__close" type="button" aria-label="关闭广告">&times;</button>
+    `
 
-    script.onload = () => {
-      const STORAGE_KEY = 'swal_no_remind_date'
-      const today = new Date().toISOString().slice(0, 10)
-      const noRemindDate = localStorage.getItem(STORAGE_KEY)
+    ad.querySelector('.markhub-ad__close').addEventListener('click', () => {
+      ad.remove()
+    })
 
-      if (noRemindDate !== today) {
-        Swal.fire({
-          allowEscapeKey: false,
-          cancelButtonText: '稍后再看',
-          confirmButtonText: '了解详情',
-          position: 'bottom-end',
-          showCancelButton: true,
-          toast: true,
-          html: `
-            <div style="text-align: justify; line-height: 1.8; font-size: 15px;">
-              <p style="margin: 0;"><span style="color: #ff3f57; font-weight: bold;">简中文档</span>由社区提供维护，随着访问量不断增长，服务器与 CDN 等基础设施成本也在持续增加。</p>
-              <p style="margin: 0;">为了文档能够稳定、长期地运行下去，我们与<span style="color: #ff3f57; font-weight: bold;">雨云</span>建立合作关系，由其为本项目提供技术支持。</p>
-              <h2 style="margin: 0; font-size: 17px; font-weight: 900; line-height: 2;">为什么选择雨云</h2>
-              <p style="margin: 0;">雨云是一家国产云计算服务商，提供常见开发与部署场景的云服务产品：</p>
-              <ul style="margin: 6px 0px; font-size: 14px; padding-inline-start: 0; list-style-type: none;">
-                <li>☁️ 云服务器、🛡️ 物理机、🖥️ 显卡云</li>
-                <li>🌐 域名注册、🔒 SSL 证书、🚀 CDN</li>
-                <li>🐳 Docker 云应用、📦 对象存储</li>
-              </ul>
-              <p style="margin: 0;">如果您<span style="color: #ff3f57; font-weight: bold;">正好有相关需求</span>，可以了解一下雨云的产品。</p>
-            </div>
-          `,
-          preConfirm: () => {
-            window.open(
-              atob('aHR0cHM6Ly93d3cucmFpbnl1bi5jb20vbW1fP3M9emhjbmRvYw'),
-            )
-          },
-          didOpen: () => {
-            Swal.getConfirmButton().dataset.umamiEvent = 'ads-swal-click'
-          },
-        }).then((result) => {
-          if (result.dismiss === Swal.DismissReason.cancel) {
-            localStorage.setItem(STORAGE_KEY, today)
-          }
-        })
-      }
-    }
-
-    document.head.appendChild(script)
+    document.body.appendChild(ad)
   }
 }
 
@@ -102,4 +104,4 @@ if (window.location.hostname.endsWith('zhcndoc.com')) {
 }
 
 loadWwads()
-loadSwalAndRun()
+loadMarkHubAd()
