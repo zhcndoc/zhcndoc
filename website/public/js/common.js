@@ -90,7 +90,12 @@ function loadMarkHubAd() {
       <button class="markhub-ad__close" type="button" aria-label="关闭广告">&times;</button>
     `
 
+    ad.querySelector('.markhub-ad__link').addEventListener('click', () => {
+      window.umami?.track?.('ads-markhub-click', { source: window.location.hostname })
+    })
+
     ad.querySelector('.markhub-ad__close').addEventListener('click', () => {
+      window.umami?.track?.('ads-markhub-close', { source: window.location.hostname })
       ad.remove()
     })
 
