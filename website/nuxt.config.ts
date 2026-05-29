@@ -14,6 +14,10 @@ export default defineNuxtConfig({
           name: 'viewport',
           content: 'width=device-width, initial-scale=1, viewport-fit=cover',
         },
+        {
+          name: 'google-adsense-account',
+          content: 'ca-pub-7563908414744328',
+        },
       ],
       link: [
         {

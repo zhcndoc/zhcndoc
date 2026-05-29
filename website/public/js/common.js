@@ -15,6 +15,19 @@ function loadUmami() {
   document.head.appendChild(script)
 }
 
+function loadGoogleAnalytics() {
+  const script = document.createElement('script')
+  script.async = true
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-HYH4TH7PWM'
+  document.head.appendChild(script)
+  window.dataLayer = window.dataLayer || []
+  function gtag() {
+    dataLayer.push(arguments)
+  }
+  gtag('js', new Date())
+  gtag('config', 'G-HYH4TH7PWM')
+}
+
 function loadWwads() {
   const script = document.createElement('script')
   script.type = 'text/javascript'
@@ -106,6 +119,7 @@ function loadMarkHubAd() {
 if (window.location.hostname.endsWith('zhcndoc.com')) {
   loadBaiduAnalytics()
   loadUmami()
+  loadGoogleAnalytics()
 }
 
 loadWwads()
