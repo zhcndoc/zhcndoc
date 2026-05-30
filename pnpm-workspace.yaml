@@ -1,5 +1,0 @@
-packages:
-  - 'website'
-
-allowBuilds:
-  better-sqlite3: true

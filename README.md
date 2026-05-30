@@ -4,18 +4,19 @@
 
 ## 项目结构
 
-本项目采用 pnpm 单仓库（monorepo）管理：
+本项目是一个以仓库根目录作为应用根目录的 Nuxt 4 项目：
 
 ```
 zhcndoc/
-├── website/          # 主站 Nuxt 4 应用
-│   ├── app/          # 应用代码（页面、组件、布局）
-│   ├── content/      # 内容数据
-│   │   ├── projects/ # 各项目元数据（*.yml）
-│   │   └── blog/     # 博客文章
-│   ├── server/       # 服务端 API（分析、项目数据）
-│   └── shared/       # 共享类型与工具函数
+├── app/              # 应用代码（页面、组件、布局）
+├── content/          # 内容数据
+│   ├── projects/     # 各项目元数据（*.yml）
+│   └── blog/         # 博客文章
+├── public/           # 静态资源
+├── server/           # 服务端 API（分析、项目数据）
+├── shared/           # 共享类型与工具函数
 ├── scripts/          # 工具脚本
+├── nuxt.config.ts    # Nuxt 配置
 ├── vercel.json       # Vercel 部署配置
 └── zbpack.json       # Zeabur 部署配置
 ```
@@ -26,7 +27,7 @@ zhcndoc/
 - **UI**：[@nuxt/ui](https://ui.nuxt.com) + [Tailwind CSS v4](https://tailwindcss.com)
 - **内容**：[@nuxt/content](https://content.nuxt.com)
 - **图表**：[ECharts](https://echarts.apache.org)（通过 nuxt-echarts）
-- **包管理**：[pnpm](https://pnpm.io) workspace
+- **包管理**：[pnpm](https://pnpm.io)
 
 ## 开发约定
 
@@ -57,7 +58,7 @@ DateTime.fromMillis(timestamp)
 
 ## 本地开发
 
-根目录脚本会转发到 `@zhcndoc/website` workspace 包执行；如果你进入 `website/`，也可以直接运行同名脚本。
+所有命令都在仓库根目录执行。
 
 安装依赖：
 
@@ -89,11 +90,11 @@ pnpm run preview
 
 ### Vercel
 
-项目通过 `vercel.json` 配置，从仓库根目录调用 workspace 脚本；构建完成后会将 Nitro 的 Vercel Build Output API 产物从 `website/.vercel/output` 复制到仓库根目录，Vercel 可自动识别并部署 SSR：
+项目通过 `vercel.json` 配置，从仓库根目录直接构建 Nuxt 应用：
 
 ```json
 {
-  "buildCommand": "pnpm run build:vercel",
+  "buildCommand": "pnpm run build",
   "installCommand": "pnpm install"
 }
 ```
@@ -102,18 +103,18 @@ pnpm run preview
 
 ### Zeabur
 
-通过 `zbpack.json` 配置，从仓库根目录构建，并使用 workspace 过滤到 `website` 包启动 `node-server` 产物：
+通过 `zbpack.json` 配置，从仓库根目录构建，并使用 `node-server` 产物启动服务：
 
 ```json
 {
   "build_command": "NITRO_PRESET=node-server pnpm run build",
-  "start_command": "NITRO_HOST=0.0.0.0 pnpm --filter @zhcndoc/website exec node .output/server/index.mjs"
+  "start_command": "NITRO_HOST=0.0.0.0 node .output/server/index.mjs"
 }
 ```
 
 ## 添加项目
 
-在 `website/content/projects/` 目录下新增 `<name>.yml` 文件：
+在 `content/projects/` 目录下新增 `<name>.yml` 文件：
 
 ```yaml
 name: project-name
@@ -156,7 +157,7 @@ upstream:
 
 推荐步骤：
 
-1. 先在 `website/content/projects/<name>.yml` 里补上 `upstream.sparse`
+1. 先在 `content/projects/<name>.yml` 里补上 `upstream.sparse`
 2. 用 sparse 模式分别拉取当前 `main` 和官方上游仓库
 3. 重建远端 `upstream` 分支为 docs-only 快照
 4. 基于新的 `upstream` 重建远端 `main`，再把当前中文内容同步回去
@@ -255,7 +256,7 @@ git push origin main --force-with-lease
 
 推荐步骤：
 
-1. 先在 `website/content/projects/<name>.yml` 中写好 `upstream.sparse`
+1. 先在 `content/projects/<name>.yml` 中写好 `upstream.sparse`
 2. 初始化 `zhcndoc/<name>` 仓库
 3. 先执行一次上面的迁移模板，建立 docs-only 的 `upstream` 和 `main`
 4. 再启用 `.github/workflows/sync-upstream.yml` 进行后续自动同步
