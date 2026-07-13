@@ -1,0 +1,10 @@
+packages:
+  - .
+
+allowBuilds:
+  '@parcel/watcher': true
+  better-sqlite3: true
+  canvas: true
+  esbuild: true
+  unrs-resolver: true
+  vue-demi: true
