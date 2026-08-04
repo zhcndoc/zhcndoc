@@ -1,0 +1,7 @@
+name: mise
+description: 统一管理开发工具、环境变量与项目任务等的跨平台命令行工具。
+upstream:
+  owner: jdx
+  repo: mise
+  branch: main
+  link: https://mise.jdx.dev

@@ -2,7 +2,7 @@
   "name": "zhcndoc",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.12.0",
+  "packageManager": "pnpm@11.20.0",
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
