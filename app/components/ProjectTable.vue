@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TableColumn } from '@nuxt/ui'
+import type { DropdownMenuItem, TableColumn } from '@nuxt/ui'
 
 const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
@@ -7,10 +7,69 @@ const UTooltip = resolveComponent('UTooltip')
 
 defineProps<{ data?: ProjectInfo[] }>()
 
+const defaultColumnVisibility: Record<string, boolean> = {}
+
+const columnOptions = [
+  { id: 'license', label: '开源协议' },
+  { id: 'stars', label: 'Star' },
+  { id: 'forks', label: 'Fork' },
+  { id: 'watchers', label: 'Watch' },
+  { id: 'issues', label: 'Issue 总数' },
+  { id: 'openIssues', label: 'Open Issue' },
+  { id: 'pullRequests', label: 'Pull 总数' },
+  { id: 'openPullRequests', label: 'Open PR' },
+  { id: 'newCommit', label: '同步状态' },
+  { id: 'createdAt', label: '创建时间' },
+  { id: 'updatedAt', label: '更新时间' },
+  { id: 'actions', label: '操作' },
+] as const
+
+const columnVisibility = useCookie<Record<string, boolean>>(
+  'overview-table-column-visibility',
+  {
+    default: () => ({ ...defaultColumnVisibility }),
+  },
+)
+
+const getDefaultVisibility = (columnId: string) =>
+  defaultColumnVisibility[columnId] ?? true
+
+const columnMenuItems = computed<DropdownMenuItem[][]>(() => [
+  columnOptions.map(({ id, label }) => ({
+    label,
+    type: 'checkbox' as const,
+    checked: columnVisibility.value[id] ?? getDefaultVisibility(id),
+    onUpdateChecked(checked: boolean) {
+      columnVisibility.value = {
+        ...columnVisibility.value,
+        [id]: checked,
+      }
+    },
+    onSelect(event: Event) {
+      event.preventDefault()
+    },
+  })),
+  [
+    {
+      label: '恢复默认',
+      icon: 'i-lucide-rotate-ccw',
+      disabled: columnOptions.every(
+        ({ id }) =>
+          (columnVisibility.value[id] ?? getDefaultVisibility(id)) ===
+          getDefaultVisibility(id),
+      ),
+      onSelect() {
+        columnVisibility.value = { ...defaultColumnVisibility }
+      },
+    },
+  ],
+])
+
 const tableColumns: TableColumn<ProjectInfo>[] = [
   {
     accessorKey: 'title',
     header: '项目',
+    enableHiding: false,
     cell({ row }) {
       return h(UButton, {
         color: 'neutral',
@@ -71,7 +130,7 @@ const tableColumns: TableColumn<ProjectInfo>[] = [
   {
     accessorKey: 'watchers',
     header: ({ column }) => {
-      return getHeader(column, 'Wtach')
+      return getHeader(column, 'Watch')
     },
     cell({ row }) {
       return h(UBadge, {
@@ -97,6 +156,20 @@ const tableColumns: TableColumn<ProjectInfo>[] = [
     },
   },
   {
+    accessorKey: 'openIssues',
+    header: ({ column }) => {
+      return getHeader(column, 'Open Issue')
+    },
+    cell({ row }) {
+      return h(UBadge, {
+        color: 'neutral',
+        icon: 'tabler:message',
+        label: row.original.openIssues.toString(),
+        variant: 'soft',
+      })
+    },
+  },
+  {
     accessorKey: 'pullRequests',
     header: ({ column }) => {
       return getHeader(column, 'Pull')
@@ -106,6 +179,20 @@ const tableColumns: TableColumn<ProjectInfo>[] = [
         color: 'neutral',
         icon: 'tabler:git-pull-request',
         label: row.original.pullRequests.toString(),
+        variant: 'soft',
+      })
+    },
+  },
+  {
+    accessorKey: 'openPullRequests',
+    header: ({ column }) => {
+      return getHeader(column, 'Open PR')
+    },
+    cell({ row }) {
+      return h(UBadge, {
+        color: 'neutral',
+        icon: 'tabler:git-pull-request',
+        label: row.original.openPullRequests.toString(),
         variant: 'soft',
       })
     },
@@ -236,12 +323,31 @@ const getHeader = (
 </script>
 
 <template>
-  <UTable
-    :data="data"
-    :columns="tableColumns"
-    :ui="{
-      th: 'text-center text-nowrap',
-      td: 'text-center',
-    }"
-  />
+  <div class="space-y-3">
+    <div class="flex justify-end">
+      <UDropdownMenu
+        :items="columnMenuItems"
+        :content="{ align: 'end' }"
+        :ui="{ content: 'w-48' }"
+      >
+        <UButton
+          color="neutral"
+          icon="i-lucide-columns-settings"
+          label="显示列"
+          trailing-icon="i-lucide-chevron-down"
+          variant="outline"
+        />
+      </UDropdownMenu>
+    </div>
+
+    <UTable
+      v-model:column-visibility="columnVisibility"
+      :data="data"
+      :columns="tableColumns"
+      :ui="{
+        th: 'text-center text-nowrap',
+        td: 'text-center',
+      }"
+    />
+  </div>
 </template>
