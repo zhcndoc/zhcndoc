@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-echarts',
   ],
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   app: {
     head: {
       meta: [
@@ -37,61 +37,26 @@ export default defineNuxtConfig({
     umamiToken: '',
   },
   routeRules: {
-    '/analytics': {
-      redirect: {
-        to: '/insight',
-        statusCode: 301,
-      },
-    },
     '/api/insight/**': {
       cache: {
         maxAge: 60,
-        staleMaxAge: 5 * 60,
         swr: true,
       },
     },
     '/api/project/**': {
       cache: {
         maxAge: 10 * 60,
-        staleMaxAge: 60 * 60,
         swr: true,
       },
     },
-    '/api/projects': {
-      redirect: {
-        to: '/api/project',
-        statusCode: 301,
-      },
-    },
-    '/api/projects/**': {
-      redirect: {
-        to: '/api/project/**',
-        statusCode: 301,
-      },
-    },
-    '/images/projects/**': {
-      redirect: {
-        to: '/images/project/**',
-        statusCode: 301,
-      },
-    },
-    '/projects': {
-      redirect: {
-        to: '/project',
-        statusCode: 301,
-      },
-    },
-    '/projects/overview': {
-      redirect: {
-        to: '/overview',
-        statusCode: 301,
-      },
+    '/analytics': {
+      redirect: { to: '/insight', statusCode: 301 },
     },
     '/projects/**': {
-      redirect: {
-        to: '/project/**',
-        statusCode: 301,
-      },
+      redirect: { to: '/project/**', statusCode: 301 },
+    },
+    '/projects/overview': {
+      redirect: { to: '/overview', statusCode: 301 },
     },
   },
   experimental: {
