@@ -207,11 +207,11 @@ const tableColumns: TableColumn<ProjectInfo>[] = [
         original: { newCommit },
       },
     }) {
-      if (newCommit === undefined) {
+      if (newCommit === null) {
         return h(UBadge, {
           color: 'neutral',
           variant: 'subtle',
-          label: '加载中...',
+          label: '获取失败',
         })
       } else {
         return h(UBadge, {

@@ -22,6 +22,11 @@ export default defineEventHandler(async (event) => {
             pullRequests { totalCount }
             updatedAt
             createdAt
+            baseRef: ref(qualifiedName: "refs/heads/main") {
+              comparison: compare(headRef: "upstream") {
+                aheadBy
+              }
+            }
           }
           pageInfo {
             hasNextPage
@@ -37,10 +42,15 @@ export default defineEventHandler(async (event) => {
   const repos: OrgReposQuery['organization']['repositories']['nodes'] = []
 
   while (hasNextPage) {
-    const result: OrgReposQuery = await octokit.graphql({
-      query,
-      after,
-    })
+    let result: OrgReposQuery
+
+    try {
+      result = await octokit.graphql({ query, after })
+    } catch (error) {
+      if (!isMissingComparisonError(error)) throw error
+      result = error.data
+    }
+
     repos.push(...result.organization.repositories.nodes)
 
     hasNextPage = result.organization.repositories.pageInfo.hasNextPage
@@ -76,8 +86,32 @@ export default defineEventHandler(async (event) => {
       issues: repo.issues.totalCount,
       openPullRequests: repo.openPullRequests.totalCount,
       pullRequests: repo.pullRequests.totalCount,
+      newCommit: repo.baseRef?.comparison?.aheadBy ?? null,
       createdAt: repo.createdAt,
       updatedAt: repo.updatedAt,
     }
   })
 })
+
+const isMissingComparisonError = (
+  error: unknown,
+): error is {
+  data: OrgReposQuery
+  errors: { type: string; path?: (string | number)[] }[]
+} => {
+  if (!error || typeof error !== 'object') return false
+
+  const { data, errors } = error as {
+    data?: OrgReposQuery
+    errors?: { type: string; path?: (string | number)[] }[]
+  }
+
+  return (
+    Boolean(data) &&
+    Array.isArray(errors) &&
+    errors.length > 0 &&
+    errors.every(
+      ({ type, path }) => type === 'NOT_FOUND' && path?.at(-1) === 'comparison',
+    )
+  )
+}
