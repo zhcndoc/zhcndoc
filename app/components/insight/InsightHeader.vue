@@ -28,7 +28,7 @@ type SiteItem = SelectMenuItem & {
   }
 }
 
-const projects = await $fetch<ProjectInfo[]>('/api/projects')
+const projects = await $fetch<ProjectInfo[]>('/api/project')
 const { data: allTimeRange } = await useFetch<InsightDateRange | null>(
   '/api/insight/daterange',
   {
@@ -41,7 +41,7 @@ const siteItems = computed<SiteItem[]>(() => {
     value: `${project.name}.zhcndoc.com`,
     label: project.title,
     avatar: {
-      src: `/images/projects/${project.name}.svg`,
+      src: `/images/project/${project.name}.svg`,
       alt: project.title,
     },
   }))
@@ -50,7 +50,7 @@ const siteItems = computed<SiteItem[]>(() => {
     value: 'www.zhcndoc.com',
     label: '所有站点',
     avatar: {
-      src: `/images/projects/zhcndoc.svg`,
+      src: `/images/project/zhcndoc.svg`,
       alt: '简中文档',
     },
   })
@@ -64,7 +64,7 @@ const endAt = defineModel<number>('endAt')
 
 const selectedIcon = computed(
   () =>
-    `/images/projects/${
+    `/images/project/${
       (selectedSite.value || '')
         .replace(/\.zhcndoc\.com$/, '')
         .replace(/^www$/, '') || 'zhcndoc'

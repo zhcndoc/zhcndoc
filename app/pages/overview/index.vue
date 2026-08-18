@@ -6,7 +6,7 @@ useSeoMeta({
 
 const projects = ref<ProjectInfo[]>([])
 
-projects.value = await $fetch('/api/projects', {
+projects.value = await $fetch('/api/project', {
   query: {
     scope: 'all',
   },

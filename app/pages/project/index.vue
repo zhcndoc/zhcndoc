@@ -11,7 +11,7 @@ const {
   data: projects,
   status,
   error,
-} = await useFetch<ProjectInfo[]>('/api/projects', {
+} = await useFetch<ProjectInfo[]>('/api/project', {
   default: () => [],
 })
 
@@ -256,12 +256,12 @@ function formatDate(value: string | null | undefined) {
               <div class="mb-6 flex items-start gap-4">
                 <div class="flex min-w-0 items-start gap-4">
                   <NuxtLink
-                    :to="`/projects/${project.name}`"
+                    :to="`/project/${project.name}`"
                     :aria-label="`${cleanProjectTitle(project.title, project.name)} 项目档案`"
                     class="border-muted bg-elevated hover:border-accented hover:bg-accented focus-visible:outline-primary flex size-20 shrink-0 items-center justify-center border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
                   >
                     <img
-                      :src="`/images/projects/${project.name}.svg`"
+                      :src="`/images/project/${project.name}.svg`"
                       :alt="`${cleanProjectTitle(project.title, project.name)} logo`"
                       class="size-full object-contain p-0"
                       loading="lazy"
@@ -270,7 +270,7 @@ function formatDate(value: string | null | undefined) {
                   <div class="min-w-0">
                     <h3 class="text-highlighted truncate text-lg font-semibold">
                       <NuxtLink
-                        :to="`/projects/${project.name}`"
+                        :to="`/project/${project.name}`"
                         class="hover:text-primary focus-visible:outline-primary transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2"
                       >
                         {{ cleanProjectTitle(project.title, project.name) }}

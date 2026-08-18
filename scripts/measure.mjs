@@ -20,7 +20,7 @@ const font =
   '14px ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
 const TARGET = 400
 
-const dir = 'content/projects'
+const dir = 'content/project'
 const files = readdirSync(dir).filter((f) => f.endsWith('.yml'))
 const descriptions = {}
 

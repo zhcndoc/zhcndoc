@@ -10,7 +10,7 @@
 zhcndoc/
 ├── app/              # 应用代码（页面、组件、布局）
 ├── content/          # 内容数据
-│   ├── projects/     # 各项目元数据（*.yml）
+│   ├── project/      # 各项目元数据（*.yml）
 │   └── blog/         # 博客文章
 ├── public/           # 静态资源
 ├── server/           # 服务端 API（分析、项目数据）
@@ -114,7 +114,7 @@ pnpm run preview
 
 ## 添加项目
 
-在 `content/projects/` 目录下新增 `<name>.yml` 文件：
+在 `content/project/` 目录下新增 `<name>.yml` 文件：
 
 ```yaml
 name: project-name
@@ -157,7 +157,7 @@ upstream:
 
 推荐步骤：
 
-1. 先在 `content/projects/<name>.yml` 里补上 `upstream.sparse`
+1. 先在 `content/project/<name>.yml` 里补上 `upstream.sparse`
 2. 用 sparse 模式分别拉取当前 `main` 和官方上游仓库
 3. 重建远端 `upstream` 分支为 docs-only 快照
 4. 基于新的 `upstream` 重建远端 `main`，再把当前中文内容同步回去
@@ -256,7 +256,7 @@ git push origin main --force-with-lease
 
 推荐步骤：
 
-1. 先在 `content/projects/<name>.yml` 中写好 `upstream.sparse`
+1. 先在 `content/project/<name>.yml` 中写好 `upstream.sparse`
 2. 初始化 `zhcndoc/<name>` 仓库
 3. 先执行一次上面的迁移模板，建立 docs-only 的 `upstream` 和 `main`
 4. 再启用 `.github/workflows/sync-upstream.yml` 进行后续自动同步

@@ -19,7 +19,7 @@ useSeoMeta({
 const homeRoot = ref<HTMLElement | null>(null)
 
 const { data: projects, status: projectsStatus, error: projectsError } = useFetch<ProjectInfo[]>(
-  '/api/projects',
+  '/api/project',
   {
     default: () => [],
     server: false,
@@ -33,7 +33,7 @@ const fallbackFeatured: FeaturedProject[] = [
     name: 'nuxt',
     title: 'Nuxt',
     description: 'Vue 全栈框架的中文文档入口。',
-    link: '/projects/nuxt',
+    link: '/project/nuxt',
     stars: 0,
     forks: 0,
   },
@@ -41,7 +41,7 @@ const fallbackFeatured: FeaturedProject[] = [
     name: 'vue',
     title: 'Vue',
     description: '渐进式 JavaScript 框架的中文资料。',
-    link: '/projects/vue',
+    link: '/project/vue',
     stars: 0,
     forks: 0,
   },
@@ -49,7 +49,7 @@ const fallbackFeatured: FeaturedProject[] = [
     name: 'vite',
     title: 'Vite',
     description: '现代前端工具链的中文文档索引。',
-    link: '/projects/vite',
+    link: '/project/vite',
     stars: 0,
     forks: 0,
   },
@@ -57,7 +57,7 @@ const fallbackFeatured: FeaturedProject[] = [
     name: 'bun',
     title: 'Bun',
     description: 'JavaScript 运行时与工具链中文入口。',
-    link: '/projects/bun',
+    link: '/project/bun',
     stars: 0,
     forks: 0,
   },
@@ -65,7 +65,7 @@ const fallbackFeatured: FeaturedProject[] = [
     name: 'nitro',
     title: 'Nitro',
     description: '服务端运行时的中文文档卷宗。',
-    link: '/projects/nitro',
+    link: '/project/nitro',
     stars: 0,
     forks: 0,
   },
@@ -73,7 +73,7 @@ const fallbackFeatured: FeaturedProject[] = [
     name: 'tailwindcss',
     title: 'Tailwind CSS',
     description: '实用优先 CSS 框架的中文资料。',
-    link: '/projects/tailwindcss',
+    link: '/project/tailwindcss',
     stars: 0,
     forks: 0,
   },
@@ -190,7 +190,7 @@ const featuredProjects = computed<FeaturedProject[]>(() => {
     .map((project) => ({
       description: project.description,
       forks: project.forks,
-      link: project.link || `/projects/${project.name}`,
+      link: project.link || `/project/${project.name}`,
       name: project.name,
       stars: project.stars,
       title: cleanProjectTitle(project.title, project.name),
@@ -364,7 +364,7 @@ onBeforeUnmount(() => {
 
           <div data-zh-hero-actions class="mt-9 flex flex-col gap-3 sm:flex-row">
             <UButton
-              to="/projects"
+              to="/project"
               label="打开项目索引"
               trailing-icon="tabler:arrow-right"
               color="primary"
@@ -401,13 +401,13 @@ onBeforeUnmount(() => {
                 v-for="(project, index) in featuredProjects"
                 :key="project.name"
                 data-zh-archive-card
-                :to="`/projects/${project.name}`"
+                :to="`/project/${project.name}`"
                 class="group relative min-h-56 bg-default p-4 transition-colors after:pointer-events-none after:absolute after:bottom-3 after:right-3 after:size-1.75 after:border-b after:border-r after:border-accented after:opacity-0 after:transition-opacity hover:bg-elevated hover:after:opacity-100"
               >
                 <div class="mb-6 flex items-start justify-between gap-4">
                   <div class="flex items-center gap-3">
                     <img
-                      :src="`/images/projects/${project.name}.svg`"
+                      :src="`/images/project/${project.name}.svg`"
                       :alt="`${project.title} logo`"
                       class="size-10 border border-muted bg-elevated object-contain p-1.5"
                       loading="lazy"
@@ -520,7 +520,7 @@ onBeforeUnmount(() => {
           </div>
           <UButton
             data-zh-reveal
-            to="/projects"
+            to="/project"
             label="查看全部项目"
             trailing-icon="tabler:arrow-right"
             color="neutral"
@@ -534,7 +534,7 @@ onBeforeUnmount(() => {
             v-for="(project, index) in featuredProjects"
             :key="project.name"
             data-zh-reveal
-            :to="`/projects/${project.name}`"
+            :to="`/project/${project.name}`"
             class="grid gap-px border-b border-muted bg-border last:border-b-0 lg:grid-cols-[88px_1fr_180px_120px]"
           >
             <div class="flex items-center bg-default px-5 py-4 font-mono text-sm text-dimmed">
@@ -628,7 +628,7 @@ onBeforeUnmount(() => {
               </p>
               <div class="flex flex-col gap-3 sm:flex-row">
                 <UButton
-                  to="/projects"
+                  to="/project"
                   label="探索项目"
                   trailing-icon="tabler:arrow-right"
                   color="primary"

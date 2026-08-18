@@ -99,7 +99,7 @@ badge:
 | Deno         | https://deno.zhcndoc.com        |
 | Nuxt I18n    | https://nuxt-i18n.zhcndoc.com   |
 
-如果你想看看目前支持了哪些项目，可以前往官网的 [项目探索](/projects) 页面。
+如果你想看看目前支持了哪些项目，可以前往官网的 [项目探索](/project) 页面。
 
 ![项目探索](https://img.8b5.cn/2025/04/29/lB9ZS2.png)
 

@@ -7,7 +7,7 @@ const columns: FooterColumn[] = [
   {
     label: '文档索引',
     children: [
-      { label: '探索项目', to: '/projects' },
+      { label: '探索项目', to: '/project' },
       { label: '项目概览', to: '/overview' },
       { label: '访问统计', to: '/insight' },
     ],

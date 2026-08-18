@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 async function fetchAndConvert() {
   try {
-    const response = await fetch('https://www.zhcndoc.com/api/projects')
+    const response = await fetch('https://www.zhcndoc.com/api/project')
     const data = await response.json()
 
     data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))

@@ -1,11 +1,11 @@
 ---
 name: project-description
-description: 将 `content/projects/*.yml` 中的 `description` 字段保持在约 400px，避免禁用词，并使用简洁且准确的一句项目描述。
+description: 将 `content/project/*.yml` 中的 `description` 字段保持在约 400px，避免禁用词，并使用简洁且准确的一句项目描述。
 ---
 
 # 项目描述文案规范
 
-新增或修改 `content/projects/*.yml` 文件中的 `description` 字段时，必须遵守以下规范。
+新增或修改 `content/project/*.yml` 文件中的 `description` 字段时，必须遵守以下规范。
 
 ## 宽度目标
 

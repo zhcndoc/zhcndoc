@@ -57,7 +57,7 @@ const route = useRoute()
 const slug = route.params.slug as string
 
 const { data, status } = await useFetch<ProjectPageData>(
-  `/api/projects/${slug}`,
+  `/api/project/${slug}`,
 )
 
 const seoTitle = computed(
@@ -214,7 +214,7 @@ const formatRepoSize = (sizeInKb: number | null | undefined) => {
             <div>
               <div class="mb-6 flex flex-wrap items-center gap-3">
                 <UButton
-                  to="/projects"
+                  to="/project"
                   label="返回项目索引"
                   icon="tabler:arrow-left"
                   color="neutral"
@@ -231,7 +231,7 @@ const formatRepoSize = (sizeInKb: number | null | undefined) => {
 
               <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
                 <img
-                  :src="`/images/projects/${slug}.svg`"
+                  :src="`/images/project/${slug}.svg`"
                   :alt="`${data.project.name} logo`"
                   class="border-muted bg-elevated size-24 shrink-0 border object-contain p-0 sm:size-32 lg:size-36"
                 />
@@ -604,7 +604,7 @@ const formatRepoSize = (sizeInKb: number | null | undefined) => {
           </h2>
           <p class="text-muted mt-3 text-sm">当前项目档案暂时无法读取。</p>
           <UButton
-            to="/projects"
+            to="/project"
             label="返回项目列表"
             icon="tabler:arrow-left"
             class="mt-6 rounded-xs"

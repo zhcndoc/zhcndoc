@@ -7,8 +7,8 @@ const items = computed<NavigationMenuItem[]>(() => [
   {
     label: '项目',
     icon: 'tabler:list-details',
-    to: '/projects',
-    active: route.path.startsWith('/projects'),
+    to: '/project',
+    active: route.path === '/project' || route.path.startsWith('/project/'),
     description: '浏览已收录的中文技术文档项目',
   },
   {
