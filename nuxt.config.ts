@@ -43,6 +43,20 @@ export default defineNuxtConfig({
         statusCode: 301,
       },
     },
+    '/api/insight/**': {
+      cache: {
+        maxAge: 60,
+        staleMaxAge: 5 * 60,
+        swr: true,
+      },
+    },
+    '/api/project/**': {
+      cache: {
+        maxAge: 10 * 60,
+        staleMaxAge: 60 * 60,
+        swr: true,
+      },
+    },
     '/api/projects': {
       redirect: {
         to: '/api/project',
