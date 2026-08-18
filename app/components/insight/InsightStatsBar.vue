@@ -5,8 +5,8 @@ const props = defineProps<{
   hostname: string
 }>()
 
-const { data, status } = await useFetch('/api/analytics/stats', {
-  key: 'analytics-stats',
+const { data, status } = await useFetch('/api/insight/stats', {
+  key: 'insight-stats',
   query: props,
 })
 
@@ -78,7 +78,7 @@ const metrics = computed(() => {
     class="relative grid w-full grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
   >
     <template v-for="item in metrics" :key="item.label">
-      <AnalyticsMetricCard
+      <InsightMetricCard
         :loading="status === 'pending'"
         :value="item.value"
         :change="item.change"

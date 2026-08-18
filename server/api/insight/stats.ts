@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
   if (!success) return
 
-  const data = await umami<AnalyticsStats>(
+  const data = await umami<InsightStats>(
     `/websites/${UMAMI_WEBSITE_ID}/stats`,
     {
       query,
@@ -39,5 +39,5 @@ export default defineEventHandler(async (event) => {
       bounces: Number(data?.comparison?.bounces ?? 0),
       totaltime: Number(data?.comparison?.totaltime ?? 0),
     },
-  } satisfies AnalyticsStats
+  } satisfies InsightStats
 })

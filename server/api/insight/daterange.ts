@@ -6,7 +6,7 @@ interface UmamiDateRange {
 }
 
 export default defineEventHandler(
-  async (): Promise<AnalyticsDateRange | null> => {
+  async (): Promise<InsightDateRange | null> => {
     const data = await umami<UmamiDateRange>(
       `/websites/${UMAMI_WEBSITE_ID}/daterange`,
     )

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AnalyticsHeader from '~/components/analytics/AnalyticsHeader.vue'
+import InsightHeader from '~/components/insight/InsightHeader.vue'
 
 useSeoMeta({
   title: '站点统计',
@@ -42,35 +42,35 @@ const locationTabs = [
 
 <template>
   <UContainer class="flex flex-col gap-8">
-    <AnalyticsHeader
+    <InsightHeader
       v-model:start-at="startAt"
       v-model:end-at="endAt"
       v-model:hostname="hostname"
     />
-    <AnalyticsStatsBar
+    <InsightStatsBar
       :start-at="startAt"
       :end-at="endAt"
       :hostname="hostname"
     />
-    <AnalyticsPageviewsChart
+    <InsightPageviewsChart
       :start-at="startAt"
       :end-at="endAt"
       :hostname="hostname"
     />
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <AnalyticsMetricsPanel
+      <InsightMetricsPanel
         :start-at="startAt"
         :end-at="endAt"
         :hostname="hostname"
         :tabs="pagesTabs"
       />
-      <AnalyticsMetricsPanel
+      <InsightMetricsPanel
         :start-at="startAt"
         :end-at="endAt"
         :hostname="hostname"
         :tabs="sourcesTabs"
       />
-      <AnalyticsMetricsPanel
+      <InsightMetricsPanel
         :start-at="startAt"
         :end-at="endAt"
         :hostname="hostname"
@@ -78,7 +78,7 @@ const locationTabs = [
       />
       <!-- Card 4 -->
       <div class="sm:order-5 sm:col-span-2 lg:order-0 lg:col-span-2">
-        <AnalyticsGeoMap
+        <InsightGeoMap
           :start-at="startAt"
           :end-at="endAt"
           :hostname="hostname"
@@ -86,7 +86,7 @@ const locationTabs = [
       </div>
       <!-- Card 5 -->
       <div class="sm:order-4 lg:order-0 lg:col-span-1">
-        <AnalyticsMetricsPanel
+        <InsightMetricsPanel
           :start-at="startAt"
           :end-at="endAt"
           :hostname="hostname"
@@ -95,7 +95,7 @@ const locationTabs = [
       </div>
       <!-- Card 6 -->
       <div class="sm:order-6 sm:col-span-2 lg:order-0 lg:col-span-1">
-        <AnalyticsSessionsWeekly
+        <InsightSessionsWeekly
           :start-at="startAt"
           :end-at="endAt"
           :hostname="hostname"
@@ -103,7 +103,7 @@ const locationTabs = [
       </div>
       <!-- Card 7 -->
       <div class="sm:order-7 sm:col-span-2 lg:order-0 lg:col-span-2">
-        <AnalyticsSessions
+        <InsightSessions
           :start-at="startAt"
           :end-at="endAt"
           :hostname="hostname"

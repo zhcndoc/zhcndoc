@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
   const unit = getUnitByTime(query.startAt, query.endAt)
 
-  const data = await umami<AnalyticsPageviews>(
+  const data = await umami<InsightPageviews>(
     `/websites/${UMAMI_WEBSITE_ID}/pageviews`,
     {
       query: {

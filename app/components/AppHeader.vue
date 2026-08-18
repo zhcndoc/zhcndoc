@@ -21,9 +21,9 @@ const items = computed<NavigationMenuItem[]>(() => [
   {
     label: '统计',
     icon: 'tabler:chart-pie',
-    to: '/analytics',
+    to: '/insight',
     description: '查看简中文档访问和项目数据',
-    active: route.path.startsWith('/analytics'),
+    active: route.path.startsWith('/insight'),
   },
   {
     label: '博客',

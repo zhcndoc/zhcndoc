@@ -12,8 +12,8 @@ const props = defineProps<{
 const page = ref(1)
 const pageSize = ref(10)
 
-const { data, status } = useFetch<AnalyticsSessionsResponse>(
-  '/api/analytics/sessions',
+const { data, status } = useFetch<InsightSessionsResponse>(
+  '/api/insight/sessions',
   {
     query: computed(() => ({
       startAt: props.startAt,
@@ -26,7 +26,7 @@ const { data, status } = useFetch<AnalyticsSessionsResponse>(
   },
 )
 
-const columns: TableColumn<AnalyticsSession>[] = [
+const columns: TableColumn<InsightSession>[] = [
   {
     accessorKey: 'browser',
     header: '浏览器',

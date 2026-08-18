@@ -29,10 +29,10 @@ type SiteItem = SelectMenuItem & {
 }
 
 const projects = await $fetch<ProjectInfo[]>('/api/projects')
-const { data: allTimeRange } = await useFetch<AnalyticsDateRange | null>(
-  '/api/analytics/daterange',
+const { data: allTimeRange } = await useFetch<InsightDateRange | null>(
+  '/api/insight/daterange',
   {
-    key: 'analytics-daterange',
+    key: 'insight-daterange',
   },
 )
 
@@ -202,7 +202,7 @@ const timeRangeItems: SelectMenuItem[][] = [
 const getPresetRange = (
   value: TimeRangeValue,
   offset = 0,
-): AnalyticsDateRange | null => {
+): InsightDateRange | null => {
   const now = DateTime.now().setZone(TIMEZONE).setLocale(LOCALE)
 
   if (value === '0day') {

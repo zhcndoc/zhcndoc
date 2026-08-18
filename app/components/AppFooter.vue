@@ -9,7 +9,7 @@ const columns: FooterColumn[] = [
     children: [
       { label: '探索项目', to: '/projects' },
       { label: '项目概览', to: '/overview' },
-      { label: '访问统计', to: '/analytics' },
+      { label: '访问统计', to: '/insight' },
     ],
   },
   {

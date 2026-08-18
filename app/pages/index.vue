@@ -636,7 +636,7 @@ onBeforeUnmount(() => {
                   class="rounded-xs"
                 />
                 <UButton
-                  to="/analytics"
+                  to="/insight"
                   label="查看统计"
                   icon="tabler:chart-bar"
                   color="neutral"

@@ -7,8 +7,8 @@ const props = defineProps<{
   hostname: string
 }>()
 
-const { data: pageviews, status } = useFetch('/api/analytics/pageviews', {
-  key: 'analytics-pageviews',
+const { data: pageviews, status } = useFetch('/api/insight/pageviews', {
+  key: 'insight-pageviews',
   query: props,
 })
 

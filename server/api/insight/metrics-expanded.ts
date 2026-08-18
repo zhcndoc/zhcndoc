@@ -34,6 +34,7 @@ const querySchema = z.object({
   startAt: z.coerce.number().default(startAt),
   endAt: z.coerce.number().default(endAt),
   limit: z.coerce.number().positive().default(10),
+  offset: z.coerce.number().nonnegative().default(0),
 })
 
 export default defineEventHandler(async (event) => {
@@ -44,15 +45,18 @@ export default defineEventHandler(async (event) => {
 
   if (!success) return
 
-  const data = await umami<AnalyticsMetric[]>(
-    `/websites/${UMAMI_WEBSITE_ID}/metrics`,
+  const { limit, ...queryWithoutLimit } = query
+
+  const data = await umami<InsightMetricExpanded[]>(
+    `/websites/${UMAMI_WEBSITE_ID}/metrics/expanded`,
     {
       query: {
-        ...query,
+        ...queryWithoutLimit,
+        limit: limit + 10,
         timezone: 'Asia/Shanghai',
       },
     },
   )
 
-  return data
+  return data ? data.filter((item) => item.name !== null).slice(0, limit) : data
 })

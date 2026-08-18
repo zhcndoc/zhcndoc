@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
 
   if (!success) return
 
-  const data = await umami<AnalyticsSessionsResponse>(
+  const data = await umami<InsightSessionsResponse>(
     `/websites/${UMAMI_WEBSITE_ID}/sessions`,
     {
       query,

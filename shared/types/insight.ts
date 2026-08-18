@@ -1,4 +1,4 @@
-export interface AnalyticsStats {
+export interface InsightStats {
   pageviews: number
   visits: number
   visitors: number
@@ -13,8 +13,8 @@ export interface AnalyticsStats {
   }
 }
 
-export interface AnalyticsPageviews {
-  compare?: Omit<AnalyticsPageviews, 'compare'>
+export interface InsightPageviews {
+  compare?: Omit<InsightPageviews, 'compare'>
   pageviews: {
     x: string
     y: number
@@ -25,12 +25,12 @@ export interface AnalyticsPageviews {
   }[]
 }
 
-export interface AnalyticsMetric {
+export interface InsightMetric {
   x: string
   y: number
 }
 
-export interface AnalyticsMetricExpanded {
+export interface InsightMetricExpanded {
   name: string | null
   country?: string
   pageviews: number | string
@@ -40,15 +40,15 @@ export interface AnalyticsMetricExpanded {
   totaltime: number | string
 }
 
-export interface AnalyticsDateRange {
+export interface InsightDateRange {
   startAt: number
   endAt: number
 }
 
 // 7 rows (0=Sun … 6=Sat) × 24 cols (0=00:00 … 23=23:00)
-export type AnalyticsWeekly = number[][]
+export type InsightWeekly = number[][]
 
-export interface AnalyticsSession {
+export interface InsightSession {
   id: string
   websiteId: string
   hostname: string
@@ -67,8 +67,8 @@ export interface AnalyticsSession {
   createdAt: string
 }
 
-export interface AnalyticsSessionsResponse {
-  data: AnalyticsSession[]
+export interface InsightSessionsResponse {
+  data: InsightSession[]
   count: number
   page: number
   pageSize: number

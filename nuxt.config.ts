@@ -37,6 +37,12 @@ export default defineNuxtConfig({
     umamiToken: '',
   },
   routeRules: {
+    '/analytics': {
+      redirect: {
+        to: '/insight',
+        statusCode: 301,
+      },
+    },
     '/projects/overview': {
       redirect: {
         to: '/overview',

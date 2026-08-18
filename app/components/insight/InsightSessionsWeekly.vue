@@ -6,9 +6,9 @@ const props = defineProps<{
 }>()
 
 const { data: weeklyData, status } = useFetch(
-  '/api/analytics/sessions-weekly',
+  '/api/insight/sessions-weekly',
   {
-    key: 'analytics-weekly',
+    key: 'insight-weekly',
     query: props,
   },
 )
