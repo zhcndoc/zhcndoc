@@ -3,5 +3,5 @@ description: 专为 HTML5 Canvas 画布设计的 2D 图形库，支持交互和�
 upstream:
   owner: konvajs
   repo: site
-  branch: new
+  branch: master
   link: https://konvajs.org
