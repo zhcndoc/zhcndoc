@@ -1,0 +1,7 @@
+name: nuxt-cli
+description: Nuxt CLI 提供创建、开发、构建及维护 Nuxt 应用的命令行能力。
+upstream:
+  owner: nuxt
+  repo: cli
+  branch: main
+  link: https://nuxt.com

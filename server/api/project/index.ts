@@ -3,7 +3,7 @@ import { withContentDatabaseRetry } from '../../utils/content'
 
 export default defineEventHandler(async (event) => {
   const { scope } = getQuery(event)
-  const defaultIgnore = ['nuxt-docs', 'nuxt-examples']
+  const defaultIgnore = ['nuxt-cli', 'nuxt-docs', 'nuxt-examples']
 
   const query = `query ($after: String) {
       organization(login: "zhcndoc") {
