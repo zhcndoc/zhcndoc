@@ -143,9 +143,13 @@ upstream:
     - README.md
 ```
 
-`sparse` 中的路径都按仓库根目录理解。当前工作流会在运行时自动补齐前导 `/`，并在提交时对这些路径执行 `git add -f`，所以像 `openclaw` 这类会把 `/.gitignore` 自己忽略掉的仓库也能正常同步。
+`sparse` 中的路径都按仓库根目录理解，支持使用带引号的 `!` 排除规则。工作流会自动补齐前导 `/`（保留 `!` 前缀），并通过 `git add -f -A` 暂存检出后的文件，包括被上游 `.gitignore` 忽略的文件。
+
+日常同步先设置 sparse 规则再检出文件，通过 `rsync --checksum --delete` 更新快照，有变更时追加提交并普通推送到 `upstream`。成功推送后的文件与筛选后的上游一致，提交历史按快照累积。
 
 ## Sparse 仓库迁移
+
+以下模板用于一次性重建 docs-only 历史，因此需要强制推送。已经采用 sparse 的项目调整同步路径或更换上游时，更新配置后运行工作流即可。
 
 ### 旧项目迁移到 sparse
 
@@ -178,16 +182,18 @@ cd "/tmp/zhcndoc-sparse-<name>"
 printf '%s\n' "/docs" "/LICENSE" "/README.md" "/.gitignore" > sparse-paths.txt
 
 # 以 sparse 模式克隆 zhcndoc/<name> 的 main 分支，用来保留当前中文仓库里的 docs-only 内容
-git clone --filter=blob:none --sparse --branch main "https://github.com/zhcndoc/<name>.git" current
+git clone --filter=blob:none --no-checkout --branch main "https://github.com/zhcndoc/<name>.git" current
 
 # 只在 current 工作区展开需要保留的路径
 git -C current sparse-checkout set --no-cone --stdin < sparse-paths.txt
+git -C current checkout
 
 # 以浅克隆 + sparse 模式拉取官方上游仓库
-git clone --depth=1 --filter=blob:none --sparse --branch "<upstream-branch>" "https://github.com/<owner>/<repo>.git" upstream
+git clone --depth=1 --filter=blob:none --no-checkout --branch "<upstream-branch>" "https://github.com/<owner>/<repo>.git" upstream
 
 # 只在 upstream 工作区展开需要保留的路径
 git -C upstream sparse-checkout set --no-cone --stdin < sparse-paths.txt
+git -C upstream checkout
 
 # 记录上游当前提交 SHA，后续写入同步提交信息
 UPSTREAM_SHA=$(git -C upstream rev-parse HEAD)
@@ -208,13 +214,10 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git switch --orphan upstream
 
 # 用官方上游的 docs-only 内容覆盖当前工作区
-rsync -a --delete --exclude='.git' ../upstream/ ./
+rsync -a --checksum --delete --exclude='.git' ../upstream/ ./
 
 # 将所有变更加入暂存区
-git add -A
-
-# 按 sparse 路径强制加入被 .gitignore 忽略的文件
-sed 's#^/##' ../sparse-paths.txt | git add -f --pathspec-from-file=-
+git add -f -A
 
 # 提交新的 docs-only upstream 快照
 git commit -m "sync upstream <owner>/<repo>@${UPSTREAM_SHA}"
@@ -225,20 +228,11 @@ git push origin upstream --force
 # 基于刚刚生成的 upstream 分支重建 main 分支
 git checkout -B main upstream
 
-# 清空 main 分支当前工作区内容
-git rm -r --ignore-unmatch . >/dev/null 2>&1 || true
-
-# 清理未跟踪文件，确保工作区完全干净
-git clean -fdx
-
 # 把当前中文仓库里保留的 docs-only 内容同步回 main 分支
-rsync -a --delete --exclude='.git' ../current/ ./
+rsync -a --checksum --delete --exclude='.git' ../current/ ./
 
 # 将 main 分支的变更加入暂存区
-git add -A
-
-# 按 sparse 路径强制加入被 .gitignore 忽略的文件
-sed 's#^/##' ../sparse-paths.txt | git add -f --pathspec-from-file=-
+git add -f -A
 
 # 如果 main 分支内容有变化，就创建一个重建提交
 git diff --cached --quiet || git commit -m "chore: rebuild docs-only main"
@@ -265,7 +259,7 @@ git push origin main --force-with-lease
 
 - `main` 和 `upstream` 都应该使用 docs-only 历史，否则后续 `main...upstream` 的增量比较会失真
 - 如果已经迁移到 sparse，就不要删除 `upstream` 分支后重跑 workflow；应优先回退到共同历史上的旧提交
-- 如果上游根目录文件会被自己的 `.gitignore` 忽略，迁移脚本和 workflow 都必须保留 `git add -f --pathspec-from-file=-`
+- 如果上游根目录文件会被自己的 `.gitignore` 忽略，迁移脚本和 workflow 都必须保留 `git add -f -A`
 
 ## 脚本工具
 

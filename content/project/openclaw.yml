@@ -2,11 +2,42 @@ name: openclaw
 description: 可本地运行的个人 AI 助手平台，支持多渠道接入和任务自动化。
 upstream:
   owner: openclaw
-  repo: openclaw
+  repo: docs
   branch: main
-  link: https://openclaw.ai
-  sparse: 
+  link: https://docs.openclaw.ai
+  sparse:
     - .gitignore
+    - .npmrc
+    - .openclaw-sync
     - docs
+    - scripts/docs-site
+    - workers
+    - wrangler.toml
+    - package.json
+    - package-lock.json
+    - Makefile
     - LICENSE
     - README.md
+    - CLOUDFLARE.md
+    - '!docs/.i18n'
+    - '!docs/ar'
+    - '!docs/de'
+    - '!docs/es'
+    - '!docs/fa'
+    - '!docs/fr'
+    - '!docs/hi'
+    - '!docs/id'
+    - '!docs/it'
+    - '!docs/ja-JP'
+    - '!docs/ko'
+    - '!docs/nl'
+    - '!docs/pl'
+    - '!docs/pt-BR'
+    - '!docs/ru'
+    - '!docs/sv'
+    - '!docs/th'
+    - '!docs/tr'
+    - '!docs/uk'
+    - '!docs/vi'
+    - '!docs/zh-CN'
+    - '!docs/zh-TW'

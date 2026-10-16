@@ -42,18 +42,16 @@ jobs:
         run: |
           set -euo pipefail
           SPARSE_JSON='${{ toJson(matrix.sparse) }}'
-          SPARSE_PATHS="$RUNNER_TEMP/sparse-paths.txt"
-          SOURCE_DIR="$RUNNER_TEMP/upstream-source"
 
           if [ "$SPARSE_JSON" != "null" ]; then
+            SOURCE_DIR=$(mktemp -d "$RUNNER_TEMP/upstream-source.XXXXXX")
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-            printf '%s\n' "$SPARSE_JSON" | jq -r '.[] | if startswith("/") then . else "/" + . end' > "$SPARSE_PATHS"
-            rm -rf "$SOURCE_DIR"
-
-            git clone --depth=1 --filter=blob:none --sparse --branch "${{ matrix.branch }}" https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git "$SOURCE_DIR"
-            git -C "$SOURCE_DIR" sparse-checkout set --no-cone --stdin < "$SPARSE_PATHS"
+            git clone --depth=1 --filter=blob:none --no-checkout --branch "${{ matrix.branch }}" https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git "$SOURCE_DIR"
+            jq -r '.[] | if startswith("!/") or startswith("/") then . elif startswith("!") then "!/" + .[1:] else "/" + . end' <<< "$SPARSE_JSON" |
+              git -C "$SOURCE_DIR" sparse-checkout set --no-cone --stdin
+            git -C "$SOURCE_DIR" checkout
 
             upstream_sha=$(git -C "$SOURCE_DIR" rev-parse HEAD)
 
@@ -63,18 +61,15 @@ jobs:
               git checkout --orphan upstream
             fi
 
-            git rm -r --ignore-unmatch . >/dev/null 2>&1 || true
-            git clean -fdx
-            rsync -a --delete --exclude='.git' "$SOURCE_DIR"/ ./
-            
-            git add -A
-            sed 's#^/##' "$SPARSE_PATHS" | git add -f --pathspec-from-file=- || true
+            rsync -a --checksum --delete --exclude='.git' "$SOURCE_DIR"/ ./
+
+            git add -f -A
 
             if git diff --cached --quiet; then
               echo "No sparse upstream changes for ${{ matrix.name }}"
             else
               git commit -m "sync upstream ${{ matrix.owner }}/${{ matrix.repo }}@$upstream_sha"
-              git push origin upstream --force
+              git push origin upstream
             fi
           else
             git remote add upstream https://github.com/${{ matrix.owner }}/${{ matrix.repo }}.git
