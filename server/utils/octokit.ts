@@ -1,5 +1,5 @@
 import { Octokit } from 'octokit'
 
 export const octokit = new Octokit({
-  baseUrl: 'https://anymeta.ikxin.com/github',
+  baseUrl: 'https://anymeta.top/github',
 })
