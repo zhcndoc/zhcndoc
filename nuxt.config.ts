@@ -62,7 +62,26 @@ export default defineNuxtConfig({
   experimental: {
     serverAppConfig: false,
   },
-  compatibilityDate: '2026-03-26',
+  compatibilityDate: '2026-11-04',
+  nitro: {
+    preset: 'cloudflare_module',
+    cloudflare: {
+      deployConfig: false,
+      nodeCompat: true,
+    },
+    storage: {
+      cache: {
+        driver: 'cloudflare-kv-binding',
+        binding: 'CACHE',
+      },
+    },
+    devStorage: {
+      cache: {
+        driver: 'cloudflare-kv-binding',
+        binding: 'CACHE',
+      },
+    },
+  },
   vite: {
     optimizeDeps: {
       include: ['gsap', 'gsap/ScrollTrigger', 'luxon'],

@@ -2,12 +2,15 @@
   "name": "zhcndoc",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "packageManager": "pnpm@11.20.0",
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "wrangler dev",
+    "deploy": "pnpm run build && wrangler deploy",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -15,18 +18,18 @@
     "format:check": "oxfmt --check"
   },
   "dependencies": {
-    "@chenglou/pretext": "^0.0.8",
+    "@chenglou/pretext": "^1.0.0",
     "@iconify-json/lucide": "^1.2.150",
     "@iconify-json/tabler": "^1.2.43",
     "@nuxt/content": "^3.16.2",
     "@nuxt/eslint": "^1.17.0",
     "@nuxt/ui": "^4.12.0",
-    "@nuxtjs/mdc": "^0.22.2",
+    "@nuxtjs/mdc": "^0.23.2",
     "@octokit/graphql-schema": "^15.26.1",
     "@types/luxon": "^3.7.6",
-    "@vueuse/core": "^14.4.0",
-    "@vueuse/nuxt": "^14.4.0",
-    "better-sqlite3": "^12.11.1",
+    "@vueuse/core": "^15.0.0",
+    "@vueuse/nuxt": "^15.0.0",
+    "better-sqlite3": "^13.0.3",
     "canvas": "^3.2.3",
     "echarts": "^6.1.0",
     "eslint": "^10.14.0",
@@ -35,8 +38,9 @@
     "nuxt": "^4.6.4",
     "nuxt-echarts": "^1.1.0",
     "octokit": "^5.0.5",
-    "oxfmt": "^0.58.0",
+    "oxfmt": "^0.76.0",
     "tailwindcss": "^4.3.4",
+    "wrangler": "^4.156.2",
     "zod": "^4.6.7"
   }
 }

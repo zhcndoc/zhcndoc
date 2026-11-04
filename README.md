@@ -17,8 +17,7 @@ zhcndoc/
 ├── shared/           # 共享类型与工具函数
 ├── scripts/          # 工具脚本
 ├── nuxt.config.ts    # Nuxt 配置
-├── vercel.json       # Vercel 部署配置
-└── zbpack.json       # Zeabur 部署配置
+└── wrangler.jsonc    # Cloudflare Workers 与 D1、KV 绑定配置
 ```
 
 ## 技术栈
@@ -72,6 +71,8 @@ pnpm install
 pnpm run dev
 ```
 
+开发服务器通过 Wrangler 模拟 `DB`（D1）和 `CACHE`（KV）绑定，本地数据保存在 `.wrangler/`。Nuxt Content 在热更新模式下使用本地 SQLite 索引，生产构建使用 D1。统计 API 密钥通过本地 `.env` 中的 `NUXT_UMAMI_TOKEN` 配置。
+
 ## 构建与预览
 
 构建生产版本：
@@ -80,7 +81,7 @@ pnpm run dev
 pnpm run build
 ```
 
-预览生产构建：
+使用 Wrangler 预览生产构建（`http://localhost:8787`，使用本地 D1 和 KV）：
 
 ```bash
 pnpm run preview
@@ -88,29 +89,15 @@ pnpm run preview
 
 ## 部署
 
-### Vercel
+项目仅部署到 Cloudflare Workers。`wrangler.jsonc` 复用现有 `zhcndoc` 资源：`DB` 用于内容数据库，`CACHE` 用于 API 缓存，`ASSETS` 用于静态资源。Nuxt Content 首次查询时自动导入内容，无需手动迁移。
 
-项目通过 `vercel.json` 配置，从仓库根目录直接构建 Nuxt 应用：
-
-```json
-{
-  "buildCommand": "pnpm run build",
-  "installCommand": "pnpm install"
-}
+```bash
+pnpm exec wrangler login
+pnpm exec wrangler secret put NUXT_UMAMI_TOKEN
+pnpm run deploy
 ```
 
-直接连接 GitHub 仓库后，Vercel 会自动完成构建与部署。
-
-### Zeabur
-
-通过 `zbpack.json` 配置，从仓库根目录构建，并使用 `node-server` 产物启动服务：
-
-```json
-{
-  "build_command": "NITRO_PRESET=node-server pnpm run build",
-  "start_command": "NITRO_HOST=0.0.0.0 node .output/server/index.mjs"
-}
-```
+Cloudflare Workers Builds 的构建命令为 `pnpm run build`，部署命令为 `pnpm exec wrangler deploy`。D1 和 KV 只声明绑定名，由 Wrangler 复用已部署 Worker 的同名绑定；首次部署时自动创建资源。
 
 ## 添加项目
 

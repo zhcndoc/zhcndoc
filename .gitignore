@@ -4,6 +4,8 @@
 .nuxt
 .nitro
 .cache
+.wrangler
+worker-configuration.d.ts
 dist
 
 # Node dependencies
@@ -22,6 +24,7 @@ logs
 .env
 .env.*
 !.env.example
+.dev.vars
+.dev.vars.*
 
 repos-data.json
-.vercel
