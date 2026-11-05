@@ -5,7 +5,7 @@ upstream:
   repo: node
   branch: main
   link: https://nodejs.org
-  sparse: 
+  sparse:
     - .gitignore
     - doc
     - LICENSE

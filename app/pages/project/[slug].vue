@@ -56,9 +56,7 @@ interface ProjectPageData {
 const route = useRoute()
 const slug = route.params.slug as string
 
-const { data, status } = await useFetch<ProjectPageData>(
-  `/api/project/${slug}`,
-)
+const { data, status } = await useFetch<ProjectPageData>(`/api/project/${slug}`)
 
 const seoTitle = computed(
   () =>

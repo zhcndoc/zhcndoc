@@ -35,6 +35,9 @@ const { data, status } = useFetch<InsightMetricExpanded[]>(
 const totalPageviews = computed(() =>
   (data.value ?? []).reduce((sum, item) => sum + Number(item.pageviews), 0),
 )
+
+const getFaviconUrl = (name: string | null) =>
+  name ? `https://markhub.top/favicon/${encodeURIComponent(name)}` : undefined
 </script>
 
 <template>
@@ -67,7 +70,20 @@ const totalPageviews = computed(() =>
           :key="item.name"
           class="flex items-center justify-between gap-4 py-2"
         >
-          <span class="flex-1 truncate text-sm">{{ item.name }}</span>
+          <div class="flex min-w-0 flex-1 items-center gap-2">
+            <UAvatar
+              v-if="activeTab === 'referrer'"
+              :src="getFaviconUrl(item.name)"
+              alt=""
+              icon="i-lucide-globe"
+              size="2xs"
+              loading="lazy"
+              decoding="async"
+              class="rounded-sm bg-transparent"
+              :ui="{ image: 'object-contain', icon: 'size-4' }"
+            />
+            <span class="truncate text-sm">{{ item.name }}</span>
+          </div>
           <div class="flex shrink-0 items-center gap-2 text-sm">
             <span class="font-bold">{{
               Number(item.pageviews).toLocaleString()

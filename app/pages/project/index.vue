@@ -79,6 +79,10 @@ function cleanProjectTitle(title: string, name: string) {
   return title.replace(/\s*中文文档$/, '') || name
 }
 
+function getRepositoryLink(name: string, page: 'stargazers' | 'forks') {
+  return `https://github.com/zhcndoc/${name}/${page}`
+}
+
 function formatNumber(value: number) {
   return value.toLocaleString('zh-CN')
 }
@@ -96,7 +100,6 @@ function formatDate(value: string | null | undefined) {
 
   return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
 }
-
 </script>
 
 <template>
@@ -184,9 +187,7 @@ function formatDate(value: string | null | undefined) {
 
     <section class="relative">
       <UContainer>
-        <div
-          class="border-muted bg-border grid gap-px border md:grid-cols-3"
-        >
+        <div class="border-muted bg-border grid gap-px border md:grid-cols-3">
           <div class="bg-default px-5 py-5 sm:px-6">
             <p class="text-muted font-mono text-xs tracking-[0.2em]">
               TOP FILE
@@ -246,7 +247,7 @@ function formatDate(value: string | null | undefined) {
           />
         </div>
 
-        <div class="border-muted border-l border-t">
+        <div class="border-muted border-t border-l">
           <div class="grid md:grid-cols-2 xl:grid-cols-3">
             <article
               v-for="project in filteredProjects"
@@ -305,7 +306,7 @@ function formatDate(value: string | null | undefined) {
               >
                 <div class="flex flex-wrap gap-4 font-mono text-xs">
                   <NuxtLink
-                    :to="`https://github.com/zhcndoc/${project.name}/stargazers`"
+                    :to="getRepositoryLink(project.name, 'stargazers')"
                     target="_blank"
                     class="text-muted hover:text-highlighted flex items-center gap-2 transition-colors"
                   >
@@ -313,7 +314,7 @@ function formatDate(value: string | null | undefined) {
                     {{ formatNumber(project.stars) }}
                   </NuxtLink>
                   <NuxtLink
-                    :to="`https://github.com/zhcndoc/${project.name}/forks`"
+                    :to="getRepositoryLink(project.name, 'forks')"
                     target="_blank"
                     class="text-muted hover:text-highlighted flex items-center gap-2 transition-colors"
                   >

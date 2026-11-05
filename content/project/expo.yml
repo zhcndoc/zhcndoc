@@ -5,7 +5,7 @@ upstream:
   repo: expo
   branch: main
   link: https://docs.expo.dev
-  sparse: 
+  sparse:
     - .gitignore
     - docs
     - LICENSE

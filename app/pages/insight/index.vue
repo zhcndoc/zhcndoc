@@ -47,11 +47,7 @@ const locationTabs = [
       v-model:end-at="endAt"
       v-model:hostname="hostname"
     />
-    <InsightStatsBar
-      :start-at="startAt"
-      :end-at="endAt"
-      :hostname="hostname"
-    />
+    <InsightStatsBar :start-at="startAt" :end-at="endAt" :hostname="hostname" />
     <InsightPageviewsChart
       :start-at="startAt"
       :end-at="endAt"

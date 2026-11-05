@@ -8,7 +8,7 @@ image:
 authors:
   - name: 一纸忘忧
     avatar:
-      src: https://mark.ikxin.com/github/ikxin
+      src: https://markhub.top/github/ikxin
     to: https://github.com/ikxin
 badge:
   label: 里程碑

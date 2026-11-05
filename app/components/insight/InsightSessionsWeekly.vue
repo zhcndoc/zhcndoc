@@ -5,13 +5,10 @@ const props = defineProps<{
   hostname: string
 }>()
 
-const { data: weeklyData, status } = useFetch(
-  '/api/insight/sessions-weekly',
-  {
-    key: 'insight-weekly',
-    query: props,
-  },
-)
+const { data: weeklyData, status } = useFetch('/api/insight/sessions-weekly', {
+  key: 'insight-weekly',
+  query: props,
+})
 
 const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 const hours = Array.from(

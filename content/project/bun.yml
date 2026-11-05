@@ -5,14 +5,14 @@ upstream:
   repo: bun
   branch: main
   link: https://bun.com
-  sparse: 
+  sparse:
     - .gitignore
     - docs
     - LICENSE.md
     - README.md
 contributing: |
   ## 贡献指南
-  
+
   欢迎贡献！请参阅 [CONTRIBUTING.md](https://github.com/oven-sh/bun/blob/main/CONTRIBUTING.md) 以了解如何参与项目。
 readme: |
   ## README

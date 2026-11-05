@@ -1,5 +1,8 @@
 <script setup lang="ts">
-type FeaturedProject = Pick<ProjectInfo, 'description' | 'link' | 'name' | 'stars' | 'forks'> & {
+type FeaturedProject = Pick<
+  ProjectInfo,
+  'description' | 'link' | 'name' | 'stars' | 'forks'
+> & {
   title: string
 }
 
@@ -18,13 +21,14 @@ useSeoMeta({
 
 const homeRoot = ref<HTMLElement | null>(null)
 
-const { data: projects, status: projectsStatus, error: projectsError } = useFetch<ProjectInfo[]>(
-  '/api/project',
-  {
-    default: () => [],
-    server: false,
-  },
-)
+const {
+  data: projects,
+  status: projectsStatus,
+  error: projectsError,
+} = useFetch<ProjectInfo[]>('/api/project', {
+  default: () => [],
+  server: false,
+})
 
 const featuredOrder = ['nuxt', 'vue', 'vite', 'bun', 'nitro', 'tailwindcss']
 
@@ -86,7 +90,7 @@ const comments = [
       name: 'Liang',
       description: '@lianginx',
       avatar: {
-        src: 'https://mark.ikxin.com/github/lianginx',
+        src: 'https://markhub.top/github/lianginx',
       },
     },
   },
@@ -96,7 +100,7 @@ const comments = [
       name: '馬腊咯稽',
       description: '@ElementRef',
       avatar: {
-        src: 'https://mark.ikxin.com/github/ElementRef',
+        src: 'https://markhub.top/github/ElementRef',
       },
     },
   },
@@ -106,7 +110,7 @@ const comments = [
       name: 'libchaos',
       description: '@libchaos',
       avatar: {
-        src: 'https://mark.ikxin.com/github/libchaos',
+        src: 'https://markhub.top/github/libchaos',
       },
     },
   },
@@ -116,7 +120,7 @@ const comments = [
       name: 'Ali_Eljerrari',
       description: '@ali-eljerrari',
       avatar: {
-        src: 'https://mark.ikxin.com/github/ali-eljerrari',
+        src: 'https://markhub.top/github/ali-eljerrari',
       },
     },
   },
@@ -126,7 +130,7 @@ const comments = [
       name: 'Yu Hengliang',
       description: '@yuhengliang',
       avatar: {
-        src: 'https://mark.ikxin.com/github/yuhengliang',
+        src: 'https://markhub.top/github/yuhengliang',
       },
     },
   },
@@ -136,7 +140,7 @@ const comments = [
       name: 'David Muriithi',
       description: '@BarriosXJavier',
       avatar: {
-        src: 'https://mark.ikxin.com/github/BarriosXJavier',
+        src: 'https://markhub.top/github/BarriosXJavier',
       },
     },
   },
@@ -153,7 +157,10 @@ const totalForks = computed(() =>
   projectList.value.reduce((sum, project) => sum + project.forks, 0),
 )
 const documentEntryCount = computed(
-  () => projectList.value.filter((project) => project.link || project.upstream?.link).length,
+  () =>
+    projectList.value.filter(
+      (project) => project.link || project.upstream?.link,
+    ).length,
 )
 
 const statBlocks = computed(() => [
@@ -199,7 +206,18 @@ const featuredProjects = computed<FeaturedProject[]>(() => {
   return selected.length >= 4 ? selected : fallbackFeatured
 })
 
-const archiveSignals = ['DOCS', 'SYNC', 'UPSTREAM', 'README', 'ISSUE', 'RELEASE']
+const archiveSignals = [
+  'DOCS',
+  'SYNC',
+  'UPSTREAM',
+  'README',
+  'ISSUE',
+  'RELEASE',
+]
+
+function getArchiveSignal(index: number) {
+  return archiveSignals[index % archiveSignals.length]
+}
 
 function cleanProjectTitle(title: string, name: string) {
   return title.replace(/\s*中文文档$/, '') || name
@@ -222,7 +240,11 @@ onMounted(() => {
     $gsap: GsapInstance
   }
 
-  if (!root || !$gsap || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (
+    !root ||
+    !$gsap ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
     return
   }
 
@@ -261,24 +283,34 @@ onMounted(() => {
     gsap
       .timeline({ defaults: { duration: 0.8, ease: 'power3.out' } })
       .from('[data-zh-hero-kicker]', { autoAlpha: 0, y: 16 })
-      .from('[data-zh-title-line]', { autoAlpha: 0, stagger: 0.08, yPercent: 90 }, '-=0.45')
+      .from(
+        '[data-zh-title-line]',
+        { autoAlpha: 0, stagger: 0.08, yPercent: 90 },
+        '-=0.45',
+      )
       .from('[data-zh-hero-copy]', { autoAlpha: 0, y: 20 }, '-=0.35')
       .from('[data-zh-hero-actions]', { autoAlpha: 0, y: 18 }, '-=0.4')
-      .from('[data-zh-archive-card]', { autoAlpha: 0, stagger: 0.05, y: 22 }, '-=0.45')
+      .from(
+        '[data-zh-archive-card]',
+        { autoAlpha: 0, stagger: 0.05, y: 22 },
+        '-=0.45',
+      )
 
-    gsap.utils.toArray<HTMLElement>('[data-zh-reveal]').forEach((element, index) => {
-      gsap.from(element, {
-        delay: (index % 4) * 0.04,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: element,
-          start: 'top 96%',
-          once: true,
-        },
-        y: 22,
+    gsap.utils
+      .toArray<HTMLElement>('[data-zh-reveal]')
+      .forEach((element, index) => {
+        gsap.from(element, {
+          delay: (index % 4) * 0.04,
+          duration: 0.7,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 96%',
+            once: true,
+          },
+          y: 22,
+        })
       })
-    })
   }, root)
 
   const mm = gsap.matchMedia()
@@ -335,34 +367,42 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="homeRoot" class="relative overflow-hidden bg-default">
+  <div ref="homeRoot" class="bg-default relative overflow-hidden">
     <div
       data-zh-parallax="grid"
-      class="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--ui-border-muted)_1px,transparent_1px),linear-gradient(90deg,var(--ui-border-muted)_1px,transparent_1px)] bg-size-[44px_44px] opacity-20 mask-[linear-gradient(180deg,transparent,black_22%,black_72%,transparent)]"
+      class="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--ui-border-muted)_1px,transparent_1px),linear-gradient(90deg,var(--ui-border-muted)_1px,transparent_1px)] mask-[linear-gradient(180deg,transparent,black_22%,black_72%,transparent)] bg-size-[44px_44px] opacity-20"
     />
 
     <section data-zh-hero class="relative">
-      <UContainer class="relative grid min-h-[calc(100svh-var(--ui-header-height))] items-center gap-10 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:py-20">
+      <UContainer
+        class="relative grid min-h-[calc(100svh-var(--ui-header-height))] items-center gap-10 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:py-20"
+      >
         <div class="relative z-10">
           <div
             data-zh-hero-kicker
-            class="mb-6 inline-flex items-center border border-muted bg-default px-3 py-2 font-mono text-xs tracking-[0.22em] text-muted"
+            class="border-muted bg-default text-muted mb-6 inline-flex items-center border px-3 py-2 font-mono text-xs tracking-[0.22em]"
           >
             INDEX / OPEN SOURCE / 中文文档
           </div>
 
-          <h1 class="overflow-hidden font-serif text-6xl font-black leading-[0.92] text-highlighted sm:text-7xl lg:text-8xl">
+          <h1
+            class="text-highlighted overflow-hidden font-serif text-6xl leading-[0.92] font-black sm:text-7xl lg:text-8xl"
+          >
             <span data-zh-title-line class="block">简中文档</span>
           </h1>
 
           <p
             data-zh-hero-copy
-            class="mt-8 max-w-2xl text-lg leading-8 text-toned sm:text-xl"
+            class="text-toned mt-8 max-w-2xl text-lg leading-8 sm:text-xl"
           >
-            把散落在 GitHub、官方站点和社区维护仓库里的中文技术文档整理成一座可检索的开源档案库。
+            把散落在
+            GitHub、官方站点和社区维护仓库里的中文技术文档整理成一座可检索的开源档案库。
           </p>
 
-          <div data-zh-hero-actions class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div
+            data-zh-hero-actions
+            class="mt-9 flex flex-col gap-3 sm:flex-row"
+          >
             <UButton
               to="/project"
               label="打开项目索引"
@@ -383,52 +423,66 @@ onBeforeUnmount(() => {
             />
           </div>
 
-          <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-muted py-4 text-sm text-muted">
-            <span class="font-mono tracking-[0.18em]">DOCS ARE PUBLIC INFRA</span>
-            <span class="hidden h-px w-12 bg-border sm:block" />
+          <div
+            class="border-muted text-muted mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-y py-4 text-sm"
+          >
+            <span class="font-mono tracking-[0.18em]"
+              >DOCS ARE PUBLIC INFRA</span
+            >
+            <span class="bg-border hidden h-px w-12 sm:block" />
             <span>中文入口、上游线索、同步状态，一并归档。</span>
           </div>
         </div>
 
         <div data-zh-parallax="wall" class="relative z-10">
-          <div class="border border-muted bg-default shadow-[0_34px_90px_-62px_var(--ui-text)]">
-            <div class="flex items-center justify-between border-b border-muted bg-default px-4 py-3">
-              <span class="font-mono text-xs tracking-[0.24em] text-muted">LIVE INDEX</span>
-              <span class="font-mono text-xs text-dimmed">ZHCN-{{ featuredProjects.length }}</span>
+          <div
+            class="border-muted bg-default border shadow-[0_34px_90px_-62px_var(--ui-text)]"
+          >
+            <div
+              class="border-muted bg-default flex items-center justify-between border-b px-4 py-3"
+            >
+              <span class="text-muted font-mono text-xs tracking-[0.24em]"
+                >LIVE INDEX</span
+              >
+              <span class="text-dimmed font-mono text-xs"
+                >ZHCN-{{ featuredProjects.length }}</span
+              >
             </div>
-            <div class="grid gap-px bg-border sm:grid-cols-2">
+            <div class="bg-border grid gap-px sm:grid-cols-2">
               <NuxtLink
                 v-for="(project, index) in featuredProjects"
                 :key="project.name"
                 data-zh-archive-card
                 :to="`/project/${project.name}`"
-                class="group relative min-h-56 bg-default p-4 transition-colors after:pointer-events-none after:absolute after:bottom-3 after:right-3 after:size-1.75 after:border-b after:border-r after:border-accented after:opacity-0 after:transition-opacity hover:bg-elevated hover:after:opacity-100"
+                class="group bg-default after:border-accented hover:bg-elevated relative min-h-56 p-4 transition-colors after:pointer-events-none after:absolute after:right-3 after:bottom-3 after:size-1.75 after:border-r after:border-b after:opacity-0 after:transition-opacity hover:after:opacity-100"
               >
                 <div class="mb-6 flex items-start justify-between gap-4">
                   <div class="flex items-center gap-3">
                     <img
                       :src="`/images/project/${project.name}.svg`"
                       :alt="`${project.title} logo`"
-                      class="size-10 border border-muted bg-elevated object-contain p-1.5"
+                      class="border-muted bg-elevated size-10 border object-contain p-1.5"
                       loading="lazy"
                     />
                     <div>
-                      <h2 class="font-semibold text-highlighted">
+                      <h2 class="text-highlighted font-semibold">
                         {{ project.title }}
                       </h2>
-                      <p class="font-mono text-xs text-dimmed">
-                        {{ archiveSignals[index % archiveSignals.length] }}
+                      <p class="text-dimmed font-mono text-xs">
+                        {{ getArchiveSignal(index) }}
                       </p>
                     </div>
                   </div>
-                  <span class="font-mono text-xs text-dimmed">
+                  <span class="text-dimmed font-mono text-xs">
                     {{ String(index + 1).padStart(2, '0') }}
                   </span>
                 </div>
-                <p class="line-clamp-2 min-h-10 text-sm leading-5 text-muted">
+                <p class="text-muted line-clamp-2 min-h-10 text-sm leading-5">
                   {{ project.description }}
                 </p>
-                <div class="mt-6 flex items-center justify-between border-t border-muted pt-3 font-mono text-xs text-dimmed">
+                <div
+                  class="border-muted text-dimmed mt-6 flex items-center justify-between border-t pt-3 font-mono text-xs"
+                >
                   <span>ST {{ formatProjectMetric(project.stars) }}</span>
                   <span>FK {{ formatProjectMetric(project.forks) }}</span>
                 </div>
@@ -439,22 +493,25 @@ onBeforeUnmount(() => {
       </UContainer>
     </section>
 
-    <section class="relative border-y border-muted bg-elevated/30">
+    <section class="border-muted bg-elevated/30 relative border-y">
       <UContainer>
-        <div class="grid gap-px bg-border md:grid-cols-4">
+        <div class="bg-border grid gap-px md:grid-cols-4">
           <div
             v-for="stat in statBlocks"
             :key="stat.label"
             data-zh-reveal
             class="bg-default px-5 py-6 sm:px-6"
           >
-            <p class="mb-5 font-mono text-xs tracking-[0.2em] text-muted">
+            <p class="text-muted mb-5 font-mono text-xs tracking-[0.2em]">
               {{ stat.label }}
             </p>
-            <div class="font-mono text-4xl font-semibold text-highlighted">
-              <span :data-zh-count="stat.value">{{ formatNumber(stat.value) }}</span>{{ stat.suffix }}
+            <div class="text-highlighted font-mono text-4xl font-semibold">
+              <span :data-zh-count="stat.value">{{
+                formatNumber(stat.value)
+              }}</span
+              >{{ stat.suffix }}
             </div>
-            <p class="mt-3 text-sm text-muted">
+            <p class="text-muted mt-3 text-sm">
               {{ stat.detail }}
             </p>
           </div>
@@ -466,39 +523,33 @@ onBeforeUnmount(() => {
       <UContainer>
         <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div data-zh-reveal>
-            <p class="mb-4 font-mono text-xs tracking-[0.24em] text-muted">
+            <p class="text-muted mb-4 font-mono text-xs tracking-[0.24em]">
               ARCHIVE METHOD
             </p>
-            <h2 class="font-serif text-4xl font-black text-highlighted">
+            <h2 class="text-highlighted font-serif text-4xl font-black">
               不只是入口，更像一套文档整理方法。
             </h2>
           </div>
 
-          <div class="grid gap-px border border-muted bg-border md:grid-cols-3">
+          <div class="border-muted bg-border grid gap-px border md:grid-cols-3">
             <article data-zh-reveal class="bg-default p-6">
-              <span class="font-mono text-xs text-dimmed">01</span>
-              <h3 class="mt-8 text-lg font-semibold text-highlighted">
-                整理
-              </h3>
-              <p class="mt-3 text-sm leading-6 text-muted">
+              <span class="text-dimmed font-mono text-xs">01</span>
+              <h3 class="text-highlighted mt-8 text-lg font-semibold">整理</h3>
+              <p class="text-muted mt-3 text-sm leading-6">
                 对高频开源项目建立中文入口，优先保留技术上下文与原始结构。
               </p>
             </article>
             <article data-zh-reveal class="bg-default p-6">
-              <span class="font-mono text-xs text-dimmed">02</span>
-              <h3 class="mt-8 text-lg font-semibold text-highlighted">
-                同步
-              </h3>
-              <p class="mt-3 text-sm leading-6 text-muted">
+              <span class="text-dimmed font-mono text-xs">02</span>
+              <h3 class="text-highlighted mt-8 text-lg font-semibold">同步</h3>
+              <p class="text-muted mt-3 text-sm leading-6">
                 记录上游入口、仓库状态与更新时间，降低访问和检索成本。
               </p>
             </article>
             <article data-zh-reveal class="bg-default p-6">
-              <span class="font-mono text-xs text-dimmed">03</span>
-              <h3 class="mt-8 text-lg font-semibold text-highlighted">
-                对照
-              </h3>
-              <p class="mt-3 text-sm leading-6 text-muted">
+              <span class="text-dimmed font-mono text-xs">03</span>
+              <h3 class="text-highlighted mt-8 text-lg font-semibold">对照</h3>
+              <p class="text-muted mt-3 text-sm leading-6">
                 保留上游入口、仓库状态和同步线索，方便开发者确认资料新鲜度。
               </p>
             </article>
@@ -507,14 +558,16 @@ onBeforeUnmount(() => {
       </UContainer>
     </section>
 
-    <section class="relative border-y border-muted py-16 lg:py-24">
+    <section class="border-muted relative border-y py-16 lg:py-24">
       <UContainer>
-        <div class="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div
+          class="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+        >
           <div data-zh-reveal>
-            <p class="mb-4 font-mono text-xs tracking-[0.24em] text-muted">
+            <p class="text-muted mb-4 font-mono text-xs tracking-[0.24em]">
               PROJECT FILES
             </p>
-            <h2 class="font-serif text-4xl font-black text-highlighted">
+            <h2 class="text-highlighted font-serif text-4xl font-black">
               精选文档索引
             </h2>
           </div>
@@ -529,36 +582,42 @@ onBeforeUnmount(() => {
           />
         </div>
 
-        <div class="border border-muted bg-border">
+        <div class="border-muted bg-border border">
           <NuxtLink
             v-for="(project, index) in featuredProjects"
             :key="project.name"
             data-zh-reveal
             :to="`/project/${project.name}`"
-            class="grid gap-px border-b border-muted bg-border last:border-b-0 lg:grid-cols-[88px_1fr_180px_120px]"
+            class="border-muted bg-border grid gap-px border-b last:border-b-0 lg:grid-cols-[88px_1fr_180px_120px]"
           >
-            <div class="flex items-center bg-default px-5 py-4 font-mono text-sm text-dimmed">
+            <div
+              class="bg-default text-dimmed flex items-center px-5 py-4 font-mono text-sm"
+            >
               {{ String(index + 1).padStart(2, '0') }}
             </div>
             <div class="bg-default px-5 py-4">
-              <h3 class="text-lg font-semibold text-highlighted">
+              <h3 class="text-highlighted text-lg font-semibold">
                 {{ project.title }}
               </h3>
-              <p class="mt-1 text-sm text-muted">
+              <p class="text-muted mt-1 text-sm">
                 {{ project.description }}
               </p>
             </div>
-            <div class="flex items-center bg-default px-5 py-4 font-mono text-sm text-muted">
+            <div
+              class="bg-default text-muted flex items-center px-5 py-4 font-mono text-sm"
+            >
               STARS / {{ formatProjectMetric(project.stars) }}
             </div>
-            <div class="flex items-center justify-between bg-default px-5 py-4 text-sm text-muted">
+            <div
+              class="bg-default text-muted flex items-center justify-between px-5 py-4 text-sm"
+            >
               <span>打开</span>
               <UIcon name="tabler:arrow-up-right" class="size-4" />
             </div>
           </NuxtLink>
         </div>
 
-        <p v-if="hasProjectError" class="mt-4 text-sm text-muted">
+        <p v-if="hasProjectError" class="text-muted mt-4 text-sm">
           GitHub 项目数据暂未取得，当前展示本地索引快照。
         </p>
       </UContainer>
@@ -567,34 +626,38 @@ onBeforeUnmount(() => {
     <section class="relative py-16 lg:py-24">
       <UContainer>
         <div class="mb-10 max-w-2xl" data-zh-reveal>
-          <p class="mb-4 font-mono text-xs tracking-[0.24em] text-muted">
+          <p class="text-muted mb-4 font-mono text-xs tracking-[0.24em]">
             COMMUNITY NOTES
           </p>
-          <h2 class="font-serif text-4xl font-black text-highlighted">
+          <h2 class="text-highlighted font-serif text-4xl font-black">
             社区摘录
           </h2>
-          <p class="mt-4 text-muted">
+          <p class="text-muted mt-4">
             留下一点使用现场，而不是把首页变成夸张的证言墙。
           </p>
         </div>
 
-        <div class="grid gap-px border border-muted bg-border md:grid-cols-2 xl:grid-cols-3">
+        <div
+          class="border-muted bg-border grid gap-px border md:grid-cols-2 xl:grid-cols-3"
+        >
           <article
             v-for="(testimonial, index) in comments"
             :key="testimonial.user.description"
             data-zh-reveal
             class="bg-default p-6"
           >
-            <div class="mb-8 flex items-center justify-between border-b border-muted pb-3">
-              <span class="font-mono text-xs text-dimmed">
+            <div
+              class="border-muted mb-8 flex items-center justify-between border-b pb-3"
+            >
+              <span class="text-dimmed font-mono text-xs">
                 NOTE {{ String(index + 1).padStart(2, '0') }}
               </span>
-              <UIcon name="tabler:quote" class="size-4 text-dimmed" />
+              <UIcon name="tabler:quote" class="text-dimmed size-4" />
             </div>
-            <p class="min-h-28 text-sm leading-7 text-toned">
+            <p class="text-toned min-h-28 text-sm leading-7">
               {{ testimonial.quote }}
             </p>
-            <div class="mt-8 border-t border-muted pt-4">
+            <div class="border-muted mt-8 border-t pt-4">
               <UUser v-bind="testimonial.user" size="md" />
             </div>
           </article>
@@ -604,26 +667,25 @@ onBeforeUnmount(() => {
 
     <section class="relative pb-16 lg:pb-24">
       <UContainer>
-        <div
-          data-zh-reveal
-          class="border border-muted bg-default"
-        >
-          <div class="grid gap-px bg-border lg:grid-cols-[1fr_0.8fr]">
+        <div data-zh-reveal class="border-muted bg-default border">
+          <div class="bg-border grid gap-px lg:grid-cols-[1fr_0.8fr]">
             <div class="bg-default p-6 sm:p-8">
-              <p class="font-mono text-xs tracking-[0.24em] text-muted">
+              <p class="text-muted font-mono text-xs tracking-[0.24em]">
                 NEXT ACTION
               </p>
-              <h2 class="mt-6 font-serif text-4xl font-black text-highlighted">
+              <h2 class="text-highlighted mt-6 font-serif text-4xl font-black">
                 从一个项目开始查阅。
               </h2>
-              <div class="mt-8 border border-muted bg-elevated/50 p-4 font-mono text-sm text-muted">
+              <div
+                class="border-muted bg-elevated/50 text-muted mt-8 border p-4 font-mono text-sm"
+              >
                 <span class="text-primary">zhcndoc</span>
                 <span class="text-dimmed"> / </span>
                 open --index projects
               </div>
             </div>
-            <div class="flex flex-col justify-end bg-default p-6 sm:p-8">
-              <p class="mb-8 text-sm leading-7 text-muted">
+            <div class="bg-default flex flex-col justify-end p-6 sm:p-8">
+              <p class="text-muted mb-8 text-sm leading-7">
                 项目索引会带你进入中文文档、官方文档和上游仓库，适合查资料，也适合确认某个生态的文档维护状态。
               </p>
               <div class="flex flex-col gap-3 sm:flex-row">
