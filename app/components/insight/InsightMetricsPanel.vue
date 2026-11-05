@@ -17,6 +17,7 @@ const tabItems = computed<TabsItem[]>(() =>
 const { data, status } = useFetch<InsightMetricExpanded[]>(
   '/api/insight/metrics-expanded',
   {
+    key: `insight-metrics-${props.tabs[0]?.type ?? 'hostname'}`,
     query: computed(() => ({
       type: activeTab.value,
       startAt: props.startAt,

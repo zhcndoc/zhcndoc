@@ -17,8 +17,8 @@ const unit = computed(() => {
 })
 
 const xAxisData = computed(() => {
-  const start = DateTime.fromMillis(props.startAt)
-  const end = DateTime.fromMillis(props.endAt)
+  const start = DateTime.fromMillis(props.startAt).setZone('Asia/Shanghai')
+  const end = DateTime.fromMillis(props.endAt).setZone('Asia/Shanghai')
   const labels: string[] = []
 
   if (unit.value === 'hour') {
@@ -57,10 +57,20 @@ const chartTheme = {
 
 const seriesData = computed(() => {
   const pageviewsMap = new Map(
-    (pageviews.value?.pageviews ?? []).map((item) => [item.x, item.y]),
+    (pageviews.value?.pageviews ?? []).map((item) => [
+      DateTime.fromISO(item.x, { setZone: true }).toFormat(
+        'yyyy-MM-dd HH:mm:ss',
+      ),
+      item.y,
+    ]),
   )
   const sessionsMap = new Map(
-    (pageviews.value?.sessions ?? []).map((item) => [item.x, item.y]),
+    (pageviews.value?.sessions ?? []).map((item) => [
+      DateTime.fromISO(item.x, { setZone: true }).toFormat(
+        'yyyy-MM-dd HH:mm:ss',
+      ),
+      item.y,
+    ]),
   )
 
   return {

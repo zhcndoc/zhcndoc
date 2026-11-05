@@ -31,6 +31,7 @@ function onGeoRoam() {
 }
 
 const { data: countryData } = useFetch('/api/insight/metrics-expanded', {
+  key: 'insight-map-country',
   query: computed(() => ({
     type: 'country',
     startAt: props.startAt,
@@ -41,6 +42,7 @@ const { data: countryData } = useFetch('/api/insight/metrics-expanded', {
 })
 
 const { data: regionData } = useFetch('/api/insight/metrics-expanded', {
+  key: 'insight-map-region',
   query: computed(() => ({
     type: 'region',
     startAt: props.startAt,

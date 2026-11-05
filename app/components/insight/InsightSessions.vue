@@ -15,6 +15,7 @@ const pageSize = ref(10)
 const { data, status } = useFetch<InsightSessionsResponse>(
   '/api/insight/sessions',
   {
+    key: 'insight-sessions',
     query: computed(() => ({
       startAt: props.startAt,
       endAt: props.endAt,
@@ -22,7 +23,6 @@ const { data, status } = useFetch<InsightSessionsResponse>(
       page: page.value,
       pageSize: pageSize.value,
     })),
-    watch: [page, pageSize],
   },
 )
 
@@ -73,7 +73,9 @@ const columns: TableColumn<InsightSession>[] = [
       h(
         'span',
         { class: 'text-sm text-muted' },
-        DateTime.fromISO(row.original.lastAt).toFormat('MM-dd HH:mm'),
+        DateTime.fromISO(row.original.lastAt)
+          .setZone('Asia/Shanghai')
+          .toFormat('MM-dd HH:mm'),
       ),
   },
 ]
