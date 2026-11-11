@@ -1,0 +1,289 @@
+name: zhcndoc
+
+services:
+  entry:
+    image: traefik:v3
+    container_name: entry-zhcndoc
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:18080:80'
+    command:
+      - '--providers.docker.defaultRule=Host(`{{ index .Labels "com.docker.compose.service" }}.zhcndoc.com`)'
+      - '--providers.docker.constraints=Label(`com.docker.compose.project`, `${COMPOSE_PROJECT_NAME}`)'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      traefik.enable: 'false'
+
+  elysia:
+    image: zhcndoc/elysia
+    container_name: zhcndoc-elysia
+    restart: unless-stopped
+
+  drizzle:
+    image: zhcndoc/drizzle
+    container_name: zhcndoc-drizzle
+    restart: unless-stopped
+
+  vueuse:
+    image: zhcndoc/vueuse
+    container_name: zhcndoc-vueuse
+    restart: unless-stopped
+
+  unocss:
+    image: zhcndoc/unocss
+    container_name: zhcndoc-unocss
+    restart: unless-stopped
+
+  shiki:
+    image: zhcndoc/shiki
+    container_name: zhcndoc-shiki
+    restart: unless-stopped
+
+  vitest:
+    image: zhcndoc/vitest
+    container_name: zhcndoc-vitest
+    restart: unless-stopped
+
+  umami:
+    image: zhcndoc/umami
+    container_name: zhcndoc-umami
+    restart: unless-stopped
+
+  astro:
+    image: zhcndoc/astro
+    container_name: zhcndoc-astro
+    restart: unless-stopped
+
+  nuxt-color-mode:
+    image: zhcndoc/nuxt-color-mode
+    container_name: zhcndoc-nuxt-color-mode
+    restart: unless-stopped
+
+  vue:
+    image: zhcndoc/vue
+    container_name: zhcndoc-vue
+    restart: unless-stopped
+
+  unjs:
+    image: zhcndoc/unjs
+    container_name: zhcndoc-unjs
+    restart: unless-stopped
+
+  nitro:
+    image: zhcndoc/nitro
+    container_name: zhcndoc-nitro
+    restart: unless-stopped
+
+  h3:
+    image: zhcndoc/h3
+    container_name: zhcndoc-h3
+    restart: unless-stopped
+
+  nuxt:
+    image: zhcndoc/nuxt
+    container_name: zhcndoc-nuxt
+    restart: unless-stopped
+    environment:
+      NUXT_APP_SECRET: ${NUXT_APP_SECRET}
+      NUXT_GITHUB_TOKEN: ${NUXT_GITHUB_TOKEN}
+
+  vite:
+    image: zhcndoc/vite
+    container_name: zhcndoc-vite
+    restart: unless-stopped
+
+  vitepress:
+    image: zhcndoc/vitepress
+    container_name: zhcndoc-vitepress
+    restart: unless-stopped
+
+  konva:
+    image: zhcndoc/konva
+    container_name: zhcndoc-konva
+    restart: unless-stopped
+
+  nuxt-i18n:
+    image: zhcndoc/nuxt-i18n
+    container_name: zhcndoc-nuxt-i18n
+    restart: unless-stopped
+
+  deno:
+    image: zhcndoc/deno
+    container_name: zhcndoc-deno
+    restart: unless-stopped
+
+  tailwindcss:
+    image: zhcndoc/tailwindcss
+    container_name: zhcndoc-tailwindcss
+    restart: unless-stopped
+
+  sharp:
+    image: zhcndoc/sharp
+    container_name: zhcndoc-sharp
+    restart: unless-stopped
+
+  react:
+    image: zhcndoc/react
+    container_name: zhcndoc-react
+    restart: unless-stopped
+
+  node:
+    image: zhcndoc/node
+    container_name: zhcndoc-node
+    restart: unless-stopped
+
+  shadcn:
+    image: zhcndoc/shadcn
+    container_name: zhcndoc-shadcn
+    restart: unless-stopped
+
+  radix:
+    image: zhcndoc/radix
+    container_name: zhcndoc-radix
+    restart: unless-stopped
+
+  tiptap:
+    image: zhcndoc/tiptap
+    container_name: zhcndoc-tiptap
+    restart: unless-stopped
+
+  blocknote:
+    image: zhcndoc/blocknote
+    container_name: zhcndoc-blocknote
+    restart: unless-stopped
+
+  zod:
+    image: zhcndoc/zod
+    container_name: zhcndoc-zod
+    restart: unless-stopped
+
+  nuxt-content:
+    image: zhcndoc/nuxt-content
+    container_name: zhcndoc-nuxt-content
+    restart: unless-stopped
+
+  bun:
+    image: zhcndoc/bun
+    container_name: zhcndoc-bun
+    restart: unless-stopped
+
+  typeorm:
+    image: zhcndoc/typeorm
+    container_name: zhcndoc-typeorm
+    restart: unless-stopped
+
+  redux:
+    image: zhcndoc/redux
+    container_name: zhcndoc-redux
+    restart: unless-stopped
+
+  nuxt-scripts:
+    image: zhcndoc/nuxt-scripts
+    container_name: zhcndoc-nuxt-scripts
+    restart: unless-stopped
+
+  onlook:
+    image: zhcndoc/onlook
+    container_name: zhcndoc-onlook
+    restart: unless-stopped
+
+  react-native:
+    image: zhcndoc/react-native
+    container_name: zhcndoc-react-native
+    restart: unless-stopped
+
+  next-intl:
+    image: zhcndoc/next-intl
+    container_name: zhcndoc-next-intl
+    restart: unless-stopped
+
+  better-auth:
+    image: zhcndoc/better-auth
+    container_name: zhcndoc-better-auth
+    restart: unless-stopped
+
+  openclaw:
+    image: zhcndoc/openclaw
+    container_name: zhcndoc-openclaw
+    restart: unless-stopped
+
+  nodemailer:
+    image: zhcndoc/nodemailer
+    container_name: zhcndoc-nodemailer
+    restart: unless-stopped
+
+  hono:
+    image: zhcndoc/hono
+    container_name: zhcndoc-hono
+    restart: unless-stopped
+
+  opennext:
+    image: zhcndoc/opennext
+    container_name: zhcndoc-opennext
+    restart: unless-stopped
+
+  lucide:
+    image: zhcndoc/lucide
+    container_name: zhcndoc-lucide
+    restart: unless-stopped
+
+  nuxt-mcp-toolkit:
+    image: zhcndoc/nuxt-mcp-toolkit
+    container_name: zhcndoc-nuxt-mcp-toolkit
+    restart: unless-stopped
+
+  iconify:
+    image: zhcndoc/iconify
+    container_name: zhcndoc-iconify
+    restart: unless-stopped
+
+  markdoc:
+    image: zhcndoc/markdoc
+    container_name: zhcndoc-markdoc
+    restart: unless-stopped
+
+  mcp:
+    image: zhcndoc/mcp
+    container_name: zhcndoc-mcp
+    restart: unless-stopped
+
+  agent-skills:
+    image: zhcndoc/agent-skills
+    container_name: zhcndoc-agent-skills
+    restart: unless-stopped
+
+  oxc:
+    image: zhcndoc/oxc
+    container_name: zhcndoc-oxc
+    restart: unless-stopped
+
+  viteplus:
+    image: zhcndoc/viteplus
+    container_name: zhcndoc-viteplus
+    restart: unless-stopped
+
+  evlog:
+    image: zhcndoc/evlog
+    container_name: zhcndoc-evlog
+    restart: unless-stopped
+
+  rolldown:
+    image: zhcndoc/rolldown
+    container_name: zhcndoc-rolldown
+    restart: unless-stopped
+
+  expo:
+    image: zhcndoc/expo
+    container_name: zhcndoc-expo
+    restart: unless-stopped
+
+  dicebear:
+    image: zhcndoc/dicebear
+    container_name: zhcndoc-dicebear
+    restart: unless-stopped
+
+  mise:
+    image: zhcndoc/mise
+    container_name: zhcndoc-mise
+    restart: unless-stopped
