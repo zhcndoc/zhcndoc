@@ -1,5 +1,5 @@
 ---
-name: project-description
+name: create-project
 description: 将 `content/project/*.yml` 中的 `description` 字段保持在约 400px，避免禁用词，并使用简洁且准确的一句项目描述。
 ---
 
@@ -11,14 +11,14 @@ description: 将 `content/project/*.yml` 中的 `description` 字段保持在约
 
 描述文案的渲染宽度需控制在 **400px ± 5px** 范围内。
 
-使用 `scripts/measure.mjs` 脚本检测所有项目描述的宽度；使用 `scripts/test-desc.mjs` 脚本检测单条描述的宽度：
+使用技能内的 [scripts/measure-description.mjs](scripts/measure-description.mjs) 检测描述宽度：不传参数时检测所有项目，传入文案时检测单条描述。以下命令均从仓库根目录执行，依赖仓库安装的 `canvas` 和 `@chenglou/pretext`：
 
 ```bash
 # 检测所有项目描述宽度
-node scripts/measure.mjs
+node .agents/skills/create-project/scripts/measure-description.mjs
 
 # 检测单条描述宽度
-node scripts/test-desc.mjs "描述文案内容"
+node .agents/skills/create-project/scripts/measure-description.mjs "描述文案内容"
 ```
 
 度量基于 `@chenglou/pretext` 库，字体为 `14px ui-sans-serif, system-ui, sans-serif`。
@@ -40,9 +40,9 @@ node scripts/test-desc.mjs "描述文案内容"
 ## 验证流程
 
 1. 编写或修改描述文案。
-2. 运行 `node scripts/test-desc.mjs "文案内容"` 验证宽度。
+2. 运行 `node .agents/skills/create-project/scripts/measure-description.mjs "文案内容"` 验证宽度。
 3. 若不在 ±5px 范围内，调整措辞后重新验证。
-4. 最终运行 `node scripts/measure.mjs` 确认所有项目均在范围内。
+4. 最终运行 `node .agents/skills/create-project/scripts/measure-description.mjs` 确认所有项目均在范围内。
 
 ## 示例
 
