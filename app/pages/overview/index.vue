@@ -4,9 +4,8 @@ useSeoMeta({
   description: '简中文档项目仓库的整体概览数据，仅供站内浏览。',
 })
 
-const projects = ref<ProjectInfo[]>([])
-
-projects.value = await $fetch('/api/project', {
+const { data: projects } = await useFetch<ProjectInfo[]>('/api/project', {
+  default: () => [],
   query: {
     scope: 'all',
   },
