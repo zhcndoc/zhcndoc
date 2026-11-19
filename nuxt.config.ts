@@ -90,7 +90,7 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ['gsap', 'gsap/ScrollTrigger', 'luxon'],
+      include: ['luxon'],
     },
   },
   echarts: {

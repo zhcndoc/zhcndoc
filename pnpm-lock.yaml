@@ -53,9 +53,6 @@ importers:
       eslint:
         specifier: ^10.14.0
         version: 10.14.0(jiti@2.7.0)(supports-color@10.2.2)
-      gsap:
-        specifier: ^3.15.0
-        version: 3.15.0
       luxon:
         specifier: ^3.7.2
         version: 3.7.2
@@ -4093,9 +4090,6 @@ packages:
   graphql@16.14.2:
     resolution: {integrity: sha512-Chq1s4CY7jmh8gO2qvLIJyfCDIN+EHLFW/9iShnp1z8FjBQMoodWP1kDC36VAMXXIvAjj4ARa7ntfAV2BrjsbA==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
-
-  gsap@3.15.0:
-    resolution: {integrity: sha512-dMW4CWBTUK1AEEDeZc1g4xpPGIrSf9fJF960qbTZmN/QwZIWY5wgliS6JWl9/25fpTGJrMRtSjGtOmPnfjZB+A==}
 
   gzip-size@7.0.0:
     resolution: {integrity: sha512-O1Ld7Dr+nqPnmGpdhzLmMTQ4vAsD+rHwMm1NLUmoUFFymBOMKxCCrtDxqdBRYXdeEPEi3SyoR4TizJLQrnKBNA==}
@@ -10835,8 +10829,6 @@ snapshots:
       tslib: 2.9.1
 
   graphql@16.14.2: {}
-
-  gsap@3.15.0: {}
 
   gzip-size@7.0.0:
     dependencies:
