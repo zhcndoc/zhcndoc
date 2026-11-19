@@ -12,6 +12,14 @@ const props = defineProps<{
 const page = ref(1)
 const pageSize = ref(10)
 
+watch(
+  () => [props.hostname, props.startAt, props.endAt, pageSize.value],
+  () => {
+    page.value = 1
+  },
+  { flush: 'sync' },
+)
+
 const { data, status } = useFetch<InsightSessionsResponse>(
   '/api/insight/sessions',
   {
@@ -82,22 +90,37 @@ const columns: TableColumn<InsightSession>[] = [
 </script>
 
 <template>
-  <UCard class="flex h-full flex-col">
+  <UCard as="section" :ui="{ body: 'p-0 sm:p-0' }">
+    <template #header><h2 class="font-semibold">最近会话</h2></template>
     <UTable
       :data="data?.data ?? []"
       :columns="columns"
       :loading="status === 'pending'"
-      class="flex-1"
-    />
+      :empty="
+        status === 'error' ? '暂时无法读取会话记录。' : '所选时段暂无会话'
+      "
+    >
+      <template #loading>正在加载会话…</template>
+    </UTable>
 
     <template #footer>
       <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-        <div class="text-muted text-sm">共 {{ data?.count ?? 0 }} 条记录</div>
+        <span class="text-muted text-sm tabular-nums">
+          共 {{ data?.count ?? 0 }} 条记录
+        </span>
+        <USelectMenu
+          v-model="pageSize"
+          :items="[10, 20, 50, 100]"
+          :search-input="false"
+          aria-label="每页记录数"
+        >
+          <template #default>每页 {{ pageSize }} 条</template>
+        </USelectMenu>
         <UPagination
           v-model:page="page"
-          v-model:items-per-page="pageSize"
+          :items-per-page="pageSize"
           :total="data?.count ?? 0"
-          :items-per-page-options="[10, 20, 50, 100]"
+          :sibling-count="0"
           show-controls
           size="sm"
         />

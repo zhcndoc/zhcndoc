@@ -28,7 +28,10 @@ type SiteItem = SelectMenuItem & {
   }
 }
 
-const projects = await $fetch<ProjectInfo[]>('/api/project')
+const { data: projects } = await useFetch<ProjectInfo[]>('/api/project', {
+  default: () => [],
+})
+const wideCalendar = useMediaQuery('(min-width: 640px)')
 const { data: allTimeRange } = await useFetch<InsightDateRange | null>(
   '/api/insight/daterange',
   {
@@ -37,12 +40,12 @@ const { data: allTimeRange } = await useFetch<InsightDateRange | null>(
 )
 
 const siteItems = computed<SiteItem[]>(() => {
-  const items: SiteItem[] = projects.map((project) => ({
+  const items: SiteItem[] = projects.value.map((project) => ({
     value: `${project.name}.zhcndoc.com`,
     label: project.title,
     avatar: {
       src: `/images/project/${project.name}.svg`,
-      alt: project.title,
+      alt: '',
     },
   }))
 
@@ -51,7 +54,7 @@ const siteItems = computed<SiteItem[]>(() => {
     label: '所有站点',
     avatar: {
       src: `/images/project/zhcndoc.svg`,
-      alt: '简中文档',
+      alt: '',
     },
   })
 
@@ -423,82 +426,66 @@ onMounted(() => {
   applyPresetRange(selectedTimeRange.value, 0)
 })
 </script>
-
 <template>
-  <div class="flex flex-wrap items-center justify-between gap-4 pt-8">
-    <USelectMenu
-      v-model="selectedSite"
-      :items="siteItems"
-      :avatar="{
-        src: selectedIcon,
-      }"
-      :ui="{
-        itemLeadingAvatar: 'rounded-md',
-      }"
-      value-key="value"
-      size="xl"
-      placeholder="选择站点"
-      class="w-64"
-    >
-    </USelectMenu>
-    <div class="flex items-center gap-2">
-      <div class="flex items-center gap-1">
+  <UCard :ui="{ body: 'flex flex-wrap items-center justify-between gap-3' }">
+    <h1 class="text-highlighted text-2xl font-bold tracking-tight">访问统计</h1>
+    <div class="flex w-full min-w-0 flex-wrap items-center gap-2 md:w-auto">
+      <USelectMenu
+        v-model="selectedSite"
+        :items="siteItems"
+        :avatar="{ src: selectedIcon, alt: '' }"
+        :ui="{ itemLeadingAvatar: 'rounded-xs' }"
+        value-key="value"
+        aria-label="选择站点"
+        placeholder="选择站点"
+        class="w-full sm:w-52"
+      />
+      <div class="flex w-full min-w-0 items-center gap-1.5 sm:w-auto">
         <UButton
           icon="i-lucide-chevron-left"
+          aria-label="上一时段"
           color="neutral"
           variant="outline"
-          size="xl"
           @click="shiftTimeRange(-1)"
         />
+        <USelectMenu
+          :model-value="selectedTimeRange"
+          :search-input="false"
+          :items="timeRangeItems"
+          value-key="value"
+          aria-label="日期范围"
+          :title="selectedTimeRangeLabel"
+          class="min-w-0 flex-1 sm:max-w-80 sm:min-w-36"
+          :ui="{ content: 'min-w-40' }"
+          @update:model-value="handleTimeRangeChange"
+        >
+          <template #default>
+            <span class="truncate">{{ selectedTimeRangeLabel }}</span>
+          </template>
+        </USelectMenu>
         <UButton
           icon="i-lucide-chevron-right"
+          aria-label="下一时段"
           color="neutral"
           variant="outline"
-          size="xl"
           @click="shiftTimeRange(1)"
         />
       </div>
-      <USelectMenu
-        :model-value="selectedTimeRange"
-        :ui="{
-          base: 'w-fit min-w-48 max-w-[calc(100vw-2rem)]',
-          content: 'max-h-full w-48 min-w-48',
-          value: 'whitespace-nowrap !overflow-visible !text-clip',
-          item: 'transition-colors hover:bg-elevated/80 data-[highlighted]:bg-elevated/80',
-        }"
-        :search-input="false"
-        :items="timeRangeItems"
-        value-key="value"
-        size="xl"
-        class="w-fit"
-        @update:model-value="handleTimeRangeChange"
-      >
-        <template #default>
-          <span class="inline-flex text-left whitespace-nowrap">
-            {{ selectedTimeRangeLabel }}
-          </span>
-        </template>
-      </USelectMenu>
     </div>
-  </div>
-
+  </UCard>
   <UModal v-model:open="isCustomRangeOpen" title="选择日期范围">
     <template #body>
-      <div class="overflow-x-auto py-1">
-        <UCalendar
-          v-model="customRange"
-          range
-          :number-of-months="2"
-          class="mx-auto"
-        />
-      </div>
+      <UCalendar
+        v-model="customRange"
+        range
+        :number-of-months="wideCalendar ? 2 : 1"
+      />
     </template>
-
     <template #footer>
       <div class="flex w-full justify-end gap-2">
         <UButton
           color="neutral"
-          variant="ghost"
+          variant="outline"
           @click="isCustomRangeOpen = false"
         >
           取消

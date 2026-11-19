@@ -16,14 +16,7 @@ const hours = Array.from(
   (_, i) => `${String(i).padStart(2, '0')}:00`,
 )
 
-const chartTheme = {
-  axisText: '#64748B',
-  axisLine: 'rgba(148, 163, 184, 0.4)',
-  splitArea: ['rgba(148, 163, 184, 0.04)', 'rgba(148, 163, 184, 0.09)'],
-  tooltipBg: 'rgba(15, 23, 42, 0.92)',
-  tooltipBorder: 'rgba(148, 163, 184, 0.3)',
-  tooltipText: '#F8FAFC',
-}
+const palette = useChartPalette()
 
 const seriesData = computed(() => {
   const data = weeklyData.value
@@ -39,84 +32,93 @@ const maxValue = computed(() => {
   return Math.max(...data.flat(), 1)
 })
 
-const chartOptions = computed<ECOption>(() => ({
-  animationDuration: 450,
-  tooltip: {
-    trigger: 'item',
-    backgroundColor: chartTheme.tooltipBg,
-    borderColor: chartTheme.tooltipBorder,
-    borderWidth: 1,
-    textStyle: { color: chartTheme.tooltipText },
-    formatter(params: any) {
-      const [dayIdx, hourIdx, value] = params.data as [number, number, number]
-      return `${days[dayIdx]} ${hours[hourIdx]}<br/><span style="font-size: 14px; font-weight: 700;">${value.toLocaleString()}</span> 次会话`
-    },
-  },
-  grid: {
-    left: '1%',
-    right: '1%',
-    top: '4%',
-    bottom: '4%',
-    containLabel: true,
-  },
-  xAxis: {
-    type: 'category',
-    data: days,
-    position: 'top',
-    axisLine: { lineStyle: { color: chartTheme.axisLine } },
-    axisTick: { show: false },
-    axisLabel: { color: chartTheme.axisText },
-  },
-  yAxis: {
-    type: 'category',
-    data: hours,
-    inverse: true,
-    axisLine: { lineStyle: { color: chartTheme.axisLine } },
-    axisTick: { show: false },
-    axisLabel: { color: chartTheme.axisText, fontSize: 11 },
-  },
-  visualMap: {
-    min: 0,
-    max: maxValue.value,
-    show: false,
-    inRange: {
-      color: [
-        'transparent',
-        'rgba(8,145,178,0.3)',
-        'rgba(8,145,178,0.6)',
-        '#0891b2',
-      ],
-    },
-  },
-  series: [
-    {
-      type: 'heatmap',
-      data: seriesData.value,
-      label: { show: false },
-      itemStyle: {
-        borderColor: 'rgba(148, 163, 184, 0.1)',
-        borderWidth: 0.5,
+const chartOptions = computed<ECOption>(() => {
+  const chartTheme = palette.value
+  if (!chartTheme) return {}
+  return {
+    animationDuration: 450,
+    tooltip: {
+      trigger: 'item',
+      renderMode: 'richText',
+      backgroundColor: chartTheme.tooltipBg,
+      borderColor: chartTheme.tooltipBorder,
+      borderWidth: 1,
+      textStyle: { color: chartTheme.tooltipText },
+      formatter(params: any) {
+        const [dayIdx, hourIdx, value] = params.data as [number, number, number]
+        return `${days[dayIdx]} ${hours[hourIdx]}\n${value.toLocaleString()} 次会话`
       },
     },
-  ],
-}))
-
-const isMounted = ref(false)
-onMounted(() => {
-  isMounted.value = true
+    grid: {
+      left: '1%',
+      right: '1%',
+      top: '4%',
+      bottom: '4%',
+      containLabel: true,
+    },
+    xAxis: {
+      type: 'category',
+      data: days,
+      position: 'top',
+      axisLine: { lineStyle: { color: chartTheme.axisLine } },
+      axisTick: { show: false },
+      axisLabel: { color: chartTheme.axisText },
+    },
+    yAxis: {
+      type: 'category',
+      data: hours,
+      inverse: true,
+      axisLine: { lineStyle: { color: chartTheme.axisLine } },
+      axisTick: { show: false },
+      axisLabel: { color: chartTheme.axisText, fontSize: 11 },
+    },
+    visualMap: [
+      {
+        type: 'continuous',
+        min: 0,
+        max: maxValue.value,
+        show: false,
+        inRange: {
+          color: chartTheme.range,
+        },
+      },
+      transparentZeroVisualMap,
+    ],
+    series: [
+      {
+        type: 'heatmap',
+        data: seriesData.value,
+        label: { show: false },
+        itemStyle: {
+          borderColor: chartTheme.splitLine,
+          borderWidth: 0.5,
+        },
+      },
+    ],
+  }
 })
 </script>
-
 <template>
-  <UCard :ui="{ body: 'p-4 sm:p-4' }">
-    <div class="relative" style="height: 660px">
+  <UCard as="section">
+    <template #header><h2 class="font-semibold">每周会话分布</h2></template>
+    <p v-if="status === 'error'" role="status" class="text-muted text-sm">
+      暂时无法读取会话分布。
+    </p>
+    <p
+      v-else-if="status === 'success' && !seriesData.length"
+      class="text-muted text-sm"
+    >
+      所选时段暂无会话
+    </p>
+    <div v-else class="relative h-[28rem]">
       <VChart
+        v-if="palette"
         :option="chartOptions"
         :autoresize="true"
         :loading="status === 'pending'"
-        class="h-full w-full"
+        class="size-full"
       />
-      <USkeleton v-if="!isMounted" class="absolute top-0 h-full w-full" />
+      <USkeleton v-else class="size-full" />
     </div>
   </UCard>
 </template>

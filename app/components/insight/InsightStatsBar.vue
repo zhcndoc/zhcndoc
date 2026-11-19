@@ -72,20 +72,23 @@ const metrics = computed(() => {
   }
 })
 </script>
-
 <template>
-  <div
-    class="relative grid w-full grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
-  >
-    <template v-for="item in metrics" :key="item.label">
+  <UCard :ui="{ body: 'p-0 sm:p-0' }">
+    <p v-if="status === 'error'" role="status" class="text-muted p-4 text-sm">
+      暂时无法读取访问指标。
+    </p>
+    <div
+      v-else-if="metrics.length"
+      class="grid grid-cols-2 gap-px overflow-hidden rounded-md bg-(--ui-border-muted) sm:grid-cols-3 lg:grid-cols-5"
+    >
       <InsightMetricCard
+        v-for="item in metrics"
+        :key="item.label"
+        v-bind="item"
         :loading="status === 'pending'"
-        :value="item.value"
-        :change="item.change"
-        :label="item.label"
-        :reverse-colors="item.reverseColors"
-        :format-value="item.formatValue"
       />
-    </template>
-  </div>
+    </div>
+    <USkeleton v-else-if="status === 'pending'" class="h-24" />
+    <p v-else class="text-muted p-4 text-sm">暂无访问指标</p>
+  </UCard>
 </template>

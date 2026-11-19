@@ -9,48 +9,35 @@ const props = defineProps<{
 
 const mapType = ref<'world' | 'china'>('china')
 const geoReady = reactive({ world: false, china: false })
+const geoErrors = reactive({ world: false, china: false })
 
-// 用于获取图表实例，读取拖拽/缩放后的 center 和 zoom 值
-const vchartRef = ref<{ chart: any } | null>(null)
+const { data: countryData, status: countryStatus } = useFetch(
+  '/api/insight/metrics-expanded',
+  {
+    key: 'insight-map-country',
+    query: computed(() => ({
+      type: 'country',
+      startAt: props.startAt,
+      endAt: props.endAt,
+      hostname: props.hostname,
+      limit: 500,
+    })),
+  },
+)
 
-function onGeoRoam() {
-  return // 先注释掉，等需要微调初始视角时再启用这个函数
-  const chart = vchartRef.value?.chart
-  if (!chart) return
-  const option = chart.getOption() as any
-  const series = option?.series?.[0]
-  if (series) {
-    // 控制台会打印当前中心点和缩放比例，将满意的值填入 chartOptions 中的注释位置
-    console.log(
-      '[GeoMap] center:',
-      JSON.stringify(series.center),
-      '| zoom:',
-      series.zoom,
-    )
-  }
-}
-
-const { data: countryData } = useFetch('/api/insight/metrics-expanded', {
-  key: 'insight-map-country',
-  query: computed(() => ({
-    type: 'country',
-    startAt: props.startAt,
-    endAt: props.endAt,
-    hostname: props.hostname,
-    limit: 500,
-  })),
-})
-
-const { data: regionData } = useFetch('/api/insight/metrics-expanded', {
-  key: 'insight-map-region',
-  query: computed(() => ({
-    type: 'region',
-    startAt: props.startAt,
-    endAt: props.endAt,
-    hostname: props.hostname,
-    limit: 500,
-  })),
-})
+const { data: regionData, status: regionStatus } = useFetch(
+  '/api/insight/metrics-expanded',
+  {
+    key: 'insight-map-region',
+    query: computed(() => ({
+      type: 'region',
+      startAt: props.startAt,
+      endAt: props.endAt,
+      hostname: props.hostname,
+      limit: 500,
+    })),
+  },
+)
 
 const countryCodeToName: Record<string, string> = {
   CN: 'China',
@@ -156,9 +143,14 @@ const geoInitialView: Record<
 
 async function loadGeo(type: 'world' | 'china') {
   if (geoReady[type]) return
-  const json = await $fetch(`/geo/${type}.json`)
-  registerMap(type, json as any)
-  geoReady[type] = true
+  geoErrors[type] = false
+  try {
+    const json = await $fetch(`/geo/${type}.json`)
+    registerMap(type, json as any)
+    geoReady[type] = true
+  } catch {
+    geoErrors[type] = true
+  }
 }
 
 onMounted(() => loadGeo('china'))
@@ -199,48 +191,46 @@ const maxValue = computed(() => {
   return Math.max(...values, 1)
 })
 
-const chartTheme = {
-  axisText: '#64748B',
-  mapColor: 'rgba(54, 162, 235, 0.88)',
-  mapRange: [
-    'rgba(54, 162, 235, 0.06)',
-    'rgba(54, 162, 235, 0.24)',
-    'rgba(54, 162, 235, 0.52)',
-    'rgba(54, 162, 235, 0.88)',
-  ],
-  tooltipBg: 'rgba(15, 23, 42, 0.92)',
-  tooltipBorder: 'rgba(148, 163, 184, 0.3)',
-  tooltipText: '#F8FAFC',
-}
+const palette = useChartPalette()
+const failed = computed(
+  () =>
+    countryStatus.value === 'error' ||
+    (mapType.value === 'china' && regionStatus.value === 'error'),
+)
 
 const chartOptions = computed<ECOption>(() => {
-  if (!geoReady[mapType.value]) return {}
+  const chartTheme = palette.value
+  if (!geoReady[mapType.value] || !chartTheme) return {}
 
   return {
     tooltip: {
       trigger: 'item',
+      renderMode: 'richText',
       backgroundColor: chartTheme.tooltipBg,
       borderColor: chartTheme.tooltipBorder,
       borderWidth: 1,
       textStyle: { color: chartTheme.tooltipText },
       formatter(params: any) {
         const value = Number(params.value) || 0
-        return `${params.name}<br/><span style="font-size: 14px; font-weight: 700;">${value.toLocaleString()}</span> 次浏览`
+        return `${params.name}\n${value.toLocaleString()} 次浏览`
       },
     },
-    visualMap: {
-      show: true,
-      left: 16,
-      bottom: 16,
-      min: 0,
-      max: maxValue.value,
-      inRange: {
-        color: chartTheme.mapRange,
+    visualMap: [
+      {
+        type: 'continuous',
+        left: 16,
+        bottom: 16,
+        min: 0,
+        max: maxValue.value,
+        inRange: {
+          color: chartTheme.range,
+        },
+        text: ['多', '少'],
+        calculable: true,
+        textStyle: { color: chartTheme.axisText },
       },
-      text: ['多', '少'],
-      calculable: true,
-      textStyle: { color: chartTheme.axisText },
-    },
+      transparentZeroVisualMap,
+    ],
     series: [
       {
         name: '浏览量',
@@ -255,16 +245,23 @@ const chartOptions = computed<ECOption>(() => {
         zoom: geoInitialView[mapType.value].zoom,
         emphasis: {
           label: { show: false },
-          itemStyle: { areaColor: chartTheme.mapColor },
+          itemStyle: { areaColor: 'inherit' },
         },
         itemStyle: {
-          areaColor: 'rgba(148, 163, 184, 0.12)',
-          borderColor: 'rgba(148, 163, 184, 0.4)',
+          areaColor: 'transparent',
+          borderColor: chartTheme.axisLine,
         },
         select: {
           disabled: true,
         },
-        data: mapData.value,
+        data: mapData.value.map((item) =>
+          item.value > 0
+            ? {
+                ...item,
+                emphasis: { itemStyle: { areaColor: chartTheme.pageviews } },
+              }
+            : item,
+        ),
       },
     ],
   }
@@ -275,31 +272,28 @@ const tabItems = [
   { label: '世界', value: 'world' },
 ]
 </script>
-
 <template>
-  <UCard :ui="{ body: 'p-0 sm:p-0' }">
-    <div class="relative" style="height: 30.625rem">
-      <div class="absolute top-3 right-3 z-10">
-        <UTabs
-          v-model="mapType"
-          :items="tabItems"
-          variant="pill"
-          :content="false"
-          size="xs"
-        />
-      </div>
+  <UCard as="section">
+    <template #header>
+      <h2 class="font-semibold">访问地域</h2>
+      <UTabs v-model="mapType" :items="tabItems" :content="false" size="sm" />
+    </template>
+    <p v-if="failed" class="text-muted text-sm" role="status">
+      暂时无法读取地域数据。
+    </p>
+    <p v-else-if="geoErrors[mapType]" class="text-muted text-sm" role="status">
+      地图暂时无法加载。
+      <UButton variant="link" label="重试" @click="loadGeo(mapType)" />
+    </p>
+    <div v-else class="relative h-80 sm:h-96">
       <VChart
-        v-if="geoReady[mapType]"
-        ref="vchartRef"
+        v-if="geoReady[mapType] && palette"
         :key="mapType"
         :option="chartOptions"
         :autoresize="true"
-        class="h-full w-full"
-        @georoam="onGeoRoam"
+        class="size-full"
       />
-      <div v-else class="text-muted flex h-full items-center justify-center">
-        <UIcon name="i-lucide-loader-circle" class="size-6 animate-spin" />
-      </div>
+      <USkeleton v-else class="size-full" />
     </div>
   </UCard>
 </template>

@@ -44,16 +44,7 @@ const xAxisData = computed(() => {
   return labels
 })
 
-const chartTheme = {
-  pageviews: '#36A2EB',
-  sessions: '#4BC0C0',
-  axisText: '#64748B',
-  axisLine: 'rgba(148, 163, 184, 0.4)',
-  splitLine: 'rgba(148, 163, 184, 0.18)',
-  tooltipBg: 'rgba(15, 23, 42, 0.92)',
-  tooltipBorder: 'rgba(148, 163, 184, 0.3)',
-  tooltipText: '#F8FAFC',
-}
+const palette = useChartPalette()
 
 const seriesData = computed(() => {
   const pageviewsMap = new Map(
@@ -80,6 +71,8 @@ const seriesData = computed(() => {
 })
 
 const chartOptions = computed<ECOption>(() => {
+  const chartTheme = palette.value
+  if (!chartTheme) return {}
   return {
     color: [chartTheme.pageviews, chartTheme.sessions],
     animationDuration: 450,
@@ -93,8 +86,9 @@ const chartOptions = computed<ECOption>(() => {
       },
       axisPointer: {
         type: 'shadow',
+        z: -1,
         shadowStyle: {
-          color: 'rgba(148, 163, 184, 0.12)',
+          color: chartTheme.splitLine,
         },
       },
     },
@@ -168,7 +162,7 @@ const chartOptions = computed<ECOption>(() => {
         barGap: '20%',
         barCategoryGap: '35%',
         itemStyle: {
-          color: 'rgba(75, 192, 192, 0.85)',
+          color: chartTheme.sessions,
           borderRadius: [3, 3, 0, 0],
         },
         data: seriesData.value.sessions,
@@ -179,7 +173,7 @@ const chartOptions = computed<ECOption>(() => {
         barGap: '20%',
         barCategoryGap: '35%',
         itemStyle: {
-          color: 'rgba(54, 162, 235, 0.85)',
+          color: chartTheme.pageviews,
           borderRadius: [3, 3, 0, 0],
         },
         data: seriesData.value.pageviews,
@@ -187,21 +181,36 @@ const chartOptions = computed<ECOption>(() => {
     ],
   }
 })
-
-const isMounted = ref(false)
-
-onMounted(() => {
-  isMounted.value = true
-})
 </script>
-
 <template>
-  <div class="relative h-96 w-full">
-    <VChart
-      :option="chartOptions"
-      :autoresize="true"
-      :loading="status === 'pending'"
-    />
-    <USkeleton v-if="!isMounted" class="absolute top-0 h-full w-full" />
-  </div>
+  <UCard as="section">
+    <template #header><h2 class="font-semibold">访问趋势</h2></template>
+    <div
+      v-if="status === 'error'"
+      role="status"
+      class="text-muted py-8 text-center text-sm"
+    >
+      暂时无法读取访问趋势。
+    </div>
+    <div
+      v-else-if="
+        status === 'success' &&
+        !pageviews?.pageviews?.length &&
+        !pageviews?.sessions?.length
+      "
+      class="text-muted py-8 text-center text-sm"
+    >
+      所选时段暂无访问记录
+    </div>
+    <div v-else class="relative h-64 w-full sm:h-72">
+      <VChart
+        v-if="palette"
+        :option="chartOptions"
+        :autoresize="true"
+        :loading="status === 'pending'"
+        class="size-full"
+      />
+      <USkeleton v-else class="size-full" />
+    </div>
+  </UCard>
 </template>

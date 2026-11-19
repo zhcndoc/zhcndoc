@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { DateTime } from 'luxon'
 interface ProjectPageData {
   project: {
     name: string
@@ -54,21 +55,23 @@ interface ProjectPageData {
 }
 
 const route = useRoute()
-const slug = route.params.slug as string
+const slug = computed(() => String(route.params.slug))
 
-const { data, status } = await useFetch<ProjectPageData>(`/api/project/${slug}`)
+const { data, status, refresh } = await useLazyFetch<ProjectPageData>(
+  () => `/api/project/${slug.value}`,
+)
 
 const seoTitle = computed(
   () =>
     data.value?.github.info.description?.trim() ||
-    `${data.value?.project.name || slug} 中文文档`,
+    `${data.value?.project.name || slug.value} 中文文档`,
 )
 
 const projectTitle = computed(
   () =>
     seoTitle.value.replace(/\s*中文文档$/, '') ||
     data.value?.project.name ||
-    slug,
+    slug.value,
 )
 
 const projectDescription = computed(
@@ -174,17 +177,27 @@ const repositoryFacts = computed(() => {
   ].filter((fact) => fact.value)
 })
 
-const latestRelease = computed(() => data.value?.github.releases?.[0])
+const documentSections = computed(() => {
+  const sections = [
+    { title: '贡献指南', content: data.value?.project.contributing },
+    { title: 'README', content: data.value?.project.readme },
+  ]
+  return sections
+    .filter((section) => section.content)
+    .map((section) => ({
+      ...section,
+      showTitle:
+        section.content
+          ?.trimStart()
+          .match(/^#{1,6}\s+([^\n]+)/)?.[1]
+          ?.trim() !== section.title,
+    }))
+})
 
 const formatDate = (dateStr: string | null | undefined) => {
   if (!dateStr) return ''
-  const d = new Date(dateStr)
-
-  if (Number.isNaN(d.getTime())) {
-    return ''
-  }
-
-  return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`
+  const date = DateTime.fromISO(dateStr).setZone('Asia/Shanghai')
+  return date.isValid ? date.toFormat('yyyy-MM-dd') : ''
 }
 
 const formatNumber = (value: number | null | undefined) => {
@@ -200,415 +213,236 @@ const formatRepoSize = (sizeInKb: number | null | undefined) => {
 </script>
 
 <template>
-  <div class="bg-default relative overflow-hidden">
-    <div
-      class="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--ui-border-muted)_1px,transparent_1px),linear-gradient(90deg,var(--ui-border-muted)_1px,transparent_1px)] bg-size-[44px_44px] opacity-20"
-    />
-
+  <UContainer class="py-5">
+    <ULink
+      to="/project"
+      class="text-muted mb-4 inline-flex items-center gap-1.5 text-sm"
+    >
+      <UIcon name="tabler:arrow-left" class="size-4" />
+      项目目录
+    </ULink>
     <template v-if="data">
-      <section class="relative">
-        <UContainer class="py-12 lg:py-16">
-          <div class="grid gap-10 lg:grid-cols-[1fr_360px] lg:items-end">
-            <div>
-              <div class="mb-6 flex flex-wrap items-center gap-3">
-                <UButton
-                  to="/project"
-                  label="返回项目索引"
-                  icon="tabler:arrow-left"
-                  color="neutral"
-                  variant="ghost"
-                  class="rounded-xs"
-                />
-
-                <div
-                  class="border-muted bg-default text-muted inline-flex items-center border px-3 py-2 font-mono text-xs tracking-[0.22em]"
-                >
-                  PROJECT FILE / {{ data.project.name.toUpperCase() }}
-                </div>
-              </div>
-
-              <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
+      <div class="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_16rem]">
+        <div class="min-w-0 space-y-5">
+          <UCard as="section">
+            <div
+              class="flex flex-col items-start gap-4 xl:flex-row xl:justify-between"
+            >
+              <div class="flex min-w-0 flex-1 items-center gap-3.5">
                 <img
                   :src="`/images/project/${slug}.svg`"
-                  :alt="`${data.project.name} logo`"
-                  class="border-muted bg-elevated size-24 shrink-0 border object-contain p-0 sm:size-32 lg:size-36"
+                  alt=""
+                  class="border-default size-14 shrink-0 rounded-md border bg-white object-contain p-2.5"
                 />
-                <div>
+                <div class="min-w-0">
                   <h1
-                    class="text-highlighted font-serif text-5xl leading-tight font-black sm:text-6xl lg:text-7xl"
+                    class="text-highlighted text-2xl font-bold tracking-tight wrap-break-word sm:text-3xl"
                   >
                     {{ projectTitle }}
                   </h1>
-                  <p class="text-toned mt-6 max-w-3xl text-lg leading-8">
+                  <p class="text-muted mt-1 text-sm/6">
                     {{ projectDescription }}
                   </p>
                 </div>
               </div>
-
-              <div
-                v-if="data.github.info.topics?.length"
-                class="mt-8 flex flex-wrap gap-2"
-              >
-                <UBadge
-                  v-for="topic in data.github.info.topics"
-                  :key="topic"
-                  color="neutral"
-                  variant="subtle"
-                  class="rounded-xs font-mono"
-                >
-                  {{ topic }}
-                </UBadge>
-              </div>
-            </div>
-
-            <div
-              class="border-muted bg-default border shadow-[0_22px_70px_-58px_var(--ui-text)]"
-            >
-              <div
-                class="border-muted bg-default flex items-center justify-between border-b px-4 py-3"
-              >
-                <span class="text-muted font-mono text-xs tracking-[0.24em]"
-                  >ENTRY POINTS</span
-                >
-                <span class="text-dimmed font-mono text-xs">OPEN</span>
-              </div>
-              <div class="divide-muted flex flex-col divide-y">
+              <div class="flex flex-wrap gap-2">
                 <UButton
-                  :to="data.github.info.homepage || data.project.upstream?.link"
+                  v-if="data.github.info.homepage"
+                  :to="data.github.info.homepage"
                   target="_blank"
                   label="中文文档"
-                  icon="tabler:external-link"
-                  color="neutral"
-                  variant="ghost"
-                  size="lg"
-                  class="bg-default text-highlighted hover:bg-elevated justify-start rounded-none px-5 py-4"
+                  trailing-icon="tabler:arrow-up-right"
                 />
                 <UButton
-                  :to="data.project.upstream?.link"
+                  v-if="data.project.upstream?.link"
+                  :to="data.project.upstream.link"
                   target="_blank"
                   label="官方文档"
-                  icon="tabler:world"
-                  color="neutral"
-                  variant="ghost"
-                  size="lg"
-                  class="bg-default justify-start rounded-none px-5 py-4"
+                  variant="outline"
                 />
                 <UButton
                   :to="data.github.info.htmlUrl"
                   target="_blank"
-                  label="GitHub 仓库"
+                  aria-label="GitHub 仓库"
                   icon="tabler:brand-github"
-                  color="neutral"
-                  variant="ghost"
-                  size="lg"
-                  class="bg-default justify-start rounded-none px-5 py-4"
+                  variant="outline"
                 />
               </div>
             </div>
-          </div>
-        </UContainer>
-      </section>
-
-      <section class="relative">
-        <UContainer>
-          <div
-            class="border-muted bg-border grid gap-px border sm:grid-cols-2 lg:grid-cols-4"
-          >
             <div
-              v-for="metric in metricBlocks"
-              :key="metric.label"
-              class="bg-default px-5 py-6 sm:px-6"
+              v-if="data.github.info.topics.length"
+              class="mt-4 flex flex-wrap gap-2"
             >
-              <div class="mb-5 flex items-center justify-between gap-4">
-                <p class="text-muted font-mono text-xs tracking-[0.2em]">
-                  {{ metric.label }}
-                </p>
-                <UIcon :name="metric.icon" class="text-dimmed size-4" />
-              </div>
-              <div class="text-highlighted font-mono text-4xl font-semibold">
-                {{ metric.value }}
-              </div>
-              <p class="text-muted mt-3 text-sm">
-                {{ metric.detail }}
-              </p>
+              <UBadge
+                v-for="topic in data.github.info.topics"
+                :key="topic"
+                color="neutral"
+              >
+                {{ topic }}
+              </UBadge>
             </div>
-          </div>
-        </UContainer>
-      </section>
-
-      <section class="relative py-12 lg:py-16">
-        <UContainer>
-          <div
-            class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start"
-          >
-            <main class="flex min-w-0 flex-col gap-8">
-              <section
-                v-if="data.project.contributing !== undefined"
-                class="border-muted bg-default border"
-              >
-                <div class="border-muted bg-default border-b px-5 py-4">
-                  <p class="text-muted font-mono text-xs tracking-[0.24em]">
-                    CONTRIBUTING
-                  </p>
-                  <h2 class="text-highlighted mt-4 text-2xl font-semibold">
-                    贡献指南
-                  </h2>
-                </div>
-                <div class="bg-default p-5 sm:p-7">
-                  <div class="project-markdown">
-                    <MDC
-                      v-if="data.project.contributing"
-                      :value="data.project.contributing"
-                      tag="article"
-                    />
-                    <p v-else class="text-muted text-sm">
-                      当前项目暂未收录贡献指南内容。
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              <section
-                v-if="data.project.readme !== undefined"
-                class="border-muted bg-default border"
-              >
-                <div class="border-muted bg-default border-b px-5 py-4">
-                  <p class="text-muted font-mono text-xs tracking-[0.24em]">
-                    README
-                  </p>
-                  <h2 class="text-highlighted mt-4 text-2xl font-semibold">
-                    项目说明
-                  </h2>
-                </div>
-                <div class="bg-default p-5 sm:p-7">
-                  <div class="project-markdown">
-                    <MDC
-                      v-if="data.project.readme"
-                      :value="data.project.readme"
-                      tag="article"
-                    />
-                    <p v-else class="text-muted text-sm">
-                      当前项目暂未收录 README 内容。
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              <section
-                v-if="data.github.releases?.length"
-                class="border-muted bg-default border"
-              >
+            <template #footer>
+              <dl class="flex flex-wrap gap-x-6 gap-y-2 text-sm tabular-nums">
                 <div
-                  class="border-muted bg-default flex items-center justify-between gap-4 border-b px-5 py-4"
+                  v-for="metric in metricBlocks"
+                  :key="metric.label"
+                  :title="metric.detail"
+                  class="flex items-center gap-1.5"
                 >
-                  <div>
-                    <p class="text-muted font-mono text-xs tracking-[0.24em]">
-                      RELEASES
-                    </p>
-                    <h2 class="text-highlighted mt-4 text-2xl font-semibold">
-                      最新版本
-                    </h2>
-                  </div>
-                  <p
-                    v-if="latestRelease"
-                    class="text-dimmed hidden font-mono text-xs sm:block"
-                  >
-                    {{ latestRelease.tagName }}
-                  </p>
+                  <dt class="text-muted flex items-center gap-1.5">
+                    <UIcon :name="metric.icon" class="size-4" />
+                    {{ metric.label }}
+                  </dt>
+                  <dd class="text-highlighted font-semibold">
+                    {{ metric.value }}
+                  </dd>
                 </div>
-
-                <div class="divide-muted divide-y">
-                  <article
-                    v-for="release in data.github.releases"
-                    :key="release.tagName"
-                    class="bg-default hover:bg-elevated p-5 transition-colors"
-                  >
-                    <div
-                      class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
-                    >
-                      <div class="min-w-0 flex-1">
-                        <NuxtLink
-                          :to="release.htmlUrl"
-                          target="_blank"
-                          class="text-highlighted hover:text-primary inline-flex items-center gap-2 font-semibold"
-                        >
-                          {{ release.name || release.tagName }}
-                          <UIcon name="tabler:arrow-up-right" class="size-4" />
-                        </NuxtLink>
-                        <div class="mt-3 flex flex-wrap gap-2">
-                          <UBadge
-                            v-if="release.prerelease"
-                            color="warning"
-                            variant="subtle"
-                            class="rounded-xs"
-                          >
-                            预发布
-                          </UBadge>
-                          <UBadge
-                            v-if="release.draft"
-                            color="neutral"
-                            variant="subtle"
-                            class="rounded-xs"
-                          >
-                            草稿
-                          </UBadge>
-                          <UBadge
-                            v-if="release.assetsCount"
-                            color="neutral"
-                            variant="subtle"
-                            class="rounded-xs"
-                          >
-                            资产 {{ formatNumber(release.assetsCount) }}
-                          </UBadge>
-                          <UBadge
-                            v-if="release.downloadsCount"
-                            color="neutral"
-                            variant="subtle"
-                            class="rounded-xs"
-                          >
-                            下载 {{ formatNumber(release.downloadsCount) }}
-                          </UBadge>
-                        </div>
-                      </div>
-                      <span class="text-dimmed shrink-0 font-mono text-xs">
-                        {{ formatDate(release.publishedAt) }}
-                      </span>
-                    </div>
-                    <p
-                      v-if="release.bodyExcerpt"
-                      class="text-muted mt-5 text-sm leading-7"
-                    >
-                      {{ release.bodyExcerpt }}
-                    </p>
-                  </article>
-                </div>
-              </section>
-            </main>
-
-            <aside class="flex min-w-0 flex-col gap-6 lg:sticky lg:top-24">
-              <section class="border-muted bg-default border">
-                <div class="border-muted bg-default border-b px-5 py-4">
-                  <p class="text-muted font-mono text-xs tracking-[0.24em]">
-                    REPOSITORY
-                  </p>
-                  <h2 class="text-highlighted mt-4 text-xl font-semibold">
-                    仓库档案
-                  </h2>
-                </div>
-                <dl class="divide-muted divide-y">
-                  <div
-                    v-for="fact in repositoryFacts"
-                    :key="fact.label"
-                    class="bg-default flex items-start justify-between gap-4 px-5 py-4 text-sm"
-                  >
-                    <dt class="text-muted flex items-center gap-2">
-                      <UIcon :name="fact.icon" class="text-dimmed size-4" />
-                      {{ fact.label }}
-                    </dt>
-                    <dd class="text-highlighted text-right font-mono text-xs">
-                      {{ fact.value }}
-                    </dd>
-                  </div>
-                </dl>
-              </section>
-
-              <section
-                v-if="data.github.contributors?.length"
-                class="border-muted bg-default border"
+              </dl>
+            </template>
+          </UCard>
+          <UCard
+            v-for="section in documentSections"
+            :key="section.title"
+            as="section"
+          >
+            <template v-if="section.showTitle" #header>
+              <h2 class="text-highlighted font-semibold">
+                {{ section.title }}
+              </h2>
+            </template>
+            <MDC
+              v-if="section.content"
+              :value="section.content"
+              tag="article"
+              class="max-w-3xl min-w-0 wrap-break-word"
+            />
+          </UCard>
+          <UCard v-if="!documentSections.length" as="section">
+            <p class="text-muted text-sm">
+              本站暂未收录此项目的 README 与贡献指南，可前往文档或仓库查阅。
+            </p>
+          </UCard>
+          <UCard
+            v-if="data.github.releases.length"
+            as="section"
+            :ui="{ body: 'p-0 sm:p-0' }"
+          >
+            <template #header>
+              <h2 class="text-highlighted font-semibold">最新版本</h2>
+            </template>
+            <ul class="divide-muted divide-y">
+              <li
+                v-for="release in data.github.releases"
+                :key="release.tagName"
+                class="p-4 sm:px-5"
               >
-                <div class="border-muted bg-default border-b px-5 py-4">
-                  <p class="text-muted font-mono text-xs tracking-[0.24em]">
-                    CONTRIBUTORS
-                  </p>
-                  <h2 class="text-highlighted mt-4 text-xl font-semibold">
-                    贡献者墙
-                  </h2>
-                </div>
-                <div class="bg-default p-5">
-                  <div class="flex flex-wrap gap-2">
-                    <NuxtLink
-                      v-for="user in data.github.contributors"
-                      :key="user.login"
-                      :to="user.html_url"
-                      target="_blank"
-                      :title="`${user.login} (${user.contributions} contributions)`"
-                    >
-                      <UAvatar
-                        :src="user.avatar_url"
-                        :alt="user.login"
-                        size="md"
-                        class="ring-muted ring-1"
-                      />
-                    </NuxtLink>
-                  </div>
-                </div>
-              </section>
-
-              <section
-                v-if="data.github.languages?.length"
-                class="border-muted bg-default border"
-              >
-                <div class="border-muted bg-default border-b px-5 py-4">
-                  <p class="text-muted font-mono text-xs tracking-[0.24em]">
-                    LANGUAGES
-                  </p>
-                  <h2 class="text-highlighted mt-4 text-xl font-semibold">
-                    语言分布
-                  </h2>
-                </div>
-                <div class="divide-muted divide-y">
-                  <div
-                    v-for="language in data.github.languages.slice(0, 6)"
-                    :key="language.name"
-                    class="bg-default px-5 py-4"
+                <div class="flex flex-wrap items-center gap-2">
+                  <ULink
+                    :to="release.htmlUrl"
+                    target="_blank"
+                    class="text-primary min-w-0 font-semibold wrap-anywhere"
                   >
-                    <div
-                      class="mb-2 flex items-center justify-between gap-4 text-sm"
-                    >
-                      <div
-                        class="text-highlighted flex items-center gap-2 font-medium"
-                      >
-                        <span class="bg-primary size-2" />
-                        {{ language.name }}
-                      </div>
-                      <div class="text-muted font-mono text-xs">
-                        {{ language.percent }}%
-                      </div>
-                    </div>
-                    <div class="bg-muted h-1.5 overflow-hidden">
-                      <div
-                        class="bg-primary h-full transition-all"
-                        :style="{ width: `${Math.max(language.percent, 3)}%` }"
-                      />
-                    </div>
-                  </div>
+                    {{ release.name || release.tagName }}
+                  </ULink>
+                  <UBadge v-if="release.prerelease" color="warning">
+                    预发布
+                  </UBadge>
+                  <UBadge v-if="release.draft" color="neutral">草稿</UBadge>
+                  <span v-if="release.assetsCount" class="text-muted text-xs">
+                    资产 {{ release.assetsCount }}
+                  </span>
+                  <span
+                    v-if="release.downloadsCount"
+                    class="text-muted text-xs"
+                  >
+                    下载 {{ release.downloadsCount }}
+                  </span>
+                  <time
+                    :datetime="release.publishedAt"
+                    class="text-muted ms-auto text-xs tabular-nums"
+                  >
+                    {{ formatDate(release.publishedAt) }}
+                  </time>
                 </div>
-              </section>
-            </aside>
-          </div>
-        </UContainer>
-      </section>
-    </template>
-
-    <UContainer v-else-if="status === 'error'" class="relative py-20">
-      <div class="border-muted bg-default border">
-        <div class="bg-default px-6 py-16 text-center">
-          <UIcon
-            name="tabler:alert-triangle"
-            class="text-dimmed mx-auto mb-4 size-12"
-          />
-          <h2 class="text-highlighted text-xl font-semibold">
-            项目加载失败或不存在
-          </h2>
-          <p class="text-muted mt-3 text-sm">当前项目档案暂时无法读取。</p>
-          <UButton
-            to="/project"
-            label="返回项目列表"
-            icon="tabler:arrow-left"
-            class="mt-6 rounded-xs"
-          />
+                <p
+                  v-if="release.bodyExcerpt"
+                  class="text-muted mt-2 max-w-3xl text-sm/6 wrap-anywhere"
+                >
+                  {{ release.bodyExcerpt }}
+                </p>
+              </li>
+            </ul>
+          </UCard>
         </div>
+        <aside class="min-w-0 space-y-4">
+          <UCard>
+            <template #header><h2 class="font-semibold">仓库资料</h2></template>
+            <dl class="space-y-3 text-sm">
+              <div
+                v-for="fact in repositoryFacts"
+                :key="fact.label"
+                class="flex justify-between gap-2"
+              >
+                <dt class="text-muted shrink-0">{{ fact.label }}</dt>
+                <dd class="text-end wrap-anywhere tabular-nums">
+                  {{ fact.value }}
+                </dd>
+              </div>
+            </dl>
+          </UCard>
+          <UCard v-if="data.github.contributors.length">
+            <template #header><h2 class="font-semibold">贡献者</h2></template>
+            <div class="flex flex-wrap gap-2">
+              <ULink
+                v-for="user in data.github.contributors"
+                :key="user.login"
+                :to="user.html_url"
+                target="_blank"
+                :title="`${user.login} · ${user.contributions} 次贡献`"
+              >
+                <UAvatar
+                  :src="user.avatar_url"
+                  :alt="user.login"
+                  size="sm"
+                  loading="lazy"
+                />
+              </ULink>
+            </div>
+          </UCard>
+          <UCard v-if="data.github.languages.length">
+            <template #header><h2 class="font-semibold">语言分布</h2></template>
+            <ul class="space-y-3">
+              <li
+                v-for="language in data.github.languages.slice(0, 6)"
+                :key="language.name"
+              >
+                <div class="mb-1.5 flex justify-between text-sm">
+                  <span>{{ language.name }}</span>
+                  <span class="text-muted tabular-nums">
+                    {{ language.percent }}%
+                  </span>
+                </div>
+                <progress
+                  :value="language.percent"
+                  max="100"
+                  :aria-label="language.name"
+                  class="bg-elevated accent-primary [&::-moz-progress-bar]:bg-primary [&::-webkit-progress-bar]:bg-elevated [&::-webkit-progress-value]:bg-primary block h-1.5 w-full overflow-hidden rounded-full"
+                ></progress>
+              </li>
+            </ul>
+          </UCard>
+        </aside>
       </div>
-    </UContainer>
-  </div>
+    </template>
+    <UCard v-else-if="status === 'error'" role="status">
+      <h1 class="text-xl font-semibold">项目加载失败或不存在</h1>
+      <UButton
+        label="重新加载"
+        class="mt-3"
+        variant="outline"
+        @click="refresh()"
+      />
+    </UCard>
+    <USkeleton v-else class="h-32 w-full" aria-label="正在加载项目" />
+  </UContainer>
 </template>

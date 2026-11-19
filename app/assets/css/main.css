@@ -1,6 +1,47 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
+@theme static {
+  --font-sans: Inter, system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --color-brand-50: #fff3f4;
+  --color-brand-100: #ffe3e7;
+  --color-brand-200: #ffc6ce;
+  --color-brand-300: #ff9aa9;
+  --color-brand-400: #ff7083;
+  --color-brand-500: #ff3f57;
+  --color-brand-600: #dc2d47;
+  --color-brand-700: #bc263e;
+  --color-brand-800: #992236;
+  --color-brand-900: #781e30;
+  --color-brand-950: #440f1a;
+}
+
+:root {
+  --ui-container: 80rem;
+  --ui-header-height: 3.5rem;
+  --ui-primary: var(--color-brand-700);
+  --ui-bg: #ffffff;
+  --ui-bg-muted: #f5f5f6;
+  --ui-bg-elevated: #eeeef0;
+  --ui-border: #dedee2;
+  --ui-border-muted: #ebebee;
+  --ui-text-muted: #62616b;
+  --chart-secondary: #696775;
+  --chart-range-low: var(--color-brand-50);
+  --chart-range-mid: var(--color-brand-200);
+  --chart-range-high: var(--color-brand-400);
+}
+
 .dark {
-  --ui-bg: var(--ui-color-neutral-950);
+  --ui-primary: var(--color-brand-400);
+  --ui-bg: #202024;
+  --ui-bg-muted: #171719;
+  --ui-bg-elevated: #2c2c31;
+  --ui-border: #39393f;
+  --ui-border-muted: #303035;
+  --ui-text-muted: #acabb3;
+  --chart-secondary: #b8b4c9;
+  --chart-range-low: var(--color-brand-950);
+  --chart-range-mid: var(--color-brand-800);
+  --chart-range-high: var(--color-brand-600);
 }

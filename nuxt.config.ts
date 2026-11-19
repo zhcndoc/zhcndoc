@@ -39,6 +39,9 @@ export default defineNuxtConfig({
       bindingName: 'DB',
     },
   },
+  ui: {
+    theme: { unstyled: true },
+  },
   runtimeConfig: {
     umamiToken: '',
   },

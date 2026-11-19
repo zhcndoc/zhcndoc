@@ -1,5 +1,5 @@
 <template>
-  <div class="h-8 w-40 max-w-full">
+  <div class="h-7 w-36 max-w-full">
     <img
       src="~/assets/brand/logo-light.svg?no-inline"
       alt="简中文档"

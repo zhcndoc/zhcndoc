@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui'
+import { DateTime } from 'luxon'
 
-const UButton = resolveComponent('UButton')
-const UBadge = resolveComponent('UBadge')
-const UTooltip = resolveComponent('UTooltip')
+defineProps<{
+  data: ProjectInfo[]
+  status: 'idle' | 'pending' | 'success' | 'error'
+}>()
+defineEmits<{ retry: [] }>()
 
-defineProps<{ data?: ProjectInfo[] }>()
-
-const defaultColumnVisibility: Record<string, boolean> = {}
-
-const columnOptions = [
+const fields = [
   { id: 'license', label: '开源协议' },
   { id: 'stars', label: 'Star' },
   { id: 'forks', label: 'Fork' },
@@ -23,25 +22,31 @@ const columnOptions = [
   { id: 'updatedAt', label: '更新时间' },
   { id: 'actions', label: '操作' },
 ] as const
-
-const columnVisibility = useCookie<Record<string, boolean>>(
-  'overview-table-column-visibility',
-  {
-    default: () => ({ ...defaultColumnVisibility }),
-  },
+const sortableFields = fields.filter(
+  (field) => field.id !== 'license' && field.id !== 'actions',
 )
-
-const getDefaultVisibility = (columnId: string) =>
-  defaultColumnVisibility[columnId] ?? true
-
+const defaultColumnVisibility: Record<string, boolean> = {
+  watchers: false,
+  issues: false,
+  pullRequests: false,
+  updatedAt: false,
+}
+const savedColumnVisibility = useCookie<Record<string, boolean>>(
+  'overview-table-column-visibility',
+  { default: () => ({}) },
+)
+const columnVisibility = computed(() => ({
+  ...defaultColumnVisibility,
+  ...savedColumnVisibility.value,
+}))
 const columnMenuItems = computed<DropdownMenuItem[][]>(() => [
-  columnOptions.map(({ id, label }) => ({
+  fields.map(({ id, label }) => ({
     label,
-    type: 'checkbox' as const,
-    checked: columnVisibility.value[id] ?? getDefaultVisibility(id),
+    type: 'checkbox',
+    checked: columnVisibility.value[id] ?? true,
     onUpdateChecked(checked: boolean) {
-      columnVisibility.value = {
-        ...columnVisibility.value,
+      savedColumnVisibility.value = {
+        ...savedColumnVisibility.value,
         [id]: checked,
       }
     },
@@ -52,302 +57,228 @@ const columnMenuItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
       label: '恢复默认',
-      icon: 'i-lucide-rotate-ccw',
-      disabled: columnOptions.every(
+      icon: 'tabler:restore',
+      disabled: fields.every(
         ({ id }) =>
-          (columnVisibility.value[id] ?? getDefaultVisibility(id)) ===
-          getDefaultVisibility(id),
+          (columnVisibility.value[id] ?? true) ===
+          (defaultColumnVisibility[id] ?? true),
       ),
       onSelect() {
-        columnVisibility.value = { ...defaultColumnVisibility }
+        savedColumnVisibility.value = {}
       },
     },
   ],
 ])
 
-const tableColumns: TableColumn<ProjectInfo>[] = [
+const columns: TableColumn<ProjectInfo>[] = [
   {
     accessorKey: 'title',
     header: '项目',
     enableHiding: false,
-    cell({ row }) {
-      return h(UButton, {
-        color: 'neutral',
-        label: row.original.title,
-        target: '_blank',
-        to: row.original.link,
-        trailingIcon: row.original.link ? 'tabler:external-link' : undefined,
-        variant: 'ghost',
-      })
-    },
+    enableSorting: false,
+    meta: { class: { th: 'text-center', td: 'text-center' } },
   },
-  {
-    accessorKey: 'license',
-    header: '开源协议',
-    cell({ row }) {
-      switch (row.original.license) {
-        case 'Apache License 2.0':
-          return 'Apache License 2.0'
-        case 'MIT License':
-          return 'MIT License'
-        case 'Creative Commons Attribution 4.0 International':
-          return 'CC BY 4.0'
-        case 'Other':
-          return '其他'
-        default:
-          return '无'
-      }
-    },
-  },
-  {
-    accessorKey: 'stars',
-    header: ({ column }) => {
-      return getHeader(column, 'Star')
-    },
-    cell({ row }) {
-      return h(UBadge, {
-        color: 'neutral',
-        icon: 'tabler:star',
-        label: row.original.stars.toString(),
-        variant: 'soft',
-      })
-    },
-  },
-  {
-    accessorKey: 'forks',
-    header: ({ column }) => {
-      return getHeader(column, 'Fork')
-    },
-    cell({ row }) {
-      return h(UBadge, {
-        color: 'neutral',
-        icon: 'tabler:git-fork',
-        label: row.original.forks.toString(),
-        variant: 'soft',
-      })
-    },
-  },
-  {
-    accessorKey: 'watchers',
-    header: ({ column }) => {
-      return getHeader(column, 'Watch')
-    },
-    cell({ row }) {
-      return h(UBadge, {
-        color: 'neutral',
-        icon: 'tabler:eyeglass',
-        label: row.original.watchers.toString(),
-        variant: 'soft',
-      })
-    },
-  },
-  {
-    accessorKey: 'issues',
-    header: ({ column }) => {
-      return getHeader(column, 'Issue')
-    },
-    cell({ row }) {
-      return h(UBadge, {
-        color: 'neutral',
-        icon: 'tabler:message',
-        label: row.original.issues.toString(),
-        variant: 'soft',
-      })
-    },
-  },
-  {
-    accessorKey: 'openIssues',
-    header: ({ column }) => {
-      return getHeader(column, 'Open Issue')
-    },
-    cell({ row }) {
-      return h(UBadge, {
-        color: 'neutral',
-        icon: 'tabler:message',
-        label: row.original.openIssues.toString(),
-        variant: 'soft',
-      })
-    },
-  },
-  {
-    accessorKey: 'pullRequests',
-    header: ({ column }) => {
-      return getHeader(column, 'Pull')
-    },
-    cell({ row }) {
-      return h(UBadge, {
-        color: 'neutral',
-        icon: 'tabler:git-pull-request',
-        label: row.original.pullRequests.toString(),
-        variant: 'soft',
-      })
-    },
-  },
-  {
-    accessorKey: 'openPullRequests',
-    header: ({ column }) => {
-      return getHeader(column, 'Open PR')
-    },
-    cell({ row }) {
-      return h(UBadge, {
-        color: 'neutral',
-        icon: 'tabler:git-pull-request',
-        label: row.original.openPullRequests.toString(),
-        variant: 'soft',
-      })
-    },
-  },
-  {
-    accessorKey: 'newCommit',
-    header: ({ column }) => {
-      return getHeader(column, '同步状态')
-    },
-    cell({
-      row: {
-        original: { newCommit },
-      },
-    }) {
-      if (newCommit === null) {
-        return h(UBadge, {
-          color: 'neutral',
-          variant: 'subtle',
-          label: '获取失败',
-        })
-      } else {
-        return h(UBadge, {
-          color: newCommit <= 0 ? 'success' : 'error',
-          variant: 'subtle',
-          label: newCommit <= 0 ? '已同步最新' : `落后 ${newCommit} 个提交`,
-        })
-      }
-    },
-  },
-  {
-    accessorKey: 'createdAt',
-    header: ({ column }) => {
-      return getHeader(column, '创建时间')
-    },
-    cell({ row }) {
-      return new Date(row.getValue('createdAt')).toLocaleString('zh-CN', {
-        timeZone: 'Asia/Shanghai',
-      })
-    },
-  },
-  {
-    accessorKey: 'updatedAt',
-    header: ({ column }) => {
-      return getHeader(column, '更新时间')
-    },
-    cell({ row }) {
-      return new Date(row.getValue('updatedAt')).toLocaleString('zh-CN', {
-        timeZone: 'Asia/Shanghai',
-      })
-    },
-  },
-  {
-    accessorKey: 'actions',
-    header: '操作',
-    cell({
-      row: {
-        original: { name, upstream },
-      },
-    }) {
-      return h('div', { class: 'flex gap-2 justify-center' }, [
-        h(
-          UTooltip,
-          {
-            arrow: true,
-            delayDuration: 100,
-            text: '查看项目',
-          },
-          () =>
-            h(UButton, {
-              color: 'neutral',
-              icon: 'tabler:brand-github',
-              target: '_blank',
-              to: `https://github.com/zhcndoc/${name}`,
-              variant: 'soft',
-            }),
-        ),
-        h(
-          UTooltip,
-          {
-            arrow: true,
-            delayDuration: 100,
-            text: '上游仓库',
-          },
-          () =>
-            h(UButton, {
-              color: 'neutral',
-              icon: 'tabler:git-pull-request',
-              target: '_blank',
-              to: `https://github.com/${upstream.owner}/${upstream.repo}`,
-              variant: 'soft',
-            }),
-        ),
-      ])
-    },
-  },
+  ...fields.map(({ id, label }) => ({
+    accessorKey: id,
+    header: label,
+    enableSorting: id !== 'license' && id !== 'actions',
+    sortDescFirst: true,
+    meta: { class: { th: 'text-center', td: 'text-center' } },
+  })),
 ]
-
-const getHeader = (
-  column: {
-    getIsSorted: () => false | 'asc' | 'desc'
-    toggleSorting: (desc?: boolean) => void
-    clearSorting: () => void
-  },
-  label: string,
-) => {
-  const isSorted = column.getIsSorted()
-  return h(UButton, {
-    label,
-    variant: 'ghost',
-    color: 'neutral',
-    trailingIcon: isSorted
-      ? isSorted === 'asc'
-        ? 'tabler:sort-ascending'
-        : 'tabler:sort-descending'
-      : 'tabler:arrows-sort',
-    class: '-mx-2.5',
-    onClick: () => {
-      if (isSorted === false) {
-        column.toggleSorting(true)
-      } else if (isSorted === 'desc') {
-        column.toggleSorting(false)
-      } else {
-        column.clearSorting()
-      }
-    },
-  })
+const licenses: Record<string, string> = {
+  'Apache License 2.0': 'Apache License 2.0',
+  'MIT License': 'MIT License',
+  'Creative Commons Attribution 4.0 International': 'CC BY 4.0',
+  Other: '其他',
 }
+
+const loadFavicons = ref(false)
+onMounted(() => {
+  // Wait until the avatar can handle image errors.
+  loadFavicons.value = true
+})
+
+function projectFaviconUrl(link: string) {
+  try {
+    const { hostname } = new URL(link)
+    return hostname
+      ? `https://markhub.top/favicon/${encodeURIComponent(hostname)}`
+      : undefined
+  } catch {
+    return undefined
+  }
+}
+
+function repositoryLinks({ name, upstream }: ProjectInfo) {
+  return [
+    {
+      label: `${name} 项目仓库`,
+      to: `https://github.com/zhcndoc/${name}`,
+      icon: 'tabler:brand-github',
+    },
+    {
+      label: `${name} 上游仓库`,
+      to: `https://github.com/${upstream.owner}/${upstream.repo}`,
+      icon: 'tabler:git-fork',
+    },
+  ]
+}
+
+const dateFields = ['createdAt', 'updatedAt'] as const
+const formatTime = (date: string) =>
+  DateTime.fromISO(date)
+    .setZone('Asia/Shanghai')
+    .toFormat('yyyy-MM-dd HH:mm:ss')
 </script>
 
 <template>
-  <div class="space-y-3">
-    <div class="flex justify-end">
+  <section
+    aria-labelledby="overview-heading"
+    class="border-default bg-default min-w-0 rounded-md border"
+  >
+    <div
+      class="border-default flex flex-wrap items-center justify-between gap-3 border-b px-4 py-4"
+    >
+      <div class="flex items-baseline gap-3">
+        <h1
+          id="overview-heading"
+          class="text-highlighted text-2xl font-bold tracking-tight"
+        >
+          项目概览
+        </h1>
+        <span
+          v-if="status === 'success'"
+          class="text-muted text-sm tabular-nums"
+        >
+          {{ data.length }} 个项目
+        </span>
+      </div>
       <UDropdownMenu
         :items="columnMenuItems"
         :content="{ align: 'end' }"
         :ui="{ content: 'w-48' }"
       >
         <UButton
-          color="neutral"
-          icon="i-lucide-columns-settings"
-          label="显示列"
-          trailing-icon="i-lucide-chevron-down"
           variant="outline"
+          icon="tabler:columns-3"
+          trailing-icon="tabler:chevron-down"
+          label="显示列"
         />
       </UDropdownMenu>
     </div>
-
+    <div
+      v-if="status === 'error'"
+      role="status"
+      class="text-muted p-6 text-center text-sm"
+    >
+      暂时无法读取项目数据。
+      <UButton size="sm" variant="link" label="重试" @click="$emit('retry')" />
+    </div>
+    <p
+      v-else-if="!data.length"
+      role="status"
+      class="text-muted p-6 text-center text-sm"
+    >
+      {{ status === 'success' ? '暂无项目数据' : '正在加载项目数据…' }}
+    </p>
     <UTable
-      v-model:column-visibility="columnVisibility"
+      v-else
+      :column-visibility="columnVisibility"
+      :column-pinning="{ left: ['title'] }"
       :data="data"
-      :columns="tableColumns"
-      :ui="{
-        th: 'text-center text-nowrap',
-        td: 'text-center',
-      }"
-    />
-  </div>
+      :columns="columns"
+      :loading="status === 'pending'"
+      caption="项目仓库与同步状态"
+      tabindex="0"
+      aria-label="项目数据，可横向滚动"
+      class="focus-visible:outline-brand-500 rounded-b-md"
+      :ui="{ base: 'min-w-full w-max' }"
+    >
+      <template
+        v-for="field in sortableFields"
+        :key="field.id"
+        #[`${field.id}-header`]="{ column }"
+      >
+        <UButton
+          variant="ghost"
+          size="xs"
+          :label="field.label"
+          :trailing-icon="
+            column.getIsSorted() === 'desc'
+              ? 'tabler:sort-descending'
+              : column.getIsSorted() === 'asc'
+                ? 'tabler:sort-ascending'
+                : 'tabler:arrows-sort'
+          "
+          @click="column.toggleSorting()"
+        />
+      </template>
+      <template #title-cell="{ row }">
+        <ULink
+          :to="row.original.link || `/project/${row.original.name}`"
+          :target="row.original.link ? '_blank' : undefined"
+          class="text-primary mx-auto flex w-fit max-w-32 items-center gap-2 font-medium sm:max-w-60"
+        >
+          <UAvatar
+            v-if="row.original.link"
+            :src="
+              loadFavicons ? projectFaviconUrl(row.original.link) : undefined
+            "
+            alt=""
+            icon="i-lucide-globe"
+            size="2xs"
+            loading="lazy"
+            decoding="async"
+            class="rounded-sm bg-transparent"
+            :ui="{ image: 'object-contain', icon: 'size-4' }"
+          />
+          <span class="whitespace-normal">
+            {{ row.original.title || row.original.name }}
+          </span>
+        </ULink>
+      </template>
+      <template #license-cell="{ row }">
+        {{ licenses[row.original.license] || row.original.license || '无' }}
+      </template>
+      <template #newCommit-cell="{ row }">
+        <UBadge v-if="row.original.newCommit === null" color="neutral">
+          获取失败
+        </UBadge>
+        <UBadge v-else-if="row.original.newCommit <= 0" color="success">
+          已同步最新
+        </UBadge>
+        <UBadge v-else color="error">
+          落后 {{ row.original.newCommit }} 个提交
+        </UBadge>
+      </template>
+      <template
+        v-for="field in dateFields"
+        :key="field"
+        #[`${field}-cell`]="{ row }"
+      >
+        <time :datetime="row.original[field]">
+          {{ formatTime(row.original[field]) }}
+        </time>
+      </template>
+      <template #actions-cell="{ row }">
+        <div class="flex justify-center gap-1">
+          <UTooltip
+            v-for="link in repositoryLinks(row.original)"
+            :key="link.label"
+            :text="link.label"
+          >
+            <UButton
+              :to="link.to"
+              target="_blank"
+              size="sm"
+              variant="ghost"
+              :icon="link.icon"
+              :aria-label="link.label"
+            />
+          </UTooltip>
+        </div>
+      </template>
+    </UTable>
+  </section>
 </template>

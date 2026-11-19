@@ -1,101 +1,60 @@
 <script setup lang="ts">
-import type { FooterColumn } from '@nuxt/ui'
+import { DateTime } from 'luxon'
 
-const currentYear = new Date().getFullYear()
-
-const columns: FooterColumn[] = [
-  {
-    label: '文档索引',
-    children: [
-      { label: '探索项目', to: '/project' },
-      { label: '项目概览', to: '/overview' },
-      { label: '访问统计', to: '/insight' },
-    ],
-  },
-  {
-    label: '社区',
-    children: [
-      { label: '博客', to: '/blog' },
-      {
-        label: 'GitHub',
-        to: 'https://github.com/zhcndoc/zhcndoc',
-        target: '_blank',
-      },
-      {
-        label: '提交项目',
-        to: 'https://github.com/zhcndoc/zhcndoc/issues/new',
-        target: '_blank',
-      },
-    ],
-  },
-  {
-    label: '站点',
-    children: [
-      { label: '首页', to: '/' },
-      {
-        label: 'zhcndoc.com',
-        to: 'https://www.zhcndoc.com',
-        target: '_blank',
-      },
-      {
-        label: '开源仓库',
-        to: 'https://github.com/zhcndoc',
-        target: '_blank',
-      },
-    ],
-  },
+const year = DateTime.now().setZone('Asia/Shanghai').year
+const links = [
+  { label: '项目目录', to: '/project' },
+  { label: '项目概览', to: '/overview' },
+  { label: '访问统计', to: '/insight' },
+  { label: '站点博客', to: '/blog' },
+  { label: '开源组织', to: 'https://github.com/zhcndoc' },
+  { label: '提交项目', to: 'https://github.com/zhcndoc/zhcndoc/issues/new' },
 ]
 </script>
 
 <template>
-  <USeparator />
-
-  <UFooter>
-    <template #top>
-      <UContainer>
-        <UFooterColumns :columns="columns">
-          <template #left>
-            <div class="max-w-sm">
-              <Logo />
-              <p class="text-muted mt-4 text-sm leading-6">
-                收录、维护并索引开源项目的简体中文文档，让中文开发者更快进入可靠资料。
-              </p>
-            </div>
-          </template>
-        </UFooterColumns>
-      </UContainer>
-    </template>
-
-    <template #left>
-      <p class="text-muted text-sm">
-        Copyright © {{ currentYear }}
-        <ULink to="https://www.zhcndoc.com" class="hover:text-default">
-          简中文档
-        </ULink>
-      </p>
-    </template>
-
-    <template #right>
+  <footer class="border-default bg-default mt-8 border-t text-sm">
+    <UContainer class="py-5">
+      <div class="flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+        <ULink to="/" aria-label="简中文档首页"><Logo /></ULink>
+        <nav
+          aria-label="页脚导航"
+          class="text-muted flex flex-wrap gap-x-5 gap-y-2"
+        >
+          <ULink
+            v-for="link in links"
+            :key="link.to"
+            :to="link.to"
+            :target="link.to.startsWith('https:') ? '_blank' : undefined"
+          >
+            {{ link.label }}
+          </ULink>
+        </nav>
+      </div>
       <div
-        class="text-muted flex flex-col items-center gap-2 text-sm xl:flex-row xl:gap-4"
+        class="border-muted text-muted mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t pt-4 text-xs"
       >
+        <span class="me-auto">
+          © {{ year }}
+          <ULink to="https://www.zhcndoc.com">简中文档</ULink>
+        </span>
         <ULink
           to="https://beian.miit.gov.cn/#/Integrated/index"
           target="_blank"
-          class="hover:text-default inline-flex items-center gap-2"
+          class="inline-flex items-center gap-1.5"
         >
-          <UIcon name="icon:miit" class="size-4" />
-          <span>沪ICP备2024070610号-3</span>
+          <UIcon name="icon:miit" class="size-3.5" />
+          沪ICP备2024070610号-3
         </ULink>
         <ULink
           to="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44200002445480"
           target="_blank"
-          class="hover:text-default inline-flex items-center gap-2"
+          class="inline-flex items-center gap-1.5"
         >
-          <UIcon name="icon:mps" class="size-4" />
-          <span>粤公网安备44200002445480号</span>
+          <UIcon name="icon:mps" class="size-3.5" />
+          粤公网安备44200002445480号
         </ULink>
       </div>
-    </template>
-  </UFooter>
+    </UContainer>
+  </footer>
 </template>

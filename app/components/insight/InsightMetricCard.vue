@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { TransitionPresets } from '@vueuse/core'
-
 const props = defineProps<{
   value: number
   change: number
@@ -9,59 +7,33 @@ const props = defineProps<{
   loading?: boolean
   formatValue: (value: number) => string
 }>()
-
-const { value, change } = toRefs(props)
-
-const changeIcon = computed(() => {
-  return change.value >= 0 ? 'tabler:arrow-up' : 'tabler:arrow-down'
+const percent = computed(() => {
+  const previous = props.value - props.change
+  return previous > 0 ? (Math.abs(props.change) / previous) * 100 : null
 })
-
-const changeColor = computed(() => {
-  return change.value >= 0
-    ? props.reverseColors
-      ? 'error'
-      : 'success'
-    : props.reverseColors
-      ? 'success'
-      : 'error'
-})
-
-const pct = computed(() => {
-  const diff = value.value - change.value
-  return ((value.value - diff) / diff) * 100
-})
-
-const _value = useTransition(value, {
-  duration: 1000,
-  transition: TransitionPresets.easeInOutCubic,
-})
-
-const _pct = useTransition(pct, {
-  duration: 1000,
-  transition: TransitionPresets.easeInOutCubic,
-})
+const color = computed(() =>
+  props.change >= 0 === !props.reverseColors ? 'success' : 'error',
+)
 </script>
-
 <template>
-  <div class="flex flex-col gap-2">
-    <div class="text-sm font-bold text-nowrap">{{ label }}</div>
-    <div
-      v-if="!loading"
-      class="h-10 text-4xl font-bold text-nowrap"
-      :title="value.toString()"
-    >
-      {{ formatValue(_value) }}
+  <div class="bg-default min-w-0 px-4 py-4">
+    <div class="text-muted text-sm">{{ label }}</div>
+    <USkeleton v-if="loading" class="mt-2 h-8 w-16" />
+    <div v-else class="mt-2 flex flex-wrap items-baseline gap-2 tabular-nums">
+      <strong
+        :title="String(value)"
+        class="text-highlighted text-2xl font-semibold tracking-tight"
+      >
+        {{ formatValue(value) }}
+      </strong>
+      <UBadge
+        v-if="percent !== null && change"
+        :color="color"
+        :icon="change >= 0 ? 'tabler:arrow-up' : 'tabler:arrow-down'"
+        :aria-label="`较上期${change >= 0 ? '上升' : '下降'} ${percent < 1 ? '不到 1' : Math.round(percent)}%`"
+      >
+        {{ percent < 1 ? '<1' : Math.round(percent) }}%
+      </UBadge>
     </div>
-    <USkeleton v-else class="h-10 w-36" />
-    <UBadge
-      v-if="!loading"
-      :icon="changeIcon"
-      :color="changeColor"
-      variant="soft"
-      class="w-fit font-bold"
-    >
-      {{ `${Math.abs(~~_pct)}%` }}
-    </UBadge>
-    <USkeleton v-else class="h-6 w-16" />
   </div>
 </template>
