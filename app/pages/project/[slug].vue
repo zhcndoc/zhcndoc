@@ -97,25 +97,25 @@ const metricBlocks = computed(() => {
     {
       label: 'Stars',
       value: formatNumber(info.stars),
-      icon: 'tabler:star',
+      icon: 'i-lucide-star',
       detail: '社区关注',
     },
     {
       label: 'Forks',
       value: formatNumber(info.forks),
-      icon: 'tabler:git-fork',
+      icon: 'i-lucide-git-fork',
       detail: '派生协作',
     },
     {
       label: 'Issues',
       value: formatNumber(info.openIssues),
-      icon: 'tabler:circle-dashed',
+      icon: 'i-lucide-circle-dashed',
       detail: '开放议题',
     },
     {
       label: 'Pull Requests',
       value: formatNumber(info.openPullRequests),
-      icon: 'tabler:git-pull-request',
+      icon: 'i-lucide-git-pull-request',
       detail: '等待合并',
     },
   ]
@@ -132,47 +132,47 @@ const repositoryFacts = computed(() => {
     {
       label: '主要语言',
       value: info.language,
-      icon: 'tabler:code',
+      icon: 'i-lucide-code',
     },
     {
       label: '默认分支',
       value: info.defaultBranch,
-      icon: 'tabler:git-branch',
+      icon: 'i-lucide-git-branch',
     },
     {
       label: '开源协议',
       value: info.license,
-      icon: 'tabler:license',
+      icon: 'i-lucide-file-badge',
     },
     {
       label: '仓库大小',
       value: formatRepoSize(info.size),
-      icon: 'tabler:database',
+      icon: 'i-lucide-database',
     },
     {
       label: '最近推送',
       value: formatDate(info.pushedAt),
-      icon: 'tabler:upload',
+      icon: 'i-lucide-upload',
     },
     {
       label: '创建时间',
       value: formatDate(info.createdAt),
-      icon: 'tabler:calendar-plus',
+      icon: 'i-lucide-calendar-plus',
     },
     {
       label: '最后更新',
       value: formatDate(info.updatedAt),
-      icon: 'tabler:refresh',
+      icon: 'i-lucide-refresh-cw',
     },
     {
       label: 'Fork 网络',
       value: info.networkCount ? formatNumber(info.networkCount) : '',
-      icon: 'tabler:network',
+      icon: 'i-lucide-network',
     },
     {
       label: '订阅者',
       value: info.watchers ? formatNumber(info.watchers) : '',
-      icon: 'tabler:eye',
+      icon: 'i-lucide-eye',
     },
   ].filter((fact) => fact.value)
 })
@@ -218,7 +218,7 @@ const formatRepoSize = (sizeInKb: number | null | undefined) => {
       to="/project"
       class="text-muted mb-4 inline-flex items-center gap-1.5 text-sm"
     >
-      <UIcon name="tabler:arrow-left" class="size-4" />
+      <UIcon name="i-lucide-arrow-left" class="size-4" />
       项目目录
     </ULink>
     <template v-if="data">
@@ -251,7 +251,7 @@ const formatRepoSize = (sizeInKb: number | null | undefined) => {
                   :to="data.github.info.homepage"
                   target="_blank"
                   label="中文文档"
-                  trailing-icon="tabler:arrow-up-right"
+                  trailing-icon="i-lucide-arrow-up-right"
                 />
                 <UButton
                   v-if="data.project.upstream?.link"
@@ -264,7 +264,7 @@ const formatRepoSize = (sizeInKb: number | null | undefined) => {
                   :to="data.github.info.htmlUrl"
                   target="_blank"
                   aria-label="GitHub 仓库"
-                  icon="tabler:brand-github"
+                  icon="i-lucide-github"
                   variant="outline"
                 />
               </div>

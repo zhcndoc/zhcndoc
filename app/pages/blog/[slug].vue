@@ -36,7 +36,7 @@ useSeoMeta({
       to="/blog"
       class="text-muted mb-4 inline-flex items-center gap-1.5 text-sm"
     >
-      <UIcon name="tabler:arrow-left" class="size-4" />
+      <UIcon name="i-lucide-arrow-left" class="size-4" />
       站点博客
     </ULink>
     <div class="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_16rem]">

@@ -49,7 +49,7 @@ const filteredProjects = computed(() => {
         <UInput
           v-model="search"
           type="search"
-          icon="tabler:search"
+          icon="i-lucide-search"
           aria-label="搜索项目"
           placeholder="搜索项目、描述或上游仓库"
           class="w-full sm:w-72"

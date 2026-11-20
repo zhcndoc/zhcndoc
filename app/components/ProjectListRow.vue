@@ -60,7 +60,7 @@ const updatedDate = computed(
           class="inline-flex items-center gap-1"
           :aria-label="`${project.stars} Stars`"
         >
-          <UIcon name="tabler:star" class="size-3.5" />
+          <UIcon name="i-lucide-star" class="size-3.5" />
           {{ project.stars }}
         </ULink>
         <ULink
@@ -70,7 +70,7 @@ const updatedDate = computed(
           class="inline-flex items-center gap-1"
           :aria-label="`${project.forks} Forks`"
         >
-          <UIcon name="tabler:git-fork" class="size-3.5" />
+          <UIcon name="i-lucide-git-fork" class="size-3.5" />
           {{ project.forks }}
         </ULink>
       </div>
@@ -82,7 +82,7 @@ const updatedDate = computed(
       class="text-muted hidden items-center gap-2 text-xs md:inline-flex"
     >
       项目详情
-      <UIcon name="tabler:chevron-right" class="size-4" />
+      <UIcon name="i-lucide-chevron-right" class="size-4" />
     </ULink>
     <div v-else class="col-start-2 flex flex-wrap gap-2 md:col-start-3">
       <UButton
@@ -92,7 +92,7 @@ const updatedDate = computed(
         variant="soft"
         size="sm"
         label="中文文档"
-        trailing-icon="tabler:arrow-up-right"
+        trailing-icon="i-lucide-arrow-up-right"
       />
       <UButton
         v-if="project.upstream?.link"

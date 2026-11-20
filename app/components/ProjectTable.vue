@@ -57,7 +57,7 @@ const columnMenuItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
       label: '恢复默认',
-      icon: 'tabler:restore',
+      icon: 'i-lucide-rotate-ccw',
       disabled: fields.every(
         ({ id }) =>
           (columnVisibility.value[id] ?? true) ===
@@ -115,12 +115,12 @@ function repositoryLinks({ name, upstream }: ProjectInfo) {
     {
       label: `${name} 项目仓库`,
       to: `https://github.com/zhcndoc/${name}`,
-      icon: 'tabler:brand-github',
+      icon: 'i-lucide-github',
     },
     {
       label: `${name} 上游仓库`,
       to: `https://github.com/${upstream.owner}/${upstream.repo}`,
-      icon: 'tabler:git-fork',
+      icon: 'i-lucide-git-fork',
     },
   ]
 }
@@ -161,8 +161,8 @@ const formatTime = (date: string) =>
       >
         <UButton
           variant="outline"
-          icon="tabler:columns-3"
-          trailing-icon="tabler:chevron-down"
+          icon="i-lucide-columns-3"
+          trailing-icon="i-lucide-chevron-down"
           label="显示列"
         />
       </UDropdownMenu>
@@ -206,10 +206,10 @@ const formatTime = (date: string) =>
           :label="field.label"
           :trailing-icon="
             column.getIsSorted() === 'desc'
-              ? 'tabler:sort-descending'
+              ? 'i-lucide-arrow-down-wide-narrow'
               : column.getIsSorted() === 'asc'
-                ? 'tabler:sort-ascending'
-                : 'tabler:arrows-sort'
+                ? 'i-lucide-arrow-up-narrow-wide'
+                : 'i-lucide-arrow-down-up'
           "
           @click="column.toggleSorting()"
         />

@@ -47,5 +47,9 @@ export default defineContentConfig({
           .optional(),
       }),
     }),
+    docs: defineCollection({
+      type: 'page',
+      source: 'docs/**/*.{md,yml}',
+    }),
   },
 })

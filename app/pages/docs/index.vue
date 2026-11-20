@@ -1,0 +1,3 @@
+<template>
+  <DocsArticle />
+</template>

@@ -29,7 +29,7 @@ const color = computed(() =>
       <UBadge
         v-if="percent !== null && change"
         :color="color"
-        :icon="change >= 0 ? 'tabler:arrow-up' : 'tabler:arrow-down'"
+        :icon="change >= 0 ? 'i-lucide-arrow-up' : 'i-lucide-arrow-down'"
         :aria-label="`较上期${change >= 0 ? '上升' : '下降'} ${percent < 1 ? '不到 1' : Math.round(percent)}%`"
       >
         {{ percent < 1 ? '<1' : Math.round(percent) }}%

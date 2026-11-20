@@ -49,16 +49,16 @@ const featured = computed(() =>
   ),
 )
 const community = [
-  { label: '站点博客', to: '/blog', icon: 'tabler:article' },
+  { label: '站点博客', to: '/blog', icon: 'i-lucide-file-text' },
   {
     label: 'GitHub 仓库',
     to: 'https://github.com/zhcndoc/zhcndoc',
-    icon: 'tabler:brand-github',
+    icon: 'i-lucide-github',
   },
   {
     label: '提交项目',
     to: 'https://github.com/zhcndoc/zhcndoc/issues/new',
-    icon: 'tabler:circle-plus',
+    icon: 'i-lucide-circle-plus',
   },
 ]
 
@@ -147,7 +147,7 @@ const comments = [
           <UButton
             to="/project"
             label="浏览项目"
-            trailing-icon="tabler:arrow-right"
+            trailing-icon="i-lucide-arrow-right"
             class="mt-5"
           />
         </div>
@@ -178,7 +178,7 @@ const comments = [
           <h2
             class="text-highlighted flex items-center gap-2.5 text-lg font-semibold"
           >
-            <UIcon name="tabler:books" class="text-primary size-5" />
+            <UIcon name="i-lucide-library-big" class="text-primary size-5" />
             精选项目
           </h2>
           <ULink
@@ -186,7 +186,7 @@ const comments = [
             class="text-muted inline-flex items-center gap-1 text-sm"
           >
             全部项目
-            <UIcon name="tabler:chevron-right" class="size-4" />
+            <UIcon name="i-lucide-chevron-right" class="size-4" />
           </ULink>
         </template>
         <ul class="divide-muted divide-y">
@@ -204,7 +204,7 @@ const comments = [
       <UCard :ui="{ body: 'p-0 sm:p-0' }">
         <template #header>
           <h2 class="flex items-center gap-2 font-semibold">
-            <UIcon name="tabler:users" class="text-primary size-4" />
+            <UIcon name="i-lucide-users" class="text-primary size-4" />
             社区
           </h2>
         </template>
@@ -221,8 +221,8 @@ const comments = [
             <UIcon
               :name="
                 link.to.startsWith('https:')
-                  ? 'tabler:arrow-up-right'
-                  : 'tabler:chevron-right'
+                  ? 'i-lucide-arrow-up-right'
+                  : 'i-lucide-chevron-right'
               "
               class="text-muted ms-auto size-3.5"
             />
@@ -241,7 +241,7 @@ const comments = [
           id="community-excerpts-heading"
           class="text-highlighted flex items-center gap-2 font-semibold"
         >
-          <UIcon name="tabler:message-circle" class="text-primary size-5" />
+          <UIcon name="i-lucide-message-circle" class="text-primary size-5" />
           社区摘录
         </h2>
         <span class="text-muted text-xs"> {{ comments.length }} 条评价 </span>

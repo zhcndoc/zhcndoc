@@ -7,6 +7,7 @@ const links = [
   { label: '项目概览', to: '/overview' },
   { label: '访问统计', to: '/insight' },
   { label: '站点博客', to: '/blog' },
+  { label: '文档指南', to: '/docs' },
   { label: '开源组织', to: 'https://github.com/zhcndoc' },
   { label: '提交项目', to: 'https://github.com/zhcndoc/zhcndoc/issues/new' },
 ]

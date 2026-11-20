@@ -1,3 +1,5 @@
+import { docsRedirects } from './config/docs-redirects'
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
@@ -46,6 +48,7 @@ export default defineNuxtConfig({
     umamiToken: '',
   },
   routeRules: {
+    ...docsRedirects,
     '/api/insight/**': {
       cache: {
         maxAge: 60,
@@ -123,7 +126,12 @@ export default defineNuxtConfig({
   icon: {
     mode: 'css',
     clientBundle: {
-      scan: true,
+      scan: {
+        globInclude: [
+          '**/*.{vue,jsx,tsx,md,mdc,mdx,yml,yaml}',
+          'content/docs/**/.navigation.yml',
+        ],
+      },
       includeCustomCollections: true,
       sizeLimitKb: 1024,
     },

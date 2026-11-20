@@ -5,32 +5,39 @@ const route = useRoute()
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
+    label: '指南',
+    icon: 'i-lucide-book-open',
+    to: '/docs',
+    active: route.path === '/docs' || route.path.startsWith('/docs/'),
+    description: '查阅中文技术文档的语言风格、结构与排版',
+  },
+  {
     label: '项目',
-    icon: 'tabler:list-details',
+    icon: 'i-lucide-list',
     to: '/project',
     active: route.path === '/project' || route.path.startsWith('/project/'),
     description: '浏览已收录的中文技术文档项目',
   },
   {
     label: '概览',
-    icon: 'tabler:layout-dashboard',
+    icon: 'i-lucide-layout-dashboard',
     to: '/overview',
     description: '查看项目仓库与同步状态的整体图景',
     active: route.path.startsWith('/overview'),
   },
   {
-    label: '统计',
-    icon: 'tabler:chart-pie',
-    to: '/insight',
-    description: '查看简中文档访问和项目数据',
-    active: route.path.startsWith('/insight'),
-  },
-  {
     label: '博客',
-    icon: 'tabler:article',
+    icon: 'i-lucide-file-text',
     to: '/blog',
     description: '简中文档的更新记录和文章',
     active: route.path.startsWith('/blog'),
+  },
+  {
+    label: '统计',
+    icon: 'i-lucide-chart-pie',
+    to: '/insight',
+    description: '查看简中文档访问和项目数据',
+    active: route.path.startsWith('/insight'),
   },
 ])
 </script>
@@ -54,7 +61,7 @@ const items = computed<NavigationMenuItem[]>(() => [
         to="https://github.com/zhcndoc/zhcndoc"
         target="_blank"
         variant="ghost"
-        icon="tabler:brand-github"
+        icon="i-lucide-github"
         color="neutral"
       />
     </template>
