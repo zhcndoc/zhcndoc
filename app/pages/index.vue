@@ -59,36 +59,16 @@ function submitProjectSearch() {
 }
 
 const featured = [
-  {
-    name: 'nuxt',
-    title: 'Nuxt',
-    description: 'Vue 全栈开发框架',
-  },
-  {
-    name: 'vue',
-    title: 'Vue.js',
-    description: '渐进式前端框架',
-  },
-  {
-    name: 'vite',
-    title: 'Vite',
-    description: '前端构建工具',
-  },
-  {
-    name: 'bun',
-    title: 'Bun',
-    description: 'JavaScript 运行时',
-  },
-  {
-    name: 'nitro',
-    title: 'Nitro',
-    description: '通用服务端引擎',
-  },
-  {
-    name: 'tailwindcss',
-    title: 'Tailwind CSS',
-    description: '实用优先 CSS 框架',
-  },
+  { name: 'nuxt', title: 'Nuxt' },
+  { name: 'tailwindcss', title: 'Tailwind CSS' },
+  { name: 'mise', title: 'Mise' },
+  { name: 'rolldown', title: 'Rolldown' },
+  { name: 'hono', title: 'Hono' },
+  { name: 'openclaw', title: 'OpenClaw' },
+  { name: 'elysia', title: 'Elysia' },
+  { name: 'bun', title: 'Bun' },
+  { name: 'better-auth', title: 'Better Auth' },
+  { name: 'deno', title: 'Deno' },
 ]
 const featuredList = useTemplateRef<HTMLUListElement>('featured-list')
 const { arrivedState, measure } = useScroll(featuredList)
@@ -96,7 +76,14 @@ useResizeObserver(featuredList, measure)
 
 function scrollFeatured(direction: -1 | 1) {
   const list = featuredList.value
-  if (list) list.scrollBy({ left: direction * list.clientWidth })
+  const firstCard = list?.firstElementChild
+  const secondCard = firstCard?.nextElementSibling
+  if (!list || !firstCard || !secondCard) return
+
+  const step =
+    secondCard.getBoundingClientRect().left -
+    firstCard.getBoundingClientRect().left
+  list.scrollBy({ left: direction * step })
 }
 
 const guideChapters = [
@@ -198,8 +185,8 @@ const comments = [
 </script>
 
 <template>
-  <UContainer class="space-y-10 pt-12 pb-8 sm:space-y-12 sm:pt-20">
-    <section aria-labelledby="home-title" class="max-w-152">
+  <div class="space-y-10 pt-12 pb-8 sm:space-y-12 sm:pt-20">
+    <UContainer as="section" aria-labelledby="home-title">
       <h1 id="home-title" ref="home-title" class="w-fit">
         <span class="sr-only">简中文档，开源项目的中文文档</span>
         <Logo
@@ -210,13 +197,13 @@ const comments = [
           :style="{ '--home-logo-scale': logoScale }"
         />
       </h1>
-      <p class="text-muted mt-4 text-base/7 sm:text-lg/8">
+      <p class="text-muted mt-4 max-w-152 text-base/7 sm:text-lg/8">
         由开源社区维护的中文技术文档。查阅译文、官方原文和项目同步进度。
       </p>
       <form
         action="/project"
         role="search"
-        class="mt-7"
+        class="mt-7 max-w-152"
         @submit.prevent="submitProjectSearch"
       >
         <label
@@ -243,63 +230,75 @@ const comments = [
           />
         </div>
       </form>
-    </section>
+    </UContainer>
 
     <section aria-labelledby="featured-heading">
-      <div class="mb-3 flex min-h-9 items-center justify-between gap-3">
+      <UContainer class="mb-3 flex min-h-9 items-center justify-between gap-3">
         <h2
           id="featured-heading"
           class="text-highlighted text-lg font-semibold tracking-tight sm:text-xl"
         >
-          精选项目
+          热门文档
         </h2>
         <div class="flex items-center gap-3 sm:gap-4">
-          <ULink
-            to="/project"
-            class="text-muted inline-flex items-center gap-1 text-sm whitespace-nowrap"
-          >
-            全部项目
-            <UIcon name="i-lucide-arrow-right" class="size-4" />
-          </ULink>
-          <div class="flex gap-1 lg:hidden">
+          <div class="flex gap-1">
             <UButton
-              aria-label="向左浏览精选项目"
+              aria-label="向左浏览热门文档"
               aria-controls="featured-projects"
               icon="i-lucide-chevron-left"
               color="neutral"
-              variant="outline"
-              class="size-9 rounded-lg"
+              variant="ghost"
+              class="size-9 rounded-md"
               :disabled="arrivedState.left"
               @click="scrollFeatured(-1)"
             />
             <UButton
-              aria-label="向右浏览精选项目"
+              aria-label="向右浏览热门文档"
               aria-controls="featured-projects"
               icon="i-lucide-chevron-right"
               color="neutral"
-              variant="outline"
-              class="size-9 rounded-lg"
+              variant="ghost"
+              class="size-9 rounded-md"
               :disabled="arrivedState.right"
               @click="scrollFeatured(1)"
             />
           </div>
+          <UButton
+            to="/project"
+            label="全部项目"
+            trailing-icon="i-lucide-arrow-up-right"
+            color="neutral"
+            variant="ghost"
+            class="gap-1 rounded-md font-normal"
+          />
         </div>
-      </div>
+      </UContainer>
       <ul
         id="featured-projects"
         ref="featured-list"
-        class="grid snap-x snap-mandatory scrollbar-thin [scrollbar-color:var(--ui-border)_transparent] auto-cols-[min(11rem,44%)] grid-flow-col gap-3 overflow-x-auto overscroll-x-contain scroll-smooth motion-reduce:scroll-auto max-lg:pb-2 lg:auto-cols-auto lg:grid-cols-6"
+        class="grid w-full snap-x snap-proximity scroll-px-(--featured-gutter) scrollbar-none auto-cols-[min(16rem,72vw)] grid-flow-col gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-(--featured-gutter) pt-1 pb-2 [--featured-gutter:1rem] motion-reduce:scroll-auto sm:auto-cols-72 sm:[--featured-gutter:max(1.5rem,calc((100%-var(--ui-container))/2+1.5rem))] motion-safe:pointer-fine:[@media(hover:hover)]:py-4"
+        :class="[
+          'motion-safe:pointer-fine:[@media(hover:hover)]:*:*:transition-[scale,translate]',
+          'motion-safe:pointer-fine:[@media(hover:hover)]:*:*:duration-360',
+          'motion-safe:pointer-fine:[@media(hover:hover)]:*:*:ease-[cubic-bezier(0.22,1,0.36,1)]',
+          'motion-safe:pointer-fine:*:hover:*:relative',
+          'motion-safe:pointer-fine:*:hover:*:z-1',
+          'motion-safe:pointer-fine:*:hover:*:scale-[1.12]',
+          'motion-safe:pointer-fine:[@media(hover:hover)]:*:has-[~_li:hover]:*:translate-x-[-6%]',
+          'motion-safe:pointer-fine:[@media(hover:hover)]:[&>li:hover~li>*]:translate-x-[6%]',
+        ]"
       >
         <ProjectListRow
           v-for="project in featured"
           :key="project.name"
           :project="project"
+          :preview-src="`/images/screenshot/${project.name}.webp`"
           featured
         />
       </ul>
     </section>
 
-    <div
+    <UContainer
       class="grid items-start gap-8 md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]"
     >
       <section aria-labelledby="guide-heading" class="min-w-0">
@@ -354,13 +353,12 @@ const comments = [
         :status="status"
         class="overflow-hidden rounded-xl"
       />
-    </div>
+    </UContainer>
 
-    <section
-      aria-labelledby="community-excerpts-heading"
-      class="border-muted border-t pt-6"
-    >
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <UContainer as="section" aria-labelledby="community-excerpts-heading">
+      <div
+        class="border-muted mb-4 flex flex-wrap items-center justify-between gap-3 border-t pt-6"
+      >
         <h2
           id="community-excerpts-heading"
           class="text-highlighted text-lg font-semibold tracking-tight sm:text-xl"
@@ -399,6 +397,6 @@ const comments = [
           </p>
         </li>
       </ul>
-    </section>
-  </UContainer>
+    </UContainer>
+  </div>
 </template>

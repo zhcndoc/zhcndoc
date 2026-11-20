@@ -2,9 +2,9 @@
 import { DateTime } from 'luxon'
 
 const props = defineProps<{
-  project: Pick<ProjectInfo, 'name' | 'title' | 'description'> &
-    Partial<ProjectInfo>
+  project: Pick<ProjectInfo, 'name' | 'title'> & Partial<ProjectInfo>
   featured?: boolean
+  previewSrc?: string
 }>()
 
 const title = computed(
@@ -12,6 +12,8 @@ const title = computed(
 )
 const detailLink = computed(() => `/project/${props.project.name}`)
 const logoSrc = computed(() => `/images/project/${props.project.name}.svg`)
+const previewImage = useTemplateRef<HTMLImageElement>('preview-image')
+const failedPreviewSrc = ref<string>()
 const updatedDate = computed(
   () =>
     props.project.updatedAt &&
@@ -19,40 +21,64 @@ const updatedDate = computed(
       .setZone('Asia/Shanghai')
       .toFormat('yyyy-MM-dd'),
 )
+
+function handlePreviewError() {
+  failedPreviewSrc.value = props.previewSrc
+}
+
+onMounted(() => {
+  const image = previewImage.value
+  // The server-rendered image can fail before Vue attaches its error listener.
+  if (image?.complete && image.naturalWidth === 0) handlePreviewError()
+})
 </script>
 
 <template>
   <li v-if="featured" class="min-w-0 snap-start">
-    <ULink
-      :to="detailLink"
-      class="group border-default bg-default hover:border-primary flex h-full flex-col overflow-hidden rounded-xl border transition-colors focus-visible:-outline-offset-2"
+    <div
+      class="border-muted bg-default flex h-full flex-col overflow-hidden rounded-md border shadow-sm shadow-black/5"
     >
       <div
-        class="border-muted bg-muted/60 relative grid h-24 place-items-center border-b sm:h-28"
+        class="bg-muted dark:bg-elevated grid min-h-8 flex-1 grid-cols-[2.5rem_minmax(0,1fr)_2.5rem] items-center gap-2 px-2.5 py-1 sm:px-3"
+      >
+        <span aria-hidden="true" class="flex shrink-0 items-center gap-1">
+          <span class="size-2.5 rounded-full bg-[#ff6058]"></span>
+          <span class="size-2.5 rounded-full bg-[#ffbd38]"></span>
+          <span class="size-2.5 rounded-full bg-[#2dc844]"></span>
+        </span>
+        <h3
+          class="text-highlighted w-fit max-w-full min-w-0 justify-self-center rounded-sm bg-zinc-200 px-2 py-1 text-center text-[10px]/3 font-medium dark:bg-zinc-700"
+        >
+          {{ title }} <span class="whitespace-nowrap">中文文档</span>
+        </h3>
+      </div>
+      <ULink
+        :to="detailLink"
+        :aria-label="`${title} 中文文档预览`"
+        class="focus-visible:outline-primary bg-muted/60 relative grid aspect-video w-full shrink-0 place-items-center overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2"
       >
         <img
+          v-if="previewSrc && previewSrc !== failedPreviewSrc"
+          ref="preview-image"
+          :src="previewSrc"
+          alt=""
+          width="640"
+          height="360"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 size-full object-cover"
+          @error="handlePreviewError"
+        />
+        <img
+          v-else
           :src="logoSrc"
           alt=""
           width="76"
           height="76"
-          class="size-[4.75rem] object-contain"
+          class="size-14 object-contain sm:size-19"
         />
-        <UIcon
-          name="i-lucide-arrow-right"
-          class="text-muted group-hover:text-primary absolute end-3 top-3 size-4"
-        />
-      </div>
-      <div class="px-3 py-2.5 sm:px-3.5 sm:py-3">
-        <h3
-          class="text-highlighted group-hover:text-primary text-sm font-semibold"
-        >
-          {{ title }}
-        </h3>
-        <p class="text-muted mt-1 text-xs/5">
-          {{ project.description }}
-        </p>
-      </div>
-    </ULink>
+      </ULink>
+    </div>
   </li>
   <li
     v-else
