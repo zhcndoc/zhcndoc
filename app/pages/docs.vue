@@ -25,11 +25,11 @@ function closeOnLink(event: MouseEvent) {
 </script>
 
 <template>
-  <div class="bg-default min-h-[calc(100dvh-var(--ui-header-height))]">
+  <div class="min-h-[calc(100dvh-var(--ui-header-height))]">
     <UContainer class="grid items-start md:grid-cols-[13rem_minmax(0,1fr)]">
       <a
         href="#doc-content"
-        class="text-primary bg-default sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-50 focus:rounded-md focus:p-3"
+        class="text-primary bg-default sr-only focus:not-sr-only focus:fixed focus:inset-s-4 focus:top-4 focus:z-50 focus:rounded-md focus:p-3"
       >
         跳到正文
       </a>

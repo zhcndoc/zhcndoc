@@ -11,6 +11,7 @@ const title = computed(
   () => props.project.title.replace(/\s*中文文档$/, '') || props.project.name,
 )
 const detailLink = computed(() => `/project/${props.project.name}`)
+const logoSrc = computed(() => `/images/project/${props.project.name}.svg`)
 const updatedDate = computed(
   () =>
     props.project.updatedAt &&
@@ -21,18 +22,50 @@ const updatedDate = computed(
 </script>
 
 <template>
+  <li v-if="featured" class="min-w-0 snap-start">
+    <ULink
+      :to="detailLink"
+      class="group border-default bg-default hover:border-primary flex h-full flex-col overflow-hidden rounded-xl border transition-colors focus-visible:-outline-offset-2"
+    >
+      <div
+        class="border-muted bg-muted/60 relative grid h-24 place-items-center border-b sm:h-28"
+      >
+        <img
+          :src="logoSrc"
+          alt=""
+          width="76"
+          height="76"
+          class="size-[4.75rem] object-contain"
+        />
+        <UIcon
+          name="i-lucide-arrow-right"
+          class="text-muted group-hover:text-primary absolute end-3 top-3 size-4"
+        />
+      </div>
+      <div class="px-3 py-2.5 sm:px-3.5 sm:py-3">
+        <h3
+          class="text-highlighted group-hover:text-primary text-sm font-semibold"
+        >
+          {{ title }}
+        </h3>
+        <p class="text-muted mt-1 text-xs/5">
+          {{ project.description }}
+        </p>
+      </div>
+    </ULink>
+  </li>
   <li
+    v-else
     class="hover:bg-muted/60 grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3 gap-y-2 px-4 py-3.5 transition-colors sm:gap-x-4 sm:px-5 md:grid-cols-[auto_minmax(0,1fr)_auto]"
   >
     <ULink
       :to="detailLink"
       :aria-label="title"
       tabindex="-1"
-      class="border-default flex shrink-0 items-center justify-center rounded-md border bg-white p-2"
-      :class="featured ? 'size-11 sm:size-12' : 'size-14 sm:size-16'"
+      class="border-default flex size-14 shrink-0 items-center justify-center rounded-md border bg-white p-2 sm:size-16"
     >
       <img
-        :src="`/images/project/${project.name}.svg`"
+        :src="logoSrc"
         alt=""
         width="32"
         height="32"
@@ -46,7 +79,6 @@ const updatedDate = computed(
       </h3>
       <p class="text-muted mt-0.5 text-sm/6">{{ project.description }}</p>
       <div
-        v-if="!featured"
         class="text-muted mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs tabular-nums"
       >
         <span v-if="updatedDate">
@@ -75,16 +107,7 @@ const updatedDate = computed(
         </ULink>
       </div>
     </div>
-    <ULink
-      v-if="featured"
-      :to="detailLink"
-      :aria-label="`查看 ${title} 项目`"
-      class="text-muted hidden items-center gap-2 text-xs md:inline-flex"
-    >
-      项目详情
-      <UIcon name="i-lucide-chevron-right" class="size-4" />
-    </ULink>
-    <div v-else class="col-start-2 flex flex-wrap gap-2 md:col-start-3">
+    <div class="col-start-2 flex flex-wrap gap-2 md:col-start-3">
       <UButton
         v-if="project.link"
         :to="project.link"

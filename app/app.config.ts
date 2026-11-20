@@ -14,10 +14,10 @@ export default defineAppConfig({
     header: {
       slots: {
         root: 'sticky top-0 z-40 h-(--ui-header-height) border-b border-default bg-default',
-        container: 'flex h-full items-center gap-4 lg:gap-10',
+        container: 'flex h-full items-center gap-3 sm:gap-4',
         left: 'flex shrink-0 items-center',
-        center: 'hidden h-full items-stretch md:flex',
-        right: 'ms-auto flex items-center gap-1.5',
+        center: 'ms-auto hidden h-full items-stretch md:flex',
+        right: 'ms-auto flex items-center gap-1.5 md:ms-0',
         title: 'inline-flex items-center',
         toggle: 'md:hidden',
         content: 'md:hidden',

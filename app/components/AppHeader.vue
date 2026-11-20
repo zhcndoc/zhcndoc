@@ -2,6 +2,8 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
+const homeLogoDocked = useState('home-logo-docked', () => false)
+const showHeroLogo = computed(() => route.path === '/' && !homeLogoDocked.value)
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
@@ -43,9 +45,15 @@ const items = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-  <UHeader title="简中文档">
+  <UHeader
+    title="简中文档"
+    class="motion-safe:transition-colors"
+    :class="{
+      'border-transparent **:data-[slot=title]:invisible': showHeroLogo,
+    }"
+  >
     <template #title>
-      <Logo />
+      <Logo data-header-logo />
     </template>
 
     <UNavigationMenu :items="items" />

@@ -5,7 +5,15 @@ useSeoMeta({
     '探索简中文档支持的中文技术文档项目，快速进入中文文档与官方文档入口。',
 })
 
+const route = useRoute()
 const search = ref('')
+watch(
+  () => route.query.q,
+  (query) => {
+    search.value = typeof query === 'string' ? query : ''
+  },
+  { immediate: true },
+)
 const {
   data: projects,
   status,
